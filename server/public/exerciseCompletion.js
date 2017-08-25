@@ -247,7 +247,7 @@ function bindInteractionStuff() {
   };
 
   var brush = d3.brushY()
-                .extent([[0, 120],[78, 775]]) // constrain brush extent to y axis
+                .extent([[0, 120],[78, 825]]) // constrain brush extent to y axis
                 .on("end", brushed);
 
   d3.select("#container1").select("svg").append("g")
