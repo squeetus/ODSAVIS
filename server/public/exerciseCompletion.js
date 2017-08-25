@@ -94,8 +94,8 @@ function drawExerciseCompletionChart(exercises, exerciseGroundTruth, students, m
 
       chart: {
           type: 'heatmap',
-          marginTop: 40,
-          marginBottom: 80,
+          marginTop: 130,
+          marginBottom: 30,
           plotBorderWidth: 1
       },
 
@@ -105,7 +105,8 @@ function drawExerciseCompletionChart(exercises, exerciseGroundTruth, students, m
       },
 
       xAxis: {
-          categories: exercises
+          categories: exercises,
+          opposite: true
       },
 
       yAxis: {
@@ -120,12 +121,14 @@ function drawExerciseCompletionChart(exercises, exerciseGroundTruth, students, m
       },
 
       legend: {
-          align: 'right',
-          layout: 'vertical',
+          align: 'top',
+          layout: 'horizontal',
           margin: 0,
           verticalAlign: 'top',
-          y: 25,
-          symbolHeight: 450
+          y: 30,
+          x: 640,
+          symbolHeight: 15,
+          symbolWidth: 130
       },
 
       tooltip: {
@@ -197,7 +200,7 @@ function bindInteractionStuff() {
           .attr("width", 100)
           .attr("height", 30)
           .attr("x", 0)
-          .attr("y", 0)
+          .attr("y", 50)
           .attr("fill", "white")
           .attr("stroke", "black")
           .on("click", function(d, i) { reorder(); });
@@ -207,7 +210,7 @@ function bindInteractionStuff() {
           .attr("width", 40)
           .attr("height", 20)
           .attr("x", 30)
-          .attr("y", 20)
+          .attr("y", 70)
           .text("Reorder");
 
   var brushed = function() {
@@ -237,7 +240,7 @@ function bindInteractionStuff() {
   };
 
   var brush = d3.brushY()
-                .extent([[0, 30],[78, 730]]) // constrain brush extent to y axis
+                .extent([[0, 120],[78, 775]]) // constrain brush extent to y axis
                 .on("end", brushed);
 
   d3.select("#container1").select("svg").append("g")
