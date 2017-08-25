@@ -54,7 +54,7 @@ function populateStudentsAndExerciseGrades() {
   for(var i = 0; i < grades.length; i++) {
 
     // set up name and grades array
-    students.push("student" + i);
+    students.push("student " + i);
     exerciseData[i] = {
       name: 'student'+i,
       grades: []
@@ -116,8 +116,15 @@ function drawExerciseCompletionChart(exercises, exerciseGroundTruth, students, m
 
       colorAxis: {
           min: 0,
-          minColor: '#FFFFFF',
-          maxColor: Highcharts.getOptions().colors[7]
+          // minColor: '#FFFFFF',
+          // maxColor: Highcharts.getOptions().colors[7]
+          minColor: '#EEEEFF',
+          maxColor: '#000022',
+          stops: [
+              [0, '#AA0000'],
+              [0.5, '#FFFFFF'],
+              [1, '#00AA00']
+          ]
       },
 
       legend: {
@@ -231,7 +238,7 @@ function bindInteractionStuff() {
       .selectAll("text").each(function(d) {
         myY = +d3.select(this).attr('y');
         if (myY > y1 && myY < y2) {
-          these.push(+d3.select(this).text().substring(7, 9));
+          these.push(+d3.select(this).text().substring(8, 10));
         }
       });
     }
