@@ -4,12 +4,22 @@
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="jquery.csv.js"></script>
 <link rel="stylesheet" type="text/css" href="style.css">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 
-<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-<div id="container1" style="height: 800px; min-width: 310px; max-width: 800px; margin: 50 auto"></div>
+<div class="app">
+<div class="description" id="desc1">
+  <h1>Course grades</h1>
+  <p>Averages, ranges, and interquartile ranges for all course assignments.</p>
+  <p>Click a particular assignment title to view each student's completion. </p>
+</div>
 
+
+<div class="container" id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+<div class="container" id="container1" style="display: none; height: 800px; min-width: 310px; max-width: 800px; margin: 50 auto"></div>
+</div>
 
 <script src='classPerformance.js'></script>
 <script src="exerciseCompletion.js"></script>

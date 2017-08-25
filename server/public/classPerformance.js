@@ -13,7 +13,10 @@ var grades = [],
 
     // charts
     chartAveragePerformance,
-    chartExerciseCompletion;
+    chartExerciseCompletion,
+
+    // flag for setup
+    onlyOnce = true;
 
 // point of entry (from parser once document loads)
 function nowMakePretty(csv) {
@@ -152,7 +155,7 @@ function drawClassPerformanceChart(averages, ranges, interquartileRanges) {
   return Highcharts.chart('container', {
 
       title: {
-          text: 'Class Performance'
+          text: 'Average Assignment Grades'
       },
 
       yAxis: {
@@ -183,7 +186,7 @@ function drawClassPerformanceChart(averages, ranges, interquartileRanges) {
           name: 'Average Grade',
           // id: 'avgGrade',
           data: averages,
-          lineWidth: 3,
+          lineWidth: 2,
           zIndex: 1,
           marker: {
               fillColor: 'white',
@@ -205,11 +208,11 @@ function drawClassPerformanceChart(averages, ranges, interquartileRanges) {
               enabled: false
           }
       }, {
-          name: 'InterQuartileRange',
+          name: 'Interquartile Range',
           data: interquartileRanges,
           type: 'arearange',
           lineWidth: 0,
-          linkedTo: 'avgGrade',
+          // linkedTo: 'avgGrade',
           color: 'lightgrey',
           fillOpacity: 0.2,
           zIndex: 0,
@@ -231,6 +234,8 @@ function removeExtraneousSeries() {
 
 /* superimpose lines for some subset of students */
 function addSeries(these) {
+  var lineWidth = (these.length > 5) ? 1 : ((these.length > 3) ? 2 : 3);
+
   removeExtraneousSeries();
   extraSeries = {};
 
@@ -250,14 +255,15 @@ function addSeries(these) {
     // }
     extraSeries['student'+these[i]] = grades[these[i]];
 
-    console.log(extraSeries);
+
 
     // add new series
     chartAveragePerformance.addSeries({
         data: extraSeries['student'+these[i]],
         name: 'Student '+ these[i] +' Grade',
         id: 'student'+these[i],
-        lineWidth: 1,
+        zIndex: 3,
+        lineWidth: lineWidth,
     }, false);
   }
 
@@ -270,6 +276,20 @@ function bindInteractionStuffToAvg() {
   assignmentLabels.on('mouseover', function(d, i) { d3.select(this).style('opacity', 0.5); })
        .on('mouseout', function(d, i) { d3.select(this).style('opacity', 1.0); })
        .on('click', function(d, i) {
+
+        if(onlyOnce) {
+          d3.select(".app").insert("div", "#container1")
+                 .attr("id", "description1")
+                 .attr("class", "description")
+                 .html("<h1>Exercise Completion</h1>" +
+                       "<p>Proportion of the steps completed in each exercise for all students.</p>" +
+                       "<p>Reorder by average completion, or click a particular exercise name to order within that exercise.</p>" +
+                       "<p>Click and drag across some student labels on the y axis to view their course grades in the chart above.</p>");
+
+          $("html, body").animate({ scrollTop: "600px" }, 1000);
+          onlyOnce = false;
+        }
+
          computeDummyExerciseValues();
          populateStudentsAndExerciseGrades();
          chartExerciseCompletion = drawExerciseCompletionChart(exercises, exerciseGroundTruth, students, matrixChartData, d3.select(this).text());

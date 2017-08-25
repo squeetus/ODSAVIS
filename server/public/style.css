@@ -3,3 +3,24 @@
   fill-opacity: .125;
   shape-rendering: crispEdges;
 }
+
+.description {
+  text-align: left;
+  margin: 50px;
+  margin-bottom: 50px;
+  min-width: 50%;
+}
+
+.container {
+  padding: 45px;
+  -webkit-box-shadow: 0 0 10px 2px #888;
+           box-shadow: 0 0 10px 2px #888;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.app {
+
+}

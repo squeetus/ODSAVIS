@@ -89,6 +89,7 @@ function putStudentData() {
 }
 
 function drawExerciseCompletionChart(exercises, exerciseGroundTruth, students, matrixChartData, whichOne) {
+  d3.select('#container1').style("display", "block");
   return Highcharts.chart('container1', {
 
       chart: {
@@ -131,7 +132,7 @@ function drawExerciseCompletionChart(exercises, exerciseGroundTruth, students, m
           formatter: function () {
               // console.log(this.point.x)
               return '<b>' + this.series.yAxis.categories[this.point.y] + '</b> completed <br><b>' +
-                   (this.point.value * exerciseGroundTruth[this.point.x]) + '</b> of ' + exerciseGroundTruth[this.point.x] + ' exercises (' + (this.point.value * 100).toFixed(0) + '%) in <br><b>' + this.series.xAxis.categories[this.point.x] + '</b>';
+                   (this.point.value * exerciseGroundTruth[this.point.x]) + '</b> of ' + exerciseGroundTruth[this.point.x] + ' steps (' + (this.point.value * 100).toFixed(0) + '%) in <br><b>' + this.series.xAxis.categories[this.point.x] + '</b>';
           }
       },
 
@@ -193,20 +194,21 @@ function bindInteractionStuff() {
        .on('click', function(d, i) { reorder(i); });
 
   d3.select("#container1").select("svg").append("rect")
-          .attr("width", 50)
-          .attr("height", 20)
-          .attr("x", 100)
-          .attr("y", 10)
-          .attr("fill", "lightgrey")
+          .attr("width", 100)
+          .attr("height", 30)
+          .attr("x", 0)
+          .attr("y", 0)
+          .attr("fill", "white")
+          .attr("stroke", "black")
           .on("click", function(d, i) { reorder(); });
 
   d3.select("#container1").select("svg").append("text")
-          .attr("pointer-events", "none")
+          .style("pointer-events", "none")
           .attr("width", 40)
           .attr("height", 20)
-          .attr("x", 108)
-          .attr("y", 25)
-          .text("order");
+          .attr("x", 30)
+          .attr("y", 20)
+          .text("Reorder");
 
   var brushed = function() {
     // handle case without different y
