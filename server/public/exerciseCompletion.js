@@ -114,6 +114,8 @@ function drawExerciseCompletionChart(exercises, exerciseGroundTruth, students, m
           title: null
       },
 
+      exporting: { enabled: false },
+
       colorAxis: {
           min: 0,
           // minColor: '#FFFFFF',
@@ -121,9 +123,11 @@ function drawExerciseCompletionChart(exercises, exerciseGroundTruth, students, m
           minColor: '#EEEEFF',
           maxColor: '#000022',
           stops: [
-              [0, '#AA0000'],
-              [0.5, '#FFFFFF'],
-              [1, '#00AA00']
+              [0, d3.interpolateRdYlGn(0)],
+              [0.25, d3.interpolateRdYlGn(0.25)],
+              [0.5, d3.interpolateRdYlGn(0.5)],
+              [0.75, d3.interpolateRdYlGn(0.75)],
+              [1, d3.interpolateRdYlGn(1)]
           ]
       },
 

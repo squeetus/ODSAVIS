@@ -14,6 +14,7 @@ var grades = [],
     // charts
     chartAveragePerformance,
     chartExerciseCompletion,
+    chartSortedByCategory,
 
     // flag for setup
     onlyOnce = true;
@@ -33,6 +34,7 @@ function nowMakePretty(csv) {
   chartAveragePerformance = drawClassPerformanceChart(averages, ranges, interquartileRanges);
   bindInteractionStuffToAvg();
 
+  chartSortedByCategory = drawAssignmentsByCategory(grades, assignments);
 
   // matrix stuff
   // computeDummyExerciseValues();
@@ -154,6 +156,10 @@ function computeInterquartileGradeRanges(grades, assignments, averages) {
 function drawClassPerformanceChart(averages, ranges, interquartileRanges) {
   return Highcharts.chart('container', {
 
+      chart: {
+          type: 'columnrange',
+      },
+
       title: {
           text: 'Average Assignment Grades'
       },
@@ -174,6 +180,13 @@ function drawClassPerformanceChart(averages, ranges, interquartileRanges) {
         // }
       },
 
+      plotOptions: {
+          columnrange: {
+              grouping: false,
+              shadow: false
+          }
+      },
+
       tooltip: {
           crosshairs: true,
           shared: true
@@ -182,22 +195,25 @@ function drawClassPerformanceChart(averages, ranges, interquartileRanges) {
       legend: {
       },
 
+      exporting: { enabled: false },
+
       series: [{
           name: 'Average Grade',
           // id: 'avgGrade',
+          type: 'spline',
           data: averages,
           lineWidth: 2,
           zIndex: 1,
           marker: {
               fillColor: 'white',
               lineWidth: 2,
-              lineColor: Highcharts.getOptions().colors[7],
-              enabled: false
+              lineColor: Highcharts.getOptions().colors[1],
+              enabled: true
           }
       }, {
           name: 'Range',
           data: ranges,
-          type: 'arearange',
+          type: 'columnrange',
           lineWidth: 0,
           linkedTo: 'avgGrade',
           // color: Highcharts.getOptions().colors[7],
@@ -210,9 +226,9 @@ function drawClassPerformanceChart(averages, ranges, interquartileRanges) {
       }, {
           name: 'Interquartile Range',
           data: interquartileRanges,
-          type: 'arearange',
+          // type: 'arearange',
           lineWidth: 0,
-          // linkedTo: 'avgGrade',
+          linkedTo: 'avgGrade',
           color: 'lightgrey',
           fillOpacity: 0.2,
           zIndex: 0,
@@ -264,6 +280,7 @@ function addSeries(these) {
         id: 'student'+these[i],
         zIndex: 3,
         lineWidth: lineWidth,
+        type: 'spline'
     }, false);
   }
 
