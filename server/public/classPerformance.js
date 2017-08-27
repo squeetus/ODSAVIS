@@ -158,6 +158,8 @@ function drawClassPerformanceChart(averages, ranges, interquartileRanges) {
 
       chart: {
           type: 'columnrange',
+          marginTop: 50,
+          marginBottom: 120,
       },
 
       title: {
@@ -216,9 +218,7 @@ function drawClassPerformanceChart(averages, ranges, interquartileRanges) {
           type: 'columnrange',
           lineWidth: 0,
           linkedTo: 'avgGrade',
-          // color: Highcharts.getOptions().colors[7],
-          color: 'WhiteSmoke',
-          fillOpacity: 0.1,
+          color: 'rgba(211,211,211,0.5)',
           zIndex: 0,
           marker: {
               enabled: false
@@ -226,11 +226,10 @@ function drawClassPerformanceChart(averages, ranges, interquartileRanges) {
       }, {
           name: 'Interquartile Range',
           data: interquartileRanges,
-          // type: 'arearange',
           lineWidth: 0,
           linkedTo: 'avgGrade',
-          color: 'lightgrey',
-          fillOpacity: 0.2,
+          pointWidth: 50,
+          color: 'rgba(192,192,192,0.7)',
           zIndex: 0,
           marker: {
               enabled: false
@@ -269,7 +268,7 @@ function addSeries(these) {
     // for(var j in grades) {
     //     extraSeries['student'+these[i]].push(grades[j][these[i]]);
     // }
-    extraSeries['student'+these[i]] = grades[these[i]];
+    extraSeries['student'+these[i]] = grades[these[i]].grades;
 
 
 
