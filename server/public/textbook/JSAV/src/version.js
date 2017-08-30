@@ -4,4 +4,9 @@
 */
 (function() {
   if (typeof JSAV === "undefined") { return; }
-  var theVERSION = "
+  var theVERSION = "v1.0.1-19-gf7c700d";
+
+  JSAV.version = function() {
+    return theVERSION;
+  };
+})();

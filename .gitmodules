@@ -1,0 +1,3 @@
+[submodule "server/public/textbook/JSAV"]
+	path = server/public/textbook/JSAV
+	url = https://github.com/vkaravir/JSAV
