@@ -1,0 +1,460 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>2. Getting Started &mdash; OpenDSA System Documentation</title>
+    
+    <link rel="stylesheet" href="_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/print.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.4.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/theme_extras.js"></script>
+    <link rel="top" title="OpenDSA System Documentation" href="index.html" />
+    <link rel="next" title="3. Instructor’s Tools" href="InstructorTools.html" />
+    <link rel="prev" title="1. Introduction" href="Introduction.html" /> 
+  </head>
+  <body>
+      <div class="header"><img class="rightlogo" src="_static/AlgoVizLogo.gif" alt="Logo"/><h1 class="heading"><a href="index.html">
+          <span>OpenDSA System Documentation</span></a></h1>
+        <h2 class="heading"><span>2. Getting Started</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        «&#160;&#160;<a href="Introduction.html">1. Introduction</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="InstructorTools.html">3. Instructor&#8217;s Tools</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="getting-started">
+<span id="gettingstarted"></span><h1>2. Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview-and-developer-s-first-steps">
+<h2>2.1. Overview and Developer&#8217;s First Steps<a class="headerlink" href="#overview-and-developer-s-first-steps" title="Permalink to this headline">¶</a></h2>
+<p>OpenDSA consists of content delivered by servers.
+Content is delivered in the form of &#8220;book instances&#8221;, which are
+created by the <a class="reference internal" href="Configuration.html#configuration"><em>configuration process</em></a>.
+A book instance is accessed through a Learning Management System (at
+the moment, we are only supporting Canvas), with the files delivered
+by an LTI Content Provider.
+Various support operations are conducted by the OpenDSA Server.
+If you want to develop content, then create a book instance and view
+it, then you will need to set up the necessary infrastructure.
+For testing purposes, this has all been packaged together to simplify
+setting up a development environment.
+See <a class="reference external" href="https://github.com/OpenDSA/OpenDSA-DevStack">https://github.com/OpenDSA/OpenDSA-DevStack</a> for how to set this
+up.</p>
+<p>Once you have the development environment in place, the next step is
+to get an account on a Canvas server.
+You can either use one provided by your institution, set up your own
+Canvas server, or use the public test server provided by Instructure
+at <a class="reference external" href="https://canvas.instructure.com">https://canvas.instructure.com</a>.
+With your account in place, you can tell Canvas to create a course.
+The place to start is to create a course named &#8220;Test&#8221;.
+You will then go back to your development environment, and create a
+<a class="reference internal" href="Configuration.html#configuration"><em>course configuration file</em></a>.
+You should start with one named &#8220;Test_LMSconf.json&#8221;, made by copying
+the template in the config directory.
+You can then go to the top of the OpenDSA repository, and do
+<tt class="docutils literal"><span class="pre">make</span> <span class="pre">Test</span></tt>.
+If everything worked right, then you will have populated your course
+on Canvas with some content.
+At this point, you are ready to learn about the parts of the system
+that you need to know in detail so that you can do useful work.</p>
+</div>
+<div class="section" id="project-communications">
+<h2>2.2. Project Communications<a class="headerlink" href="#project-communications" title="Permalink to this headline">¶</a></h2>
+<p>The primary discussion forum for topics related to OpenDSA and JSAV is
+our Piazza forum at
+<a class="reference external" href="https://piazza.com/class/i1v25wdagpr6sn">https://piazza.com/class/i1v25wdagpr6sn</a>.</p>
+<p>Issues (bug reports and suggestions) related to any of the
+repositories should be posted to their respective GitHub issue
+trackers.</p>
+</div>
+<div class="section" id="repositories-and-official-mirrors">
+<h2>2.3. Repositories and Official Mirrors<a class="headerlink" href="#repositories-and-official-mirrors" title="Permalink to this headline">¶</a></h2>
+<p>Main development is done out of repositories hosted at GitHub.
+We use a GitHub &#8220;organization&#8221; at <a class="reference external" href="https://github.com/OpenDSA">https://github.com/OpenDSA</a>.
+Here is a list of the individual repositories that we use:</p>
+<ul class="simple">
+<li>The main OpenDSA development repository:
+<a class="reference external" href="https://github.com/OpenDSA/OpenDSA">https://github.com/OpenDSA/OpenDSA</a>.
+The stable releases are kept in a separate repository at
+<a class="reference external" href="https://github.com/OpenDSA/OpenDSA-stable">https://github.com/OpenDSA/OpenDSA-stable</a>.</li>
+<li>Most developers should use the version of JSAV distributed with
+OpenDSA. However, if your task requires the most recent changes then
+the development version of JSAV can be found at:
+<a class="reference external" href="https://github.com/vkaravir/JSAV">https://github.com/vkaravir/JSAV</a>.</li>
+<li>We use the Khan Academy infrastructure for exercises and distribute
+the necessary portions with OpenDSA.</li>
+<li>Support for setting up OpenDSA servers can be found at <a class="reference external" href="https://github.com/OpenDSA/OpenDSA-DevStack">https://github.com/OpenDSA/OpenDSA-DevStack</a>.</li>
+<li>The OpenPOP project is in a separate repository at
+<a class="reference external" href="https://github.com/OpenDSA/OpenPOP">https://github.com/OpenDSA/OpenPOP</a>.</li>
+<li>The QBank project is in a separate repository at
+<a class="reference external" href="https://github.com/OpenDSA/QBank">https://github.com/OpenDSA/QBank</a>.</li>
+</ul>
+<p>The stable releases of OpenDSA and JSAV are mirrored at:
+<a class="reference external" href="http://algoviz.org/OpenDSA/">http://algoviz.org/OpenDSA/</a> and <a class="reference external" href="http://algoviz.org/OpenDSA/JSAV">http://algoviz.org/OpenDSA/JSAV</a>,
+respectively.
+The built version of the stable modules are mirrored at:
+<a class="reference external" href="http://algoviz.org/OpenDSA/Books">http://algoviz.org/OpenDSA/Books</a>.
+The development versions of OpenDSA and JSAV are mirrored at:
+<a class="reference external" href="http://algoviz.org/OpenDSA/dev/OpenDSA">http://algoviz.org/OpenDSA/dev/OpenDSA</a> and
+<a class="reference external" href="http://algoviz.org/OpenDSA/dev/OpenDSA/JSAV">http://algoviz.org/OpenDSA/dev/OpenDSA/JSAV</a>, respectively.</p>
+</div>
+<div class="section" id="jsav">
+<h2>2.4. JSAV<a class="headerlink" href="#jsav" title="Permalink to this headline">¶</a></h2>
+<p>Visualizations are developed using the JSAV (JavaScript Algorithm
+Visualization) library.
+Documentation for the JSAV API can be found at: <a class="reference external" href="http://jsav.io/">http://jsav.io/</a></p>
+</div>
+<div class="section" id="file-structure-and-file-naming-conventions">
+<h2>2.5. File Structure and File Naming Conventions<a class="headerlink" href="#file-structure-and-file-naming-conventions" title="Permalink to this headline">¶</a></h2>
+<p>The following refers to the OpenDSA content or &#8220;client side&#8221;
+repositories (&#8220;OpenDSA&#8221; and &#8220;OpenDSA-stable&#8221;).</p>
+<p>Content materials come in the form of modules (in RST), exercises,
+AVs, etc. There are various top-level directories, as explained below
+and in more detail in the project README file
+(<a class="reference external" href="https://github.com/OpenDSA/OpenDSA/blob/master/README.md">https://github.com/OpenDSA/OpenDSA/blob/master/README.md</a>). Within the
+RST, AV, SourceCode and Exercises directories, the materials are
+subdivided into subdirectories based on topical content (such as
+Sorting).
+These content subdirectories are mirrored across all of the
+materials subtypes.
+That is, if there is a Sorting subdirectory in the
+AVs directory, there should also be one in the RST directory,
+Exercises directory and the SourceCode directory to match.
+In addition, each of the major top-level directories contains a
+subdirectory named Development.
+All content starts life in the Development subdirectory.
+Once it is completed, polished, validated,
+and had a thorough code review, Dr. Shaffer will move code out of the
+Development subdirectory to an appropriate content subdirectory.</p>
+<p>Algorithm visualizations, proficiency exercises, and related code live
+in the AV directory.</p>
+<p>Exercises built using the Khan Academy exercise infrastructure lives
+in the Exercises directory.</p>
+<p>Tutorial modules live in the RST directory, with the actual source in
+RST/source.</p>
+<p>Code examples that will be presented within the modules (such as
+Processing or Python code) lives in the SourceCode directory.</p>
+<p>Individual files are further labeled by functional type.
+Files related to AVs have their filename end in AV (such as
+insertionsortAV.js).
+Files related to proficiency exercises end in PRO.
+Files related to mini-slideshows or similar content that is
+included within a module end in CON.
+Khan Academy exercises that are multiple choice questions end in MC,
+and T/F questions end in TF.
+KA-based questions that are interactive (for example, where a user
+clicks on JSAV array elements to give an answer) end in PRO.
+The practice is to put individual KA questions in separate files, and
+often these are then aggregated to present to students as a battery of
+&#8220;summary&#8221; questions.
+Such aggregations end in Summ.</p>
+</div>
+<div class="section" id="opendsa-coding-standards">
+<h2>2.6. OpenDSA Coding Standards<a class="headerlink" href="#opendsa-coding-standards" title="Permalink to this headline">¶</a></h2>
+<p>Coding standards for OpenDSA are largely driven by validation
+tools.
+The requirements for CSS and JavaScript files are embedded in
+the validation tools and settings built into the OpenDSA Makefile.
+No code gets out of the &#8220;Development&#8221; stage and into public use until
+it follows our rules for splitting into separate HTML/CSS/JavaScript
+files and passes the validation tools with zero warnings and errors.</p>
+<p><strong>HTML Pages</strong>
+Ideally, HTML pages that are part of OpenDSA should pass the W3
+validation suite.
+An easy way to run this on your page is to install the Web
+Developer plugin (from <a class="reference external" href="http://chrispederick.com">http://chrispederick.com</a>) for your
+browser.
+This is available for both Chrome and Firefox, and gives you
+icons on your toolbar that lets you run the validator on the current
+page.
+Unfortunately, we so far have not adopted a command-line tool for
+validation of HTML pages similar to what we are using for CSS and
+JavaScript.</p>
+<p>We try to avoid JavaScript and CSS in the HTML pages (though we often
+tolerate a couple of lines of CSS for an AV that needs only minimal
+customization away from the standard lib/odsaStyle.css template).
+Our standard practice is to use <tt class="docutils literal"><span class="pre">&lt;script&gt;</span></tt> and <tt class="docutils literal"><span class="pre">&lt;link&gt;</span></tt> tags
+to call separate .js and .css files, respectively.</p>
+<p><strong>CSS Files</strong>
+We use <tt class="docutils literal"><span class="pre">csslint</span></tt> to validate css files.
+OpenDSA/Makefile contains our required csslint flags.</p>
+<p><strong>JavaScript</strong>
+We use <tt class="docutils literal"><span class="pre">eslint</span></tt> for validating JavaScript.
+OpenDSA/.eslintrc contains our official configuration file that
+defines the expected style.
+It is relatively strict.
+Developers should strive to eliminate all warnings (and of course, all
+errors).</p>
+<p><strong>JSON Files</strong>
+We use <tt class="docutils literal"><span class="pre">jsonlint</span></tt> to validate css files.</p>
+</div>
+<div class="section" id="tools">
+<h2>2.7. Tools<a class="headerlink" href="#tools" title="Permalink to this headline">¶</a></h2>
+<p>This section describes the various tools that are either required or
+might be particularly helpful for various aspects of OpenDSA
+development.</p>
+<div class="section" id="git">
+<h3>2.7.1. git<a class="headerlink" href="#git" title="Permalink to this headline">¶</a></h3>
+<p>There are several versions of git for Windows
+We recommend the version found at <a class="reference external" href="http://msysgit.github.com/">http://msysgit.github.com/</a>.
+This guide assumes that windows users are working through the Git Bash
+command window.
+When installing <tt class="docutils literal"><span class="pre">msysgit</span></tt>, you should install it at the
+level of <tt class="docutils literal"><span class="pre">C:\</span></tt>, rather than in <tt class="docutils literal"><span class="pre">C:\Program</span> <span class="pre">Files</span></tt>.
+Otherwise, you are likely to have troubles interacting with
+<tt class="docutils literal"><span class="pre">GnuWin32</span></tt> tools (for <tt class="docutils literal"><span class="pre">make</span></tt>).
+Aside from this, just accept the default configuration options.</p>
+</div>
+<div class="section" id="make">
+<h3>2.7.2. make<a class="headerlink" href="#make" title="Permalink to this headline">¶</a></h3>
+<p>GNU make for Windows can be found at
+<a class="reference external" href="http://gnuwin32.sourceforge.net/packages/make.htm">http://gnuwin32.sourceforge.net/packages/make.htm</a>.</p>
+</div>
+<div class="section" id="python">
+<h3>2.7.3. Python<a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h3>
+<p>We are using Python 2.7 (NOT 3.x).</p>
+</div>
+<div class="section" id="python-setuptools">
+<h3>2.7.4. Python setuptools<a class="headerlink" href="#python-setuptools" title="Permalink to this headline">¶</a></h3>
+<p>Python setuptools is used for installing Sphinx.
+On Linux this might come preinstalled.
+If not, run the following using the appropriate package manager for
+your distribution (on Ubuntu, it is &#8220;apt-get&#8221;):</p>
+<div class="highlight-python"><pre>sudo &lt;package_manager&gt; install python-setuptools</pre>
+</div>
+<p>On windows, see <a class="reference external" href="http://pypi.python.org/pypi/setuptools#files">http://pypi.python.org/pypi/setuptools#files</a>.
+You will need to include [PythonHome]/Scripts on your PATH system
+variable for both setuptools and sphinx.
+I had some trouble installing setuptools for the 64-bit version of
+Python 2.7.3 on Windows.
+When I tried to install setuptools, it wouldn&#8217;t recognize that a
+Python installation was available.
+This is a known problem.
+You can either re-install the 32-bit version, or look
+on the internet for the proper registry work-around.</p>
+</div>
+<div class="section" id="sphinx">
+<h3>2.7.5. sphinx<a class="headerlink" href="#sphinx" title="Permalink to this headline">¶</a></h3>
+<p>For documentation, see <a class="reference external" href="http://sphinx.pocoo.org/contents.html">http://sphinx.pocoo.org/contents.html</a>.</p>
+<p>With Python and setuptools installed, just type
+<tt class="docutils literal"><span class="pre">easy_install</span> <span class="pre">-U</span> <span class="pre">Sphinx</span></tt> at the command line.</p>
+</div>
+<div class="section" id="hieroglyph">
+<h3>2.7.6. Hieroglyph<a class="headerlink" href="#hieroglyph" title="Permalink to this headline">¶</a></h3>
+<p>Hieroglyph is only needed to compile course slides.
+You need to use version 0.5.5 (newer versions don&#8217;t work).
+To install, just type <tt class="docutils literal"><span class="pre">easy_install</span> <span class="pre">pip;</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">hieroglyph==0.5.5</span></tt>
+at the command line.</p>
+</div>
+<div class="section" id="nodejs">
+<h3>2.7.7. nodejs<a class="headerlink" href="#nodejs" title="Permalink to this headline">¶</a></h3>
+<p>We don&#8217;t use nodejs directly in our toolchain, but this is useful for
+installing several of the other tools.
+For installation instructions, see
+<a class="reference external" href="http://nodejs.org">http://nodejs.org</a> (and don&#8217;t forget to check for the 64-bit version if
+that is the OS you are running).</p>
+</div>
+<div class="section" id="eslint">
+<h3>2.7.8. eslint<a class="headerlink" href="#eslint" title="Permalink to this headline">¶</a></h3>
+<p>Once you have nodejs installed, just do:</p>
+<div class="highlight-python"><pre>npm install -g eslint</pre>
+</div>
+</div>
+<div class="section" id="csslint">
+<h3>2.7.9. csslint<a class="headerlink" href="#csslint" title="Permalink to this headline">¶</a></h3>
+<p>Once you have nodejs installed, just do:</p>
+<div class="highlight-python"><pre>npm install -g csslint</pre>
+</div>
+<p>Note: To be able to lint check either JavaScript or CSS, you need to
+put it in separate files from your HTML code.</p>
+</div>
+<div class="section" id="jsonlint">
+<h3>2.7.10. jsonlint<a class="headerlink" href="#jsonlint" title="Permalink to this headline">¶</a></h3>
+<p>Once you have nodejs installed, just do:</p>
+<div class="highlight-python"><pre>npm install -g jsonlint</pre>
+</div>
+</div>
+<div class="section" id="uglifyjs">
+<h3>2.7.11. uglifyjs<a class="headerlink" href="#uglifyjs" title="Permalink to this headline">¶</a></h3>
+<p>We use this for minimizing JavaScript code.
+To install on Windows:</p>
+<div class="highlight-python"><pre>npm install -g uglify-js</pre>
+</div>
+<p>On Linux, you more likely will need to use the package manager.
+For example, on Ubuntu:</p>
+<div class="highlight-python"><pre>apt-get install uglifyjs</pre>
+</div>
+</div>
+<div class="section" id="some-other-things-requirements-txt">
+<h3>2.7.12. Some other things: requirements.txt<a class="headerlink" href="#some-other-things-requirements-txt" title="Permalink to this headline">¶</a></h3>
+<p>(This needs more documentation.)
+From the top level of the OpenDSA directory, do the following:</p>
+<blockquote>
+<div>pip install -r requirements.txt</div></blockquote>
+</div>
+<div class="section" id="notes-for-windows">
+<h3>2.7.13. Notes for Windows<a class="headerlink" href="#notes-for-windows" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>You will need to be sure that Git, Python, and make are on your
+path.
+On Windows 7, you edit your path variable by right-clicking your
+Computer icon, clicking on &#8220;Advanced system settings&#8221; and then
+&#8220;Environment Variables&#8221;.</li>
+<li>If you have a 64-bit operating system, be aware that the various GNU
+tools will not work properly if they see &#8220;Program Files (x86)&#8221; on the
+system path variable. You might need to install these tools elsewhere,
+and/or reorder things on the path so that the GNU tool appears before
+anything referencing &#8220;Program Files (x86)&#8221;.</li>
+<li>We have had a lot of trouble getting the Git Bash shell to work
+properly when running GnuWin32 tools like &#8220;make&#8221;. One solution is to
+make sure that Git is not installed to a directory whose name has
+spaces in it (in particular, the standard &#8220;Program Files&#8221; directory
+that is the default). Instead, we find it most reliable to install Git
+directly into C:/.</li>
+<li>Beware if you have Cygwin installed on your Windows machine: There
+might be path conflicts between Cygwin on the one hand, and the Git
+Bash shell and the GNU tools on the other.
+If you insist on trying to use both on your system, you are on your
+own.
+Otherwise you have two reasonable options:<ul>
+<li>If you don&#8217;t use Cygwin much, then delete it entirely from your
+system.</li>
+<li>Or stick completely with using Cygwin, by running Git and your
+other tools from within it instead of the Git command shell.</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="web-programming-resources">
+<h2>2.8. Web Programming Resources<a class="headerlink" href="#web-programming-resources" title="Permalink to this headline">¶</a></h2>
+<p>Since we do so much webpage development and programming in JavaScript,
+newcomers will need good resources.
+One well-respected site is
+<a class="reference external" href="https://developer.mozilla.org/en/JavaScript">https://developer.mozilla.org/en/JavaScript</a>.
+Beware of doing a search engine query and ending up at w3schools,
+which is not so well respected these days.
+If you are at Virginia Tech (or if your school supports this), a
+wonderful source of documentation is the Safari database
+(<a class="reference external" href="http://proquest.safaribooksonline.com/?uicode=viva">http://proquest.safaribooksonline.com/?uicode=viva</a>), which contains a
+huge collection of technical books including the entire O&#8217;Reilly
+catalog.</p>
+</div>
+<div class="section" id="simple-web-server">
+<h2>2.9. Simple Web Server<a class="headerlink" href="#simple-web-server" title="Permalink to this headline">¶</a></h2>
+<p>Once you are able to compile a book or create an exercise on your
+computer, you will probably want to look at it in your web browser.
+Unfortunately, much of the infrastructure only works when run through
+a web server.
+Since most people do not normally run a web server (like Apache) on
+their own computer, will need something simple that you can use
+instead.
+At the top level of the OpenDSA repository there is a script named
+<tt class="docutils literal"><span class="pre">WebServer</span></tt> that you can use.
+Just open a console window for the web server, go to the top level of
+your copy of the OpenDSA repository, and run the script (on
+Linux or Mac) or paste the Python command into the console (on
+Windows) to start up the simple Python web server.
+Then, open your browser to the URL listed in the comments of the
+<tt class="docutils literal"><span class="pre">WebServer</span></tt> script file.
+This should show you the top level directory structure for the OpenDSA
+repository.</p>
+</div>
+<div class="section" id="debugging">
+<h2>2.10. Debugging<a class="headerlink" href="#debugging" title="Permalink to this headline">¶</a></h2>
+<p>When you right-click a web page in Chrome
+(or Firefox when Firebug is installed), you get a popup
+menu whose bottom item is &#8220;Inspect Element&#8221;.
+This brings up the Chrome Developer Tools panel (in Chrome) or Firebug
+(in Firefox).
+This is especially helpful for inspecting the various DOM
+elements on your web page.
+A big help here is seeing the CSS styles in
+effect for any specified DOM element. For details on how to view and
+even edit on-the-fly your CSS settings in force (for example, to see
+what you should change), see
+<a class="reference external" href="https://developers.google.com/chrome-developer-tools/docs/elements-styles">https://developers.google.com/chrome-developer-tools/docs/elements-styles</a>.</p>
+<p>While Chrome has built-in developer tools (and a lite version of
+Firebug), we highly recommend using the full version of Firebug,
+available for Firefox, for JavaScript debugging.
+More information about Firebug&#8217;s features can be found here:
+<a class="reference external" href="https://getfirebug.com/">https://getfirebug.com/</a>.</p>
+<p>The following are highlights for some debugger features and how they
+can be used.</p>
+<ul class="simple">
+<li>Console - an interactive JavaScript console which allows:<ul>
+<li>Print statments for debugging and error logging.</li>
+<li>Testing JavaScript statements (including access to variables and
+functions defined on the current page).</li>
+<li>Viewing network requests - GET and POST messages appear in the
+console allowing the user to see what data was sent and the server&#8217;s
+response.</li>
+</ul>
+</li>
+<li>Inspect - allows the user to select an element on a page, view the
+HTML for it and modify the element&#8217;s CSS in real time (helpful for
+rapid GUI prototyping).</li>
+<li>Debugger - a full featured JavaScript debugger (useful for debugging
+or simply following code execution).</li>
+</ul>
+</div>
+<div class="section" id="setting-up-a-testing-environment">
+<h2>2.11. Setting up a Testing Environment<a class="headerlink" href="#setting-up-a-testing-environment" title="Permalink to this headline">¶</a></h2>
+<p>To compile your own books for testing purposes requires rather a lot
+of infrastruture.
+It also involves running multiple servers: at least one for the LTI
+provider and one for the OpenDSA scoring server.
+To make this relatively easy for most developers, we have created a
+package to deliver a complete &#8220;OpenDSA in a box&#8221; on a virtual
+machine.
+Complete instructions can be found at:
+<a class="reference external" href="https://github.com/OpenDSA/OpenDSA-DevStack">https://github.com/OpenDSA/OpenDSA-DevStack</a>.</p>
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        «&#160;&#160;<a href="Introduction.html">1. Introduction</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="InstructorTools.html">3. Instructor&#8217;s Tools</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer">
+        &copy; Copyright 2012-2015 by OpenDSA Project Contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.
+    </div>
+  </body>
+</html>

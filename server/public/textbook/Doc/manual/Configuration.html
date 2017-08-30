@@ -1,0 +1,717 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>4. Compiling Book Instances: OpenDSA Configuration &mdash; OpenDSA System Documentation</title>
+    
+    <link rel="stylesheet" href="_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/print.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.4.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/theme_extras.js"></script>
+    <link rel="top" title="OpenDSA System Documentation" href="index.html" />
+    <link rel="next" title="5. Module Authoring" href="ModAuthor.html" />
+    <link rel="prev" title="3. Instructor’s Tools" href="InstructorTools.html" /> 
+  </head>
+  <body>
+      <div class="header"><img class="rightlogo" src="_static/AlgoVizLogo.gif" alt="Logo"/><h1 class="heading"><a href="index.html">
+          <span>OpenDSA System Documentation</span></a></h1>
+        <h2 class="heading"><span>4. Compiling Book Instances: OpenDSA Configuration</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        «&#160;&#160;<a href="InstructorTools.html">3. Instructor&#8217;s Tools</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="ModAuthor.html">5. Module Authoring</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="compiling-book-instances-opendsa-configuration">
+<span id="configuration"></span><h1>4. Compiling Book Instances: OpenDSA Configuration<a class="headerlink" href="#compiling-book-instances-opendsa-configuration" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>4.1. Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>A given OpenDSA eTextbook is called a &#8220;book instance&#8221;.
+The contents of a book instance is defined by a configuration file,
+the detailed syntax for which is defined in this section.
+In practice, it is easiest to start by copying an existing
+configuration file, and then changing it to fit your needs.
+Configuration files are JSON files, normally stored in OpenDSA/config.
+From the top level of an OpenDSA repository, you can compile a book
+instance (given the existance of a configuration file named
+<tt class="docutils literal"><span class="pre">config/foo.json</span></tt>) by issuing this command:</p>
+<p><tt class="docutils literal"><span class="pre">python</span> <span class="pre">tools/configure.py</span> <span class="pre">config/foo.json</span></tt></p>
+<p>Separate from book instances is the concept of a &#8220;course instance&#8221;.
+Depending on the course software (typically an LMS such as Canvas or
+Moodle) that you are using, you will likely need to compile a special
+instance of a given OpenDSA book instance for each course that intends
+to use it.
+OpenDSA course instances are managed by a separate configuration file.
+The convention is that if the book configuration file is <tt class="docutils literal"><span class="pre">foo.json</span></tt>,
+then the corresponding course configuration file(s) will be in in
+<tt class="docutils literal"><span class="pre">fooXX_LMSconf.json</span></tt> where XX allows you to distinguish between
+the various courses that use the book.</p>
+<p>Details about how to set up a course is in
+<a class="reference internal" href="#confcourse"><em>Configuring Courses</em></a> below.</p>
+</div>
+<div class="section" id="motivation-for-the-configuration-system">
+<h2>4.2. Motivation for the Configuration System<a class="headerlink" href="#motivation-for-the-configuration-system" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Allows content to be environment-independent<ul>
+<li>Configuration file contains all environment-dependent settings
+such as paths and target URLs</li>
+<li>Example: If developers want to point their front-end code at
+different backend systems, they simply make the change in their
+own config file.  They can share all OpenDSA content, but when
+they build the book, it will be built using their personalized
+settings</li>
+</ul>
+</li>
+<li>Allows easy replication<ul>
+<li>Collects all settings and preferences required to configure an
+instance of OpenDSA in a single, portable file that can be easily
+shared among instructors.</li>
+<li>Once a configuration has been created, instructors can make
+identical copies without going through the configuration process</li>
+</ul>
+</li>
+<li>Allows fine grain control<ul>
+<li>Existing configuration files provide sensible defaults, but allow
+instructors to control aspects such as how many points a specific
+exercise is worth or whether it is required for module proficiency</li>
+</ul>
+</li>
+<li>Configuration files will eventually be generated by a GUI front-end,
+but for now we create them by hand (tedious, and the motivation for
+a GUI tool is rapidly moving to the front burner).</li>
+</ul>
+</div>
+<div class="section" id="branches">
+<h2>4.3. Branches<a class="headerlink" href="#branches" title="Permalink to this headline">¶</a></h2>
+<p>We are temporarily supporting two versions of OpenDSA, as represented
+by the branches &#8220;master&#8221; and &#8220;NewKA&#8221;.
+The &#8220;master&#8221; branch currently is intended for generating books as
+used in Canvas, while &#8220;NewKA&#8221; supports &#8220;old style&#8221; book instances
+directly accessible via HTML files.
+Only the master branch uses the server configuration files described
+at the end of this section.
+There are a few fields of the configuration process that appear in
+NewKA book configuration files, that are moved to the server
+configuration file in the master branch.</p>
+</div>
+<div class="section" id="configuration-process">
+<h2>4.4. Configuration Process<a class="headerlink" href="#configuration-process" title="Permalink to this headline">¶</a></h2>
+<p>A comment at the beginning of configure.py gives some information
+information about how the script works.
+Generally, those who want to compile a book instance do not need to
+worry about those details.</p>
+<p><strong>Note</strong>: The OpenDSA root directory must be web-accessible as there
+are many supplemental directories and files (AV/, Exercises/, lib/,
+SourceCode/, etc) which must be referenced.  These files are identical
+for all books and not copying them reduces the footprint of each
+book.</p>
+<div class="section" id="module-and-exercise-removal">
+<h3>4.4.1. Module and Exercise Removal<a class="headerlink" href="#module-and-exercise-removal" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Only the modules listed in the configuration file will be included.
+To remove a module from the book, simply remove the module object
+from the configuration file.</li>
+<li>To remove a section from a module, set the &#8220;showsection&#8221; attribute to
+<tt class="docutils literal"><span class="pre">false</span></tt>.
+Exercises are normally the sole contents of some section.
+Note that Exercises that do not appear in the configuration file will
+still be included in the book using the default configuration
+options.  During compilation, a list will be printed of any
+exercises which were encountered in the modules but not present in
+the configuration file.</li>
+</ul>
+</div>
+<div class="section" id="book-name">
+<h3>4.4.2. Book Name<a class="headerlink" href="#book-name" title="Permalink to this headline">¶</a></h3>
+<p>The name of the configuration file will often be used in some way by the
+LMS that manages the course.
+For example, the name of the configuration file might be the Course ID
+in the LMS.</p>
+</div>
+</div>
+<div class="section" id="future-features">
+<h2>4.5. Future Features<a class="headerlink" href="#future-features" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>GUI editor/interface for editing configuration files.</li>
+<li>Merge the &#8220;master&#8221; and &#8220;NewKA&#8221; branches, with support for both
+Canvas-style and &#8220;HTML page&#8221; book instances, controlled by
+command-line parameters on the configuration script.</li>
+</ul>
+</div>
+<div class="section" id="format">
+<h2>4.6. Format<a class="headerlink" href="#format" title="Permalink to this headline">¶</a></h2>
+<p>OpenDSA configuration files are stored using JSON.
+Here are the field definitions.
+All are required unless otherwise specified.
+<strong>Note</strong>: The fields &#8220;title&#8221;, &#8220;exercise_server&#8221;, &#8220;logging_server&#8221;, and
+&#8220;score_server&#8221; appear in the book configuration file only for the
+NewKA branch.
+These fields are moved to the server configuration file in the master
+branch.</p>
+<ul>
+<li><p class="first"><strong>title</strong> - The title of the OpenDSA textbook.</p>
+</li>
+<li><p class="first"><strong>build_dir</strong> - (optional) The directory where the configured book
+directory will be created, defaults to &#8216;Books&#8217; if omitted</p>
+<ul class="simple">
+<li>A new directory, named after the configuration file, will be
+created at this location and serve as the output directory for the
+configuration process.  Files required to compile the book will be
+copied / written to the output directory, including modified
+version of the source RST files<ul>
+<li>Example: Assume &#8220;build_dir&#8221;: &#8220;Books&#8221; and the name of the
+configuration file used is &#8220;CS3114.json&#8221;, the output directory
+would be &#8220;~OpenDSA/Books/CS3114/&#8221;</li>
+</ul>
+</li>
+<li>The compiled textbook will appear in <tt class="docutils literal"><span class="pre">[build_dir]/[book</span> <span class="pre">name]/html</span></tt></li>
+<li>This directory must be web accessible</li>
+</ul>
+</li>
+<li><p class="first"><strong>code_dir</strong> (optional) - Specifies a directory that contains
+another directory as specified by <tt class="docutils literal"><span class="pre">code_lang</span></tt> (see below).
+Defaults to <tt class="docutils literal"><span class="pre">SourceCode</span></tt> if omitted.</p>
+<ul class="simple">
+<li>Ex: Using <tt class="docutils literal"><span class="pre">&quot;code_dir&quot;:</span> <span class="pre">&quot;SourceCode/&quot;</span></tt>, and assuming that the
+defined language directory is <tt class="docutils literal"><span class="pre">Python</span></tt> then the configuration
+process would look for example Python source code in
+<tt class="docutils literal"><span class="pre">~OpenDSA/SourceCode/Python</span></tt>.</li>
+</ul>
+</li>
+<li><p class="first"><strong>code_lang</strong> - A dictionary where each key is the name of a
+programming language (supported by Pygments and matching a directory
+name in <tt class="docutils literal"><span class="pre">code_dir</span></tt>), and each value is a dictionary of language
+options.
+Language options are:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">ext</span></tt> for a list of file extensions.</li>
+<li><tt class="docutils literal"><span class="pre">label</span></tt> for the text that will be displayed at the
+header of the code snippet tab.</li>
+<li><tt class="docutils literal"><span class="pre">lang</span></tt> for the name of the programming language (supported by
+Pygments).</li>
+</ul>
+<p>The order in which the languages and extensions are provided
+determines their order of precedence in cases where only one display
+code is to be selected.</p>
+<ul>
+<li><p class="first">Example:</p>
+<div class="highlight-python"><pre>"code_lang": {
+   "C++": {"ext": ["cpp","h"],"label":"C++","lang":"C++"}
+   "Java": {"ext":["java"], "label":"Java", "lang":"java"},
+   "Processing": {"ext":["pde"], "label":"Processing","lang":"java"}
+}</pre>
+</div>
+</li>
+<li><p class="first">In this example, assuming that <tt class="docutils literal"><span class="pre">code_dir</span></tt> is <tt class="docutils literal"><span class="pre">SourceCode/</span></tt>,
+the system would search for <tt class="docutils literal"><span class="pre">.cpp</span></tt> files,
+followed by <tt class="docutils literal"><span class="pre">.h</span></tt> files in <tt class="docutils literal"><span class="pre">~OpenDSA/SourceCode/C++/</span></tt>,
+then <tt class="docutils literal"><span class="pre">.java</span></tt> files in <tt class="docutils literal"><span class="pre">~OpenDSA/SourceCode/Java/</span></tt>,
+and finally <tt class="docutils literal"><span class="pre">.pde</span></tt> files in <tt class="docutils literal"><span class="pre">~OpenDSA/SourceCode/Processing/</span></tt>.</p>
+</li>
+<li><p class="first">There is not actually a need for the &#8220;code&#8221; language files to be a
+real programming language. For example, it is plausible to use a
+&#8220;programming language&#8221; called <tt class="docutils literal"><span class="pre">Pseudo</span></tt> with file suffix <tt class="docutils literal"><span class="pre">.txt</span></tt>.
+However, Pygments might not do well with colorizing the result.</p>
+</li>
+</ul>
+</li>
+<li><p class="first"><strong>tabbed_codeinc</strong> (optional) - A boolean that controls whether or
+not code is displayed in a tabbed interface.
+If true, it will display the specified code in each of the languages
+specified in <tt class="docutils literal"><span class="pre">code_lang</span></tt> (if the code exists) in a tabbed
+container.
+If false, it will display the code in a single language (the first
+language for which the code exists with the order of precedence
+determined by the order specified in <tt class="docutils literal"><span class="pre">code_lang</span></tt>).
+Defaults to <tt class="docutils literal"><span class="pre">true</span></tt> if omitted.</p>
+</li>
+<li><p class="first"><strong>lang</strong> (optional) - Specifies the native language of the book
+using the official ISO 639-1 or 639-2 standard abbreviation,
+defaults to <tt class="docutils literal"><span class="pre">en</span></tt> if omitted.
+This is used to control where RST source files are located, within
+<tt class="docutils literal"><span class="pre">~OpenDSA/RST/[lang]</span></tt>.
+Any RST files not found in the indicated subdirectory will then be
+located in <tt class="docutils literal"><span class="pre">~OpenDSA/RST/en</span></tt>.</p>
+</li>
+<li><p class="first"><strong>module_origin</strong> - The protocol and domain where the module files are hosted</p>
+<ul class="simple">
+<li>Used by embedded exercises as the target of HTML5 post messages
+which send information to the parent (module) page</li>
+<li>Ex: &#8220;module_origin&#8221;: &#8220;<a class="reference external" href="http://algoviz.org">http://algoviz.org</a>&#8221;,</li>
+</ul>
+</li>
+<li><p class="first"><strong>av_root_dir</strong> - (optional) Allows the user to change the default
+location where the <tt class="docutils literal"><span class="pre">AV/</span></tt> directory can be found.
+Defaults to <tt class="docutils literal"><span class="pre">~OpenDSA/</span></tt> if omitted</p>
+<ul class="simple">
+<li>This can point to another location on the same machine that hosts
+the module files (as long as it is web-accessible), or it can point
+to a remote location (this feature not supported yet).</li>
+<li><strong>Note</strong>: This should not point to the AV/ directory itself, but
+instead should be the directory containing the AV/ directory (to
+avoid breaking the relative paths in the RST files).</li>
+<li>If this attribute references a remote location, &#8216;av_origin&#8217; must
+be present and the value must be a prefix of the remote location.</li>
+<li>Ex: &#8220;av_root_dir&#8221;: &#8220;/home/algoviz/OpenDSA/test/&#8221;,</li>
+<li>Ex: &#8220;av_root_dir&#8221;: &#8220;<a class="reference external" href="http://algoviz.org/OpenDSA/">http://algoviz.org/OpenDSA/</a>&#8221;, // This directory contains an AV/ directory</li>
+</ul>
+</li>
+<li><p class="first"><strong>av_origin</strong> - (normally optional, but required if <strong>av_root_dir</strong>
+is defined)
+The protocol and domain where the AV files are hosted, defaults to
+match <tt class="docutils literal"><span class="pre">module_origin</span></tt> if omitted.</p>
+<ul class="simple">
+<li>Used on module pages to allow HTML5 post messages from this
+origin, allows embedded AVs to communicate with the parent module
+page.</li>
+<li>Ex: &#8220;av_origin&#8221;: &#8220;<a class="reference external" href="http://algoviz.org">http://algoviz.org</a>&#8221;,</li>
+</ul>
+</li>
+<li><p class="first"><strong>glob_mod_options</strong> - (optional) An object containing options to be
+applied to every module in the book.
+Can be overridden by module-specific options.</p>
+</li>
+<li><p class="first"><strong>glob_exer_options</strong> - (optional) An object containing options to
+be applied to every exercise in the book. Can be used to control the
+behavior of the exercise. Can be overridden by exercise-specific
+options.</p>
+</li>
+<li><p class="first"><strong>exercises_root_dir</strong> - (optional) Allows the user to change the
+default location where the <tt class="docutils literal"><span class="pre">Exercises/</span></tt> directory will be found.
+Defaults to <tt class="docutils literal"><span class="pre">~OpenDSA/</span></tt> if omitted.</p>
+<ul class="simple">
+<li>This can point to another location on the same machine that hosts
+the module files (as long as it is web-accessible) or it can point
+to a remote location (not fully supported yet).</li>
+<li><strong>Note</strong>: This should not point to the <tt class="docutils literal"><span class="pre">Exercises/</span></tt> directory
+itself, but rather the directory containing the <tt class="docutils literal"><span class="pre">Exercises/</span></tt>
+directory (to avoid breaking the relative paths in the RST files)</li>
+<li>If this attribute references a remote location, <tt class="docutils literal"><span class="pre">exercise_origin</span></tt>
+must be present and the value must be a prefix of the remote
+location</li>
+<li>If this attribute is not present, <tt class="docutils literal"><span class="pre">~OpenDSA/</span></tt> will be used as
+the default.</li>
+<li>Ex: &#8220;exercises_root_dir&#8221;: &#8220;/home/algoviz/OpenDSA/test/&#8221;,</li>
+<li>Ex: &#8220;exercises_root_dir&#8221;: &#8220;<a class="reference external" href="http://algoviz.org/OpenDSA/">http://algoviz.org/OpenDSA/</a>&#8221;, // This
+directory contains an Exercises/ directory</li>
+</ul>
+</li>
+<li><p class="first"><strong>exercise_origin</strong> - (optional, unless <strong>exercises_root_dir</strong> is
+defined) The protocol and domain where the Exercises files are
+hosted, defaults to match <tt class="docutils literal"><span class="pre">module_origin</span></tt> if omitted.</p>
+<ul class="simple">
+<li>Used on module pages to allow HTML5 post messages from this
+origin, allows embedded exercises to communicate with the parent
+module page.</li>
+<li>Ex: &#8220;exercise_origin&#8221;: &#8220;<a class="reference external" href="http://algoviz.org">http://algoviz.org</a>&#8221;,</li>
+</ul>
+</li>
+<li><p class="first"><strong>exercise_server</strong> - (optional) The protocol and domain (and port
+number, if different than the protocol default) of the exercise
+server that provides verification for the programming exercises.
+Defaults to an empty string (exercise server disabled) if omitted.</p>
+<ul class="simple">
+<li>Trailing &#8216;/&#8217; is optional</li>
+<li>Ex: &#8220;exercise_server&#8221;: &#8220;<a class="reference external" href="https://opendsa.cs.vt.edu/">https://opendsa.cs.vt.edu/</a>&#8221;,</li>
+</ul>
+</li>
+<li><p class="first"><strong>logging_server</strong> - (optional) The protocol and domain (and port
+number, if different than the protocol default) of the logging
+server that supports interaction data collection.
+Defaults to an empty string (logging server disabled) if omitted.</p>
+<ul class="simple">
+<li>Trailing &#8216;/&#8217; is optional</li>
+<li>Ex: &#8220;logging_server&#8221;: &#8220;<a class="reference external" href="https://opendsa.cs.vt.edu/">https://opendsa.cs.vt.edu/</a>&#8221;,</li>
+</ul>
+</li>
+<li><p class="first"><strong>score_server</strong> - (optional) The protocol and domain (and port
+number, if different than the protocol default) of the score server
+that supports centralized user score collection.
+Defaults to an empty string (score server disabled) if omitted.</p>
+<ul class="simple">
+<li>Trailing &#8216;/&#8217; is optional</li>
+<li>Ex: &#8220;score_server&#8221;: &#8220;<a class="reference external" href="https://opendsa.cs.vt.edu/">https://opendsa.cs.vt.edu/</a>&#8221;,</li>
+</ul>
+</li>
+<li><p class="first"><strong>build_JSAV</strong> - (optional) A boolean controlling whether or not the
+JSAV library should be rebuilt whenever the book is compiled.
+Defaults to <tt class="docutils literal"><span class="pre">false</span></tt> if omitted.</p>
+<ul class="simple">
+<li>This value should normally set to <tt class="docutils literal"><span class="pre">false</span></tt> for development.</li>
+<li>Instructors may wish to set this to true for production
+environments when configuration is run infrequently and JSAV is
+likely to have changed since the last time configuration occurred.</li>
+</ul>
+</li>
+<li><p class="first"><strong>build_cmap</strong> - (optional) A boolean controlling wether or not the
+glossary terms concept map should be diplayed.
+Defaults to <tt class="docutils literal"><span class="pre">false</span></tt>.</p>
+</li>
+<li><p class="first"><strong>allow_anonymous_credit</strong> - (optional) A boolean controlling
+whether credit for exercises completed anonymously (without logging
+in) will be transferred to the next user to log in.
+Defaults to <tt class="docutils literal"><span class="pre">true</span></tt> if omitted.
+<strong>Note:</strong> Obsolete in the context of LMS support for scoring, since
+the LMS will require login for access to the OpenDSA content.</p>
+</li>
+<li><p class="first"><strong>req_full_ss</strong> - (optional) A boolean controlling whether students
+must view every step of a slideshow in order to obtain credit.
+Defaults to <tt class="docutils literal"><span class="pre">true</span></tt> if omitted.</p>
+</li>
+<li><p class="first"><strong>start_chap_num</strong> - (optional) Specifies at which number to start
+numbering chapters.
+Defaults to 0 if omitted.</p>
+</li>
+<li><p class="first"><strong>suppress_todo</strong> - (optional) A boolean controlling whether or not
+TODO directives are removed from the RST source files.
+Defaults to <tt class="docutils literal"><span class="pre">false</span></tt> if omitted.</p>
+<ul class="simple">
+<li><strong>Note</strong>: When changing from <tt class="docutils literal"><span class="pre">false</span></tt> to <tt class="docutils literal"><span class="pre">true</span></tt>, you must run
+<tt class="docutils literal"><span class="pre">make</span> <span class="pre">clean</span></tt> or otherwise remove previously compiled book files
+so as to completely remove any references to <tt class="docutils literal"><span class="pre">ToDo</span></tt>.</li>
+</ul>
+</li>
+<li><p class="first"><strong>tag</strong> - (optional) A string containing a semi-colon delimited
+list of tags.
+This directs Sphinx to include material from RST <tt class="docutils literal"><span class="pre">only</span></tt> directives
+with the matching tag(s).
+This is useful for relatively fine-grain control over whether
+material will be included in a book instance.
+For example, if you want to have multiple paragraphs each with a
+programming language-dependent discussion, with only the appropriate
+paragraph for the language being used for this book instance
+actually appearing to the reader.
+Any material within an <tt class="docutils literal"><span class="pre">only</span></tt> block that does <strong>not</strong>
+have a matching <tt class="docutils literal"><span class="pre">tag</span></tt> in the config file will be left out.</p>
+</li>
+<li><p class="first"><strong>assumes</strong> - (optional) A string containing a semi-colon delimited
+list of topics that the book assumes students are familiar with.
+This allows for control over warnings about missing prerequisite
+modules during the build process.</p>
+</li>
+<li><p class="first"><strong>chapters</strong> - A hierarchy of chapters, modules, and sections.
+This makes up the vast majority of most configuration files.</p>
+<ul class="simple">
+<li>Each key in &#8220;chapters&#8221; represents a chapter name.
+A module object is one whose key matches the name of an
+RST file in the <tt class="docutils literal"><span class="pre">~OpenDSA/RST/[lang]/</span></tt> directory, and which
+contains the key &#8220;sections&#8221;.</li>
+<li><strong>hidden</strong> - This is an optional field to signal the preprocessor
+to not display the content of the chapter in the TOC. The
+configuration script will add the new directive
+<tt class="docutils literal"><span class="pre">odsatoctree</span></tt>.
+The flagged chapter entries in the TOC will be
+of class <tt class="docutils literal"><span class="pre">hide-from-toc</span></tt>, and will be removed by a CSS rule in
+odsaMOD.css file.</li>
+<li><strong>Modules</strong><ul>
+<li>The key relating to each module object must correspond to a
+path to an RST file found in ~OpenDSA/RST/[lang]/.</li>
+<li><strong>long_name</strong> - A long form, human-readable name used to
+identify the module.</li>
+<li><strong>dispModComp</strong> - (optional) A flag that, if set to &#8220;true&#8221;, will
+force the &#8220;Module Complete&#8221; message to appear even if the module
+contains no required exercises.
+If set to &#8220;false&#8221;, the &#8220;Module Complete&#8221; message will not appear,
+even if the module DOES contain required exercises.</li>
+<li><strong>mod_options</strong> - (optional) overrides <tt class="docutils literal"><span class="pre">glob_mod_options</span></tt>,
+which allows modules to be configured independently from one
+another.
+Options that should be stored in <tt class="docutils literal"><span class="pre">JSAV_OPTIONS</span></tt> should be
+prepended with <tt class="docutils literal"><span class="pre">JOP-</span></tt> and options that should be stored in
+<tt class="docutils literal"><span class="pre">JSAV_EXERCISE_OPTIONS</span></tt> should be prepended with <tt class="docutils literal"><span class="pre">JXOP-</span></tt>.
+(This can be used to override the defaults set in
+<tt class="docutils literal"><span class="pre">odsaUtils.js</span></tt>).
+All other options will be made directly available to modules in
+the form of a parameters object created automatically by the
+client-side framework (specifically, when <tt class="docutils literal"><span class="pre">parseURLParams()</span></tt> is
+called in <tt class="docutils literal"><span class="pre">odsaUtils.js</span></tt>).</li>
+<li><strong>sections</strong> - A collection of section objects that define the
+sections that make up a module.
+The <tt class="docutils literal"><span class="pre">sections</span></tt> object should contain keys that match the
+titles of the corresponding sections in the RST file.
+Some modules contain no sections, in which case this field
+should be included with an empty list.<ul>
+<li>To remove the section completely, provide the field
+<tt class="docutils literal"><span class="pre">showsection</span></tt> and set it to <tt class="docutils literal"><span class="pre">false</span></tt>.</li>
+<li>All options provided within a section object (with the
+exception of <tt class="docutils literal"><span class="pre">remove</span></tt>) are appended to the directive, please
+see the <a class="reference internal" href="Extensions.html#odsaextensions"><em>Extensions</em></a> section for a list
+of supported arguments.</li>
+<li>A section may contain a single exercise descriptor, as
+follows.<ul>
+<li><strong>exer_options</strong> - (optional) An object containing
+exercise-specific configuration options for JSAV.
+Can be used to override the options set using
+<tt class="docutils literal"><span class="pre">glob_exer_options</span></tt>.
+Options that should be stored in <tt class="docutils literal"><span class="pre">JSAV_OPTIONS</span></tt> should be
+prepended with <tt class="docutils literal"><span class="pre">JOP-</span></tt> and options that should be stored in
+<tt class="docutils literal"><span class="pre">JSAV_EXERCISE_OPTIONS</span></tt> should be prepended with
+<tt class="docutils literal"><span class="pre">JXOP-</span></tt>.
+(This allows overriding the defaults set in
+<tt class="docutils literal"><span class="pre">odsaUtils.js</span></tt>.)
+All other options will be made directly available to
+exercises in the form of a parameters object created
+automatically by the client-side framework (specifically
+when <tt class="docutils literal"><span class="pre">parseURLParams()</span></tt> is called in <tt class="docutils literal"><span class="pre">odsaUtils.js</span></tt>).</li>
+<li><strong>long_name</strong> - (optional) A long form, human-readable name
+used to identify the exercise. Defaults to short
+exercise name if omitted.</li>
+<li><strong>points</strong> - (optional) The number of points the exercise is
+worth.
+Defaults to <tt class="docutils literal"><span class="pre">0</span></tt> if omitted.</li>
+<li><strong>required</strong> - (optional) Whether the exercise is required
+for module proficiency.
+Defaults to <tt class="docutils literal"><span class="pre">false</span></tt> if omitted.</li>
+<li><strong>threshold</strong> - (optional) The percentage that a user needs
+to score on the exercise to obtain proficiency.
+Defaults to 100% (1 on a 0-1 scale) if omitted.</li>
+</ul>
+</li>
+<li>JSAV-based diagrams do not need to be listed</li>
+</ul>
+</li>
+<li><strong>codeinclude</strong> (optional) - An object that maps the path from a
+codeinclude to a specific language that should be used for that
+code.
+This allows control of individual code snippets, overriding the
+<tt class="docutils literal"><span class="pre">code_lang</span></tt> field.<ul>
+<li>Ex: <tt class="docutils literal"><span class="pre">&quot;codeinclude&quot;:</span> <span class="pre">{&quot;Sorting/Mergesort&quot;:</span> <span class="pre">&quot;C++&quot;}</span></tt> would set
+C++ as the language for the codeinclude &#8220;Sorting/Mergesort&#8221;
+within the current module.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="configuring-exercises">
+<h2>4.7. Configuring Exercises<a class="headerlink" href="#configuring-exercises" title="Permalink to this headline">¶</a></h2>
+<p>The most important concern when configuring proficiency exercises is
+the scoring option to be used.
+JSAV-based proficiency exercises have a number of possible grading
+methods:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">atend</span></tt>: Scores are only shown at the end of the exercise.</li>
+<li><tt class="docutils literal"><span class="pre">continuous:undo</span></tt>: Mistakes are undone, the student will lose that
+point but have to repeat the step.</li>
+<li><tt class="docutils literal"><span class="pre">continuous:fix</span></tt>: On a mistake, the step is corrected, the student
+loses that point, and then is ready to attempt the next step. This
+mode requires that the exercise have the capability to fix the
+step.
+If it does not, this grading mode will default to
+<tt class="docutils literal"><span class="pre">continuous:undo</span></tt>.</li>
+</ul>
+<p>All proficiency exercises can be controlled through URL
+parameters.
+What the configuration file actualy does by setting
+<tt class="docutils literal"><span class="pre">exer_options</span></tt> is specify what should be in the URL parameters
+that are sent to the exercise by the OpenDSA module page.
+Here is an example for configuring an exercise:</p>
+<div class="highlight-python"><pre>"shellsortPRO": {
+  "long_name": "Shellsort Proficiency Exercise",
+  "required": true,
+  "points": 2.0,
+  "threshold": 0.9,
+  "exer_options": {
+    "JXOP-feedback": "continuous",
+    "JXOP-fixmode": "fix"
+  }
+},</pre>
+</div>
+<p>This configuration will affect the configuration of an entity called
+<tt class="docutils literal"><span class="pre">shellsortPRO</span></tt> (presumeably defined by an <tt class="docutils literal"><span class="pre">..avembed</span></tt> directive in
+the corresponding OpenDSA module).
+It is scored (as indicated by setting the <tt class="docutils literal"><span class="pre">required</span></tt> field to <tt class="docutils literal"><span class="pre">true</span></tt>),
+and is worth 2.0 points of credit once the user reaches &#8220;proficiency&#8221;.
+To reach &#8220;proficiency&#8221; requires correctly achieving 90% of the
+possible steps on some attempt at the exercise (as defined by
+<tt class="docutils literal"><span class="pre">threshold</span></tt>).
+The exercise is instructed to use the <tt class="docutils literal"><span class="pre">continuous:fix</span></tt> mode of
+scoring.</p>
+<p>In addition to the standard <tt class="docutils literal"><span class="pre">JXOP-feedback</span></tt> and <tt class="docutils literal"><span class="pre">JXOP-fixmode</span></tt>
+parameters, a given AV or exercise might have ad hoc parameter
+settings that it can accept via URL parameter.
+Examples might be algorithm variations or initial data input values.
+Those would have to be defined by the exercise itself.
+These (along with the standard grading options) can also have defaults
+defined in the <tt class="docutils literal"><span class="pre">.json</span></tt> file associated with the AV or exercise,
+which might help to document the available options.
+Any such ad hoc parameter defaults can be over-ridden in the
+<tt class="docutils literal"><span class="pre">exer_options</span></tt> setting in the configuration file.</p>
+</div>
+<div class="section" id="configuring-courses">
+<h2>4.8. Configuring Courses<a class="headerlink" href="#configuring-courses" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="rationale">
+<span id="confcourse"></span><h3>4.8.1. Rationale<a class="headerlink" href="#rationale" title="Permalink to this headline">¶</a></h3>
+<p>Separate from book configuration files (which define the contents of a
+book, scoring information, and configurations for various exercise),
+a given book instance will typically be accessed in the context of a
+particular LMS, which will require various permissions in order to
+operate correctly.
+The compilation process separates the compilation of book files from
+the interactions needed to set up the book&#8217;s use at a specific
+instance of the LMS.
+Book instances are in fact compiled to the specification necessary for
+that specific LMS to access it, meaning that book instances cannot be
+shared across LMS&#8217;s, or by different instances of the same LMS (say,
+two instances of Canvas), or even by two course instances on the same
+installation of a given LMS.
+The reason is that the internal cross links between the various parts
+of the book instance are often defined in the context of a specific
+course instance within the LMS.</p>
+<p>A specific course instance on a specific LMS installation is defined
+by a course configuration file.
+By convention, the file name will end with <tt class="docutils literal"><span class="pre">_LMSconf.json</span></tt>.
+A template for course configuration can be found
+<a class="reference external" href="https://github.com/OpenDSA/OpenDSA/blob/LTI/config/template_LMSconf.json">here</a>.</p>
+<p>Since course configuration files routinely store sensitive information
+such as account passwords and access keys, they are not stored in the
+OpenDSA repository.
+This documentation along with the template file should provide enough
+information for you to successfully define the contents of a
+configuration file.</p>
+<p>A set of <tt class="docutils literal"><span class="pre">make</span></tt> targets are available in the OpenDSA Makefile.
+From the top level of an OpenDSA repository, you can
+compile the HTML files for a book instance by typing</p>
+<p><tt class="docutils literal"><span class="pre">make</span> <span class="pre">&lt;courseinstance&gt;</span></tt></p>
+<p>So, if there existed a book with a configuration file named
+<tt class="docutils literal"><span class="pre">config/foo.json</span></tt>, you would type</p>
+<p><tt class="docutils literal"><span class="pre">make</span> <span class="pre">foo</span></tt></p>
+<p>This much (locally creating the HTML files) uses just the book
+configuration file.</p>
+<p>If you want to bind a book instance to a particular course instance on
+a given LMS, that requires both compiling the book and pushing
+information about it to the LMS.
+Pushing information to the LMS is where the course configuration file
+comes into play.
+<strong>After</strong> you set up the proper course configuration file in
+<tt class="docutils literal"><span class="pre">config/foo_LMSconf.json</span></tt>,  you can type:</p>
+<p><tt class="docutils literal"><span class="pre">make</span> <span class="pre">foo</span> <span class="pre">opts=&quot;-c</span> <span class="pre">True&quot;</span></tt></p>
+<p>to push the necessary book data to your LMS.
+Alternatively, there may already be a Makefile target named <tt class="docutils literal"><span class="pre">fooLMS</span></tt>
+that has this same effect by typing</p>
+<p><tt class="docutils literal"><span class="pre">make</span> <span class="pre">fooLMS</span></tt></p>
+</div>
+<div class="section" id="id1">
+<h3>4.8.2. Format<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>To understand the following description of configuration file data
+fields, it helps to understand that running a &#8220;course&#8221; using
+OpenDSA requires communication between several entities, including:</p>
+<ul class="simple">
+<li>An LTI tool provider.
+This is the site that hosts the book, which is probably where the book
+is being compiled.</li>
+<li>An LMS. The LMS has to grant access to the LTI provider in order for
+it to send scores and define the modules.</li>
+<li>The OpenDSA scoring, logging, and programming exercise server(s).
+Communications with these are required in order to handle crucial
+aspects of exercise scoring.</li>
+</ul>
+<p>Here are the fields in the configuration file.</p>
+<ul class="simple">
+<li><strong>title</strong> - The title for the course intance.</li>
+<li><strong>odsa_username</strong> - A viable user account on the course instance
+(OpenDSA) scoring server.</li>
+<li><strong>odsa_password</strong> - The corresponding password on the course instance
+(OpenDSA) scoring server.</li>
+<li><strong>target_LMS</strong> - LMS name. We currently support &#8216;canvas&#8217;.
+Other LMSs like moodle and Desire2Learn will be supported in the future.</li>
+<li><strong>LMS_url</strong> - The URL for the LMS.</li>
+<li><strong>course_code</strong> - The name used at the LMS to identify the
+course. In Canvas, this is the identfier given when creating the course.</li>
+<li><strong>access_token</strong> - This is normally issued by the LMS to allow an
+LTI tool provider to communicate with it.
+In Canvas, go to your account-level settings.
+Near the bottom of the page you should see a big blue button that
+reads &#8220;New Access Token&#8221;. Click this, then copy the string that is
+generated, and paste it into this field in the configuration file.
+If you (the creator of the config file and the one who compiles the
+book) are not the course instructor (with access to the LMS), then
+the course instructor will need to provide this access token.</li>
+<li><strong>LTI_consumer_key</strong> - The key required by the LTI tool provider.</li>
+<li><strong>LTI_secret</strong> - Effectively the password for the LTI tool
+provider.</li>
+<li><strong>module_origin</strong> - The protocol and domain where the module files are hosted<ul>
+<li>Used by embedded exercises as the target of HTML5 post messages
+which send information to the parent (module) page</li>
+<li>Ex: &#8220;module_origin&#8221;: &#8220;<a class="reference external" href="http://algoviz.org">http://algoviz.org</a>&#8221;,</li>
+</ul>
+</li>
+<li><strong>exercise_server</strong> - The protocol and domain (and port
+number, if different than the protocol default) of the exercise
+server that provides verification for the programming exercises.
+Defaults to an empty string (exercise server disabled) if omitted.<ul>
+<li>Trailing &#8216;/&#8217; is optional</li>
+<li>Ex: &#8220;exercise_server&#8221;: &#8220;<a class="reference external" href="https://opendsa.cs.vt.edu/">https://opendsa.cs.vt.edu/</a>&#8221;,</li>
+</ul>
+</li>
+<li><strong>logging_server</strong> - The protocol and domain (and port
+number, if different than the protocol default) of the logging
+server that supports interaction data collection.
+Defaults to an empty string (logging server disabled) if omitted.<ul>
+<li>Trailing &#8216;/&#8217; is optional</li>
+<li>Ex: &#8220;logging_server&#8221;: &#8220;<a class="reference external" href="https://opendsa.cs.vt.edu/">https://opendsa.cs.vt.edu/</a>&#8221;,</li>
+</ul>
+</li>
+<li><strong>score_server</strong> - The protocol and domain (and port
+number, if different than the protocol default) of the score server
+that supports centralized user score collection.
+Defaults to an empty string (score server disabled) if omitted.<ul>
+<li>Trailing &#8216;/&#8217; is optional</li>
+<li>Ex: &#8220;score_server&#8221;: &#8220;<a class="reference external" href="https://opendsa.cs.vt.edu/">https://opendsa.cs.vt.edu/</a>&#8221;,</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        «&#160;&#160;<a href="InstructorTools.html">3. Instructor&#8217;s Tools</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="ModAuthor.html">5. Module Authoring</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer">
+        &copy; Copyright 2012-2015 by OpenDSA Project Contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.
+    </div>
+  </body>
+</html>

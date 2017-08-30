@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>8. Using OpenDSA to Create JSAV-based Proficiency Exercises &mdash; OpenDSA System Documentation</title>
+    
+    <link rel="stylesheet" href="_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/print.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.4.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/theme_extras.js"></script>
+    <link rel="top" title="OpenDSA System Documentation" href="index.html" />
+    <link rel="next" title="9. Using OpenDSA with the Khan Academy infrastructure" href="KAExercise.html" />
+    <link rel="prev" title="7. Notes for AV and Exercise Developers" href="AV.html" /> 
+  </head>
+  <body>
+      <div class="header"><img class="rightlogo" src="_static/AlgoVizLogo.gif" alt="Logo"/><h1 class="heading"><a href="index.html">
+          <span>OpenDSA System Documentation</span></a></h1>
+        <h2 class="heading"><span>8. Using OpenDSA to Create JSAV-based Proficiency Exercises</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        «&#160;&#160;<a href="AV.html">7. Notes for AV and Exercise Developers</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="KAExercise.html">9. Using OpenDSA with the Khan Academy infrastructure</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="using-opendsa-to-create-jsav-based-proficiency-exercises">
+<span id="jsavexercise"></span><h1>8. Using OpenDSA to Create JSAV-based Proficiency Exercises<a class="headerlink" href="#using-opendsa-to-create-jsav-based-proficiency-exercises" title="Permalink to this headline">¶</a></h1>
+<p>Place-holder for best practices and advice on writing JSAV-based
+proficiency exercises.</p>
+<p>There is a tutorial for how to create a proficiency exercise at
+<a class="reference external" href="http://jsav.io/exercises/tutorial-exercise/">http://jsav.io/exercises/tutorial-exercise/</a>.</p>
+<div class="section" id="comparisons-for-gradeable-steps">
+<h2>8.1. Comparisons for gradeable steps<a class="headerlink" href="#comparisons-for-gradeable-steps" title="Permalink to this headline">¶</a></h2>
+<p>Often, correctness for a gradeable step is based on matching the
+current values within some data structure at each step.
+For example, you might want to compare the contents of an array at
+each step (in other words, what you check is that the user has put the
+right values into the array at each step).</p>
+<p>Sometimes, what you want to compare is some other aspect of an element
+in the data structure.
+For example, perhaps what the student should be doing is clicking on
+certain array elements in order to highlight the correct ones.
+In this case, you are concerned with some property other than the
+value of the element.
+In such cases, the best approach is to add a class to the element
+through the click handler, as opposed to setting some physical
+property such as the background-color.
+Then, the gradeable step should be comparing that the classes on the
+elements in the user&#8217;s copy of the data structure  matches the classes
+on the elements in the model copy of the data structure.</p>
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        «&#160;&#160;<a href="AV.html">7. Notes for AV and Exercise Developers</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="KAExercise.html">9. Using OpenDSA with the Khan Academy infrastructure</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer">
+        &copy; Copyright 2012-2015 by OpenDSA Project Contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.
+    </div>
+  </body>
+</html>

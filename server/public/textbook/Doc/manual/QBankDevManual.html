@@ -1,0 +1,302 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>19. QBank - Developer’s Manual &mdash; OpenDSA System Documentation</title>
+    
+    <link rel="stylesheet" href="_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/print.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.4.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/theme_extras.js"></script>
+    <link rel="top" title="OpenDSA System Documentation" href="index.html" />
+    <link rel="prev" title="18. QBank - Users Manual" href="QBankUserManual.html" /> 
+  </head>
+  <body>
+      <div class="header"><img class="rightlogo" src="_static/AlgoVizLogo.gif" alt="Logo"/><h1 class="heading"><a href="index.html">
+          <span>OpenDSA System Documentation</span></a></h1>
+        <h2 class="heading"><span>19. QBank - Developer’s Manual</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        «&#160;&#160;<a href="QBankUserManual.html">18. QBank - Users Manual</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="qbank-developer-s-manual">
+<h1><a class="toc-backref" href="#id1">19. QBank - Developer&#8217;s Manual</a><a class="headerlink" href="#qbank-developer-s-manual" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="table-of-contents">
+<span id="qbank-dev-manual"></span><p class="topic-title first">Table of Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#qbank-developer-s-manual" id="id1">QBank - Developer&#8217;s Manual</a><ul>
+<li><a class="reference internal" href="#overview" id="id2">Overview</a><ul>
+<li><a class="reference internal" href="#introduction" id="id3">Introduction</a></li>
+<li><a class="reference internal" href="#qbank-features" id="id4">QBank Features</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#requirements" id="id5">Requirements</a><ul>
+<li><a class="reference internal" href="#directory-structure" id="id6">Directory Structure</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#installation" id="id7">Installation</a><ul>
+<li><a class="reference internal" href="#setup" id="id8">Setup</a></li>
+<li><a class="reference internal" href="#configuration" id="id9">Configuration</a><ul>
+<li><a class="reference internal" href="#settings-py" id="id10"><tt class="docutils literal"><span class="pre">settings.py</span></tt></a></li>
+<li><a class="reference internal" href="#urls-py" id="id11"><tt class="docutils literal"><span class="pre">urls.py</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#view-the-authoring-tool" id="id12">View the Authoring tool</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#developing-a-tool-specific-authoring-interface" id="id13">Developing a Tool-Specific Authoring Interface</a></li>
+<li><a class="reference internal" href="#defining-another-publishing-format" id="id14">Defining another Publishing format</a></li>
+<li><a class="reference internal" href="#about-the-project" id="id15">About the project</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="overview">
+<h2><a class="toc-backref" href="#id2">19.1. Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="introduction">
+<h3><a class="toc-backref" href="#id3">19.1.1. Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h3>
+<p>QBank is a web application that assists Problem Authoring and Publishing. The user interface is intuitive and easy to understand. This document will give you a feel of the overall functionality of QBank tool and how to contribute to extending the code base.</p>
+</div>
+<div class="section" id="qbank-features">
+<h3><a class="toc-backref" href="#id4">19.1.2. QBank Features</a><a class="headerlink" href="#qbank-features" title="Permalink to this headline">¶</a></h3>
+<p><strong>Main Features Of QBank</strong></p>
+<p>Easy interfaces for Problem authoring based on the main Problem types:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Static question &#8211; Multiple Choice Question</li>
+<li>Dynamic question &#8211; Parameterised Question</li>
+<li>Summative question &#8211; Multi-Part Question</li>
+<li>Tool Specific question &#8211; Khan Academy Exercise Question</li>
+</ul>
+</div></blockquote>
+<p>Problem publishing - Parsing options to convert authored questions to different formats</p>
+<blockquote>
+<div><ul class="simple">
+<li>Comma Separated Format - <tt class="docutils literal"><span class="pre">csv</span></tt></li>
+<li>Khan Academy Exercise Format</li>
+</ul>
+</div></blockquote>
+<p>QBank is extremely flexible and extensible</p>
+<blockquote>
+<div><ul class="simple">
+<li>All display items are driven by templates using the powerful Django templating language</li>
+<li>All urls can be custom configured to your desired naming convention</li>
+<li>The formats that the questions can be parsed into can be extended to support specific needs of various publishing tool.</li>
+<li>Front ends specific to a Tool can also be easily extended from the existing(Khan Academy) interface.</li>
+</ul>
+</div></blockquote>
+<p>Standardised Authoring Interfaces based on the <strong>Formal Problem Definition</strong> for different Problem Types.</p>
+</div>
+</div>
+<div class="section" id="requirements">
+<h2><a class="toc-backref" href="#id5">19.2. Requirements</a><a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<p>QBank is developed on the Django framework, therefore you do need a fully functioning Django instance  The <a class="reference external" href="https://docs.djangoproject.com/en/1.5/intro/install/">Django installation guide</a> will step you through the process.</p>
+<p>Please use Django 1.5.x at this time.</p>
+<p>QBank requires Python 2.6.5 or later and a database supported by Django.</p>
+<div class="section" id="directory-structure">
+<h3><a class="toc-backref" href="#id6">19.2.1. Directory Structure</a><a class="headerlink" href="#directory-structure" title="Permalink to this headline">¶</a></h3>
+<p>The basic QBank directory structure looks as follows</p>
+<div class="highlight-python"><pre>.       `-- QBank
+           |-- manage.py
+           |-- settings.py
+           |-- urls.py
+           `-- templates
+           `-- qtool
+              |-- admin.py
+              |-- models.py
+              |-- forms.py
+              |-- urls.py
+              |-- views.py
+              |-- tests.py
+              `media
+                  `Exercises</pre>
+</div>
+<ol class="arabic simple">
+<li>The <tt class="docutils literal"><span class="pre">templates</span></tt> directory contains all the HTML files for the tool.</li>
+<li>The <tt class="docutils literal"><span class="pre">media</span></tt> directory contains the JavaScript, CSS, and other important files that are served by Django which are used by the QBank tool.</li>
+<li>The <tt class="docutils literal"><span class="pre">Exercises</span></tt> directory in the <tt class="docutils literal"><span class="pre">media</span></tt> folder holds the generated exercises in the <a class="reference external" href="https://khan-exercises.readthedocs.org/en/latest/">Khan Academy Exercise format</a> that can be used as-is fully compatible to Khan Academy.</li>
+</ol>
+<p><strong>Run</strong> <tt class="docutils literal"><span class="pre">qtool</span></tt> <strong>app</strong></p>
+<p>Start it with ”./manage.py runserver” and browse to <a class="reference external" href="http://localhost:8000/qtool/">http://localhost:8000/qtool/</a></p>
+</div>
+</div>
+<div class="section" id="installation">
+<h2><a class="toc-backref" href="#id7">19.3. Installation</a><a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="setup">
+<h3><a class="toc-backref" href="#id8">19.3.1. Setup</a><a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Check out the latest version of QBank into /home/user/src/:</p>
+<div class="highlight-python"><pre>git clone
+https://github.com/annp89/QBank.git</pre>
+</div>
+</li>
+</ol>
+<blockquote>
+<div><div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This copies all the files in the QBank directory into <tt class="docutils literal"><span class="pre">src</span></tt> folder.</p>
+</div>
+</div></blockquote>
+<ol class="arabic" start="2">
+<li><p class="first">Install QBank onto your system:</p>
+<div class="highlight-python"><pre>cd /home/user/src/qtool/
+sudo python setup.py install</pre>
+</div>
+</li>
+</ol>
+<blockquote>
+<div><div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">An alternative to running the install is ensuring that /path/to/QBank/qtool is on your python path. This can be done by modifying the <tt class="docutils literal"><span class="pre">PATH</span></tt> variable to point to the correct file location.</p>
+</div>
+</div></blockquote>
+<ol class="arabic" start="3">
+<li><p class="first">Once the above step in completed, a local database can be created for your copy:</p>
+<div class="highlight-python"><pre>cd /home/user/src/qtool/
+sudo python manage.py syncdb</pre>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="configuration">
+<h3><a class="toc-backref" href="#id9">19.3.2. Configuration</a><a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h3>
+<p>After having cloned the QBank repository, you have to make some changes in the <tt class="docutils literal"><span class="pre">settings.py</span></tt> file to work on your local machine.</p>
+<ul class="simple">
+<li>Ensure that <tt class="docutils literal"><span class="pre">DJANGO_SETTINGS_MODULE</span></tt> environment variable is set to <tt class="docutils literal"><span class="pre">&lt;project_name&gt;.settings</span></tt>; e.g. <tt class="docutils literal"><span class="pre">QBank.settings</span></tt></li>
+</ul>
+<div class="section" id="settings-py">
+<h4><a class="toc-backref" href="#id10">19.3.2.1. <tt class="docutils literal"><span class="pre">settings.py</span></tt></a><a class="headerlink" href="#settings-py" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><p><tt class="docutils literal"><span class="pre">TEMPLATE_DIRS</span></tt> should point to a relative location where the templates folder is located.</p>
+<div class="highlight-python"><pre>TEMPLATE_DIRS =
+("/&lt;project_name&gt;/templates",)</pre>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="urls-py">
+<h4><a class="toc-backref" href="#id11">19.3.2.2. <tt class="docutils literal"><span class="pre">urls.py</span></tt></a><a class="headerlink" href="#urls-py" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><p>The <tt class="docutils literal"><span class="pre">media</span></tt> folder contains all the javascript, css and other image files that are accessed by the tool.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^(?P&lt;path&gt;.*)$&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;django.views.static.serve&#39;</span><span class="p">,</span>
+   <span class="p">{</span><span class="s1">&#39;document_root&#39;</span><span class="p">:</span>
+   <span class="s1">&#39;/quiz/qtool/media/&#39;</span><span class="p">})</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>For viewing in Khan Academy Exercise Format, there are many <tt class="docutils literal"><span class="pre">javascript</span></tt> and <tt class="docutils literal"><span class="pre">css</span></tt> dependent files that have to be located in the media folder.</p>
+<p>Django serves the static files in the above location since the <tt class="docutils literal"><span class="pre">url</span></tt> is specified with that particular regular expression.</p>
+</div>
+</div>
+<div class="section" id="view-the-authoring-tool">
+<h3><a class="toc-backref" href="#id12">19.3.3. View the Authoring tool</a><a class="headerlink" href="#view-the-authoring-tool" title="Permalink to this headline">¶</a></h3>
+<p>After you have completed the installation and the configuration, you can view the QBank tool using the commands below.</p>
+<ol class="arabic">
+<li><p class="first">Start up the sample webserver to see your store:</p>
+<div class="highlight-python"><pre>python manage.py runserver</pre>
+</div>
+</li>
+<li><p class="first">In order to see your sample store, point your browser to:</p>
+<div class="highlight-python"><pre>http://127.0.0.1:8000/qtool</pre>
+</div>
+</li>
+<li><p class="first">If you want to see the admin interface, point your browser to:</p>
+<div class="highlight-python"><pre>http://127.0.0.1:8000/admin</pre>
+</div>
+</li>
+<li><p class="first">Additional detailed documentation can be found here:</p>
+<div class="highlight-python"><pre>http://127.0.0.1:8000/admin/doc</pre>
+</div>
+</li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The above urls will be dependent on your Django setup. If you’re running the webserver on the same machine you’re developing on, the above urls should work. If not, use the appropriate url.</p>
+</div>
+</div>
+</div>
+<div class="section" id="developing-a-tool-specific-authoring-interface">
+<h2><a class="toc-backref" href="#id13">19.4. Developing a Tool-Specific Authoring Interface</a><a class="headerlink" href="#developing-a-tool-specific-authoring-interface" title="Permalink to this headline">¶</a></h2>
+<p>Files that need to be manipulated in order to develop a tool specific to the interface</p>
+<ol class="arabic simple">
+<li><tt class="docutils literal"><span class="pre">forms.py</span></tt>:</li>
+</ol>
+<blockquote>
+<div><p>A new form specific to the interface be written by extending the basic <tt class="docutils literal"><span class="pre">`Problem</span> <span class="pre">Form</span></tt> by either adding/ excluding fields to it.</p>
+<div class="highlight-python"><pre>``SimpleProblemForm`` was created to handle simple Multi Choice Questions.</pre>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><tt class="docutils literal"><span class="pre">views.py</span></tt>:</li>
+</ol>
+<blockquote>
+<div><p>For each type of form, a view (class definition) needs to exist to render the template specific to that particular form.</p>
+<div class="highlight-python"><pre>e.g. ``simple`` for is a view for ``SimpleProblemForm``</pre>
+</div>
+</div></blockquote>
+<p>Another view needs to exist for parsing the form into a desired publishing format.</p>
+<div class="highlight-python"><pre>e.g.
+1. ``write_csv`` to parse the authored Problem to a ``csv`` file.
+2. ``ka_gen`` to parse the authored Problem to a ``Khan Academy Exercise format``</pre>
+</div>
+</div>
+<div class="section" id="defining-another-publishing-format">
+<h2><a class="toc-backref" href="#id14">19.5. Defining another Publishing format</a><a class="headerlink" href="#defining-another-publishing-format" title="Permalink to this headline">¶</a></h2>
+<p>In the <tt class="docutils literal"><span class="pre">views.py</span></tt>, the parsing of the content entered in the Frontend Interface into another format is done in the <tt class="docutils literal"><span class="pre">ka_gen</span></tt> function. This function essentially takes all the content fed into the Front end and parses it with the additional information that converts it into a particular format.</p>
+<ul class="simple">
+<li>For instance, to write exercises in the <em>Khan Academy exercise format</em>, the content has to be converted into an <tt class="docutils literal"><span class="pre">html</span></tt> page. All the appropriate header files, scripts, <tt class="docutils literal"><span class="pre">css`</span></tt> and images have to be correctly linked to the question based on the options selected and the type of question being authored.</li>
+</ul>
+<p>The <em>ka_gen</em> class parses the content and writes a file which is stored in the <tt class="docutils literal"><span class="pre">media</span></tt> folder. This allows the author to simply take the parsed file and plug it into the desired tool.</p>
+</div>
+<div class="section" id="about-the-project">
+<h2><a class="toc-backref" href="#id15">19.6. About the project</a><a class="headerlink" href="#about-the-project" title="Permalink to this headline">¶</a></h2>
+<p>QBank - Problem Authoring Tool, was developed by <strong>Ann Paul</strong>, Masters student, Department of Computer Science, Virginia Polytechnic and State University.</p>
+<p>This project was done under the supervision and able guidance of <strong>Dr. Cliff Shaffer</strong>, Professor, Department of Computer Science, Virginia Tech.</p>
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        «&#160;&#160;<a href="QBankUserManual.html">18. QBank - Users Manual</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        </p>
+
+      </div>
+
+    <div class="footer">
+        &copy; Copyright 2012-2015 by OpenDSA Project Contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.
+    </div>
+  </body>
+</html>

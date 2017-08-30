@@ -1,0 +1,619 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>11. ReST Extensions &mdash; OpenDSA System Documentation</title>
+    
+    <link rel="stylesheet" href="_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/print.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.4.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/theme_extras.js"></script>
+    <link rel="top" title="OpenDSA System Documentation" href="index.html" />
+    <link rel="next" title="12. The Document Processor" href="Preprocessor.html" />
+    <link rel="prev" title="10. Client-side Development" href="Client-sideDevelopment.html" /> 
+  </head>
+  <body>
+      <div class="header"><img class="rightlogo" src="_static/AlgoVizLogo.gif" alt="Logo"/><h1 class="heading"><a href="index.html">
+          <span>OpenDSA System Documentation</span></a></h1>
+        <h2 class="heading"><span>11. ReST Extensions</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        «&#160;&#160;<a href="Client-sideDevelopment.html">10. Client-side Development</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="Preprocessor.html">12. The Document Processor</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="rest-extensions">
+<span id="odsaextensions"></span><h1>11. ReST Extensions<a class="headerlink" href="#rest-extensions" title="Permalink to this headline">¶</a></h1>
+<p>The following custom ReST extensions have been created for the OpenDSA
+project.</p>
+<p>The documentation here presents all of the options associated with
+each directive, as if the directive were to appear for direct processing
+by Sphinx. However, OpenDSA modules are intended to be pre-processed
+by a configuration script that dynamically loads in additional
+information to tailor modules for specific eTextbook instances.
+In particular, information related to grading of embedded exercises
+should be controlled by the configuration files.
+See <a class="reference internal" href="Configuration.html#configuration"><em>Compiling Book Instances: OpenDSA Configuration</em></a> for details.
+Thus, a number of the directive options, while documented, are labeled
+as not being set manually (i.e., by the module author) within the ReST
+file. You just leave those options out when you create your module,
+and specify them instead in your configuration file.</p>
+<div class="section" id="avembed">
+<span id="id1"></span><h2>11.1. avembed<a class="headerlink" href="#avembed" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>NAME</dt>
+<dd>avembed - embed an AV or other HTML page inside a ReST document.</dd>
+</dl>
+<p>SYNOPSIS:</p>
+<div class="highlight-python"><pre>.. avembed:: {relative_path} {type}
+   [:exer_opts: {string}]
+   [:long_name: {string}]
+   [:module: {string}]
+   [:points: {number}]
+   [:required: true|false]
+   [:showhide: show|hide|none]
+   [:threshold: {number}]</pre>
+</div>
+<dl class="docutils">
+<dt>DESCRIPTION</dt>
+<dd><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">..</span> <span class="pre">avembed::</span> <span class="pre">{relative_path}</span> <span class="pre">{type}</span></tt></dt>
+<dd><p class="first"><tt class="docutils literal"><span class="pre">{relative_path}</span></tt> is the relative path (from the OpenDSA
+home directory) to the embedded page.
+<tt class="docutils literal"><span class="pre">{type}</span></tt> is the type of embedded exercise, one of the following:</p>
+<blockquote class="last">
+<div><ul class="simple">
+<li><strong>ka</strong> - Khan Academy style exercises</li>
+<li><strong>pe</strong> - OpenDSA proficiency exercises</li>
+<li><strong>ss</strong> - slideshows</li>
+<li><strong>dgm</strong> - JSAV-based diagram</li>
+</ul>
+</div></blockquote>
+</dd>
+</dl>
+<p><tt class="docutils literal"><span class="pre">:exer_opts:</span> <span class="pre">{string}</span></tt></p>
+<blockquote>
+<div>A URL-encoded string of configuration options to pass to exercises.
+<strong>Added automatically by the configuration process, do NOT add manually.</strong></div></blockquote>
+<p><tt class="docutils literal"><span class="pre">:long_name:</span> <span class="pre">{string}</span></tt></p>
+<blockquote>
+<div>Long name for the embedded object. The &#8220;short&#8221; name is the file name.
+<strong>Added automatically by the configuration process, do NOT add manually.</strong></div></blockquote>
+<p><tt class="docutils literal"><span class="pre">:module:</span> <span class="pre">{string}</span></tt></p>
+<blockquote>
+<div>The name of the module on which the AV is embedded.
+<strong>Added automatically by the configuration process, do NOT add manually.</strong></div></blockquote>
+<p><tt class="docutils literal"><span class="pre">:points:</span> <span class="pre">{number}</span></tt></p>
+<blockquote>
+<div>Number of points this activity is worth.
+<strong>Added automatically by the configuration process, do NOT add manually.</strong></div></blockquote>
+<p><tt class="docutils literal"><span class="pre">[:required:</span> <span class="pre">true|false]</span></tt></p>
+<blockquote>
+<div>Whether this activity is required for module credit.
+<strong>Added automatically by the configuration process, do NOT add manually.</strong></div></blockquote>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">:showhide:</span> <span class="pre">show|hide|none</span></tt></dt>
+<dd>Include a button to show or hide the embedded
+content. The options are <tt class="docutils literal"><span class="pre">show</span></tt> to have the content visible
+when the page is first loaded or <tt class="docutils literal"><span class="pre">hide</span></tt> to have it hidden on
+page load.
+<strong>Added automatically by the configuration process, do NOT add manually.</strong></dd>
+</dl>
+<p><tt class="docutils literal"><span class="pre">[:threshold:</span> <span class="pre">{number}]</span></tt></p>
+<blockquote class="last">
+<div>Threshold number of points required for credit.
+<strong>Added automatically by the configuration process, do NOT add manually.</strong></div></blockquote>
+</dd>
+<dt>NOTES</dt>
+<dd>The <tt class="docutils literal"><span class="pre">..</span> <span class="pre">avembed::</span></tt> directive fetches the AV&#8217;s information
+(width and height, etc.) from its XML description file.
+This XML file is located in the directory <tt class="docutils literal"><span class="pre">xml</span></tt> contained
+within the same directory as the AV. If the AV is named
+<tt class="docutils literal"><span class="pre">fooAV.html</span></tt> then the XML file must be <tt class="docutils literal"><span class="pre">xml/fooAV.xml</span></tt>.
+The path to the OpenDSA top-level directory should be set within
+<tt class="docutils literal"><span class="pre">conf.py</span></tt> in the source directory.</dd>
+</dl>
+</div>
+<div class="section" id="avmetadata">
+<h2>11.2. avmetadata<a class="headerlink" href="#avmetadata" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>NAME</dt>
+<dd>avmetadata - metadata information associated with this module.</dd>
+</dl>
+<p>SYNOPSIS:</p>
+<div class="highlight-python"><pre>.. avmetadata::
+   :author: {string}
+   :prerequisites: {list of module_name}
+   :topic: {string}
+   :requires: {string}
+   :satisfies: {string}</pre>
+</div>
+<dl class="docutils">
+<dt>DESCRIPTION</dt>
+<dd><dl class="first last docutils">
+<dt><tt class="docutils literal"><span class="pre">:author:</span> <span class="pre">{string}</span></tt></dt>
+<dd>Module author&#8217;s name.</dd>
+<dt><tt class="docutils literal"><span class="pre">:prerequisites:</span> <span class="pre">{list</span> <span class="pre">of</span> <span class="pre">module_name}</span></tt></dt>
+<dd>A comma-separated list of zero or more <tt class="docutils literal"><span class="pre">module_name</span></tt>.
+These represent the prerequisites for this module.</dd>
+<dt><tt class="docutils literal"><span class="pre">:topic:</span> <span class="pre">{string}</span></tt></dt>
+<dd>The topic covered by this module.</dd>
+<dt><tt class="docutils literal"><span class="pre">:requires:</span> <span class="pre">{string}</span></tt></dt>
+<dd>A semi-colon delimited list of topics students are expected to know prior to completing the module</dd>
+<dt><tt class="docutils literal"><span class="pre">:satisfies:</span> <span class="pre">{string}</span></tt></dt>
+<dd>A semi-colon delimited list of topics covered in this module that satisfy prerequisite knowledge requirements of other modules</dd>
+</dl>
+</dd>
+</dl>
+</div>
+<div class="section" id="codeinclude">
+<h2>11.3. codeinclude<a class="headerlink" href="#codeinclude" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>NAME</dt>
+<dd>codeinclude - displays code snippets within the eTextbook.</dd>
+</dl>
+<p>SYNOPSIS:</p>
+<div class="highlight-python"><pre>.. codeinclude:: {relative_path}
+   [:tag: {mytag1} [, {mytag2}, ...]]</pre>
+</div>
+<dl class="docutils">
+<dt>DESCRIPTION</dt>
+<dd><p class="first"><tt class="docutils literal"><span class="pre">..</span> <span class="pre">codeinclude::</span> <span class="pre">{relative_path}</span></tt></p>
+<blockquote>
+<div>Include the contents of the file located at <tt class="docutils literal"><span class="pre">{relative_path}</span></tt>.  If the path is relative to <tt class="docutils literal"><span class="pre">code_dir</span></tt>, that specific file will be loaded.
+However, if the path is relative to a code language directory in <tt class="docutils literal"><span class="pre">code_dir</span></tt>, the directive will attempt to load the file in all the languages (specified in <tt class="docutils literal"><span class="pre">code_lang</span></tt>) in a tabbed display if <tt class="docutils literal"><span class="pre">tabbed_codeinc</span></tt> is <tt class="docutils literal"><span class="pre">True</span></tt> and only the language with highest precedence if <tt class="docutils literal"><span class="pre">tabbed_codeinc</span></tt> is <tt class="docutils literal"><span class="pre">False</span></tt>.  Convention dictates that the file extension be omitted when using the second option, however, the directive will automatically strip the file extension if one is provided.</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">:tag:</span> <span class="pre">{my_tag}</span></tt></p>
+<blockquote>
+<div><p>Optionally, a tag or a comma separated list of tags can be
+specified. These tags must appear inside the source code file
+as specially formatted comments that delimit the block(s) of
+code that will be included.
+If tags are used, then only the code block(s) with the tags will
+appear.
+If multiple tags are used, then the multiple blocks will appear
+as though they were one continuous block of code without the
+intervening code that does not appear with the tags.
+If additional tags are hierarchically embedded within a tag
+block, then those tags will not appear (but the code will).
+Note that the source code must format the tags correctly,
+as:</p>
+<div class="highlight-python"><pre>/* *** ODSATag: my_tag *** */
+/* *** ODSAendTag: my_tag *** */</pre>
+</div>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">:lang:</span> <span class="pre">{code_language}</span></tt></p>
+<blockquote class="last">
+<div>Specifies the language of the code to be loaded (overrides multiple language loading).</div></blockquote>
+</dd>
+<dt>NOTES</dt>
+<dd><p class="first">The <tt class="docutils literal"><span class="pre">codeinclude</span></tt> directive closely matches the standard ReST
+directive <tt class="docutils literal"><span class="pre">literalinclude</span></tt>.:</p>
+<div class="highlight-python"><pre>.. codeinclude:: {relative_path}
+   [:tag: my_tag]</pre>
+</div>
+<p>will (logically) map to::</p>
+<div class="last highlight-python"><pre>.. literalinclude:: &lt;relative_path&gt;
+   :start-after: /* *** ODSATag: my_tag *** */
+   :end-before: /* *** ODSAendTag: my_tag *** */</pre>
+</div>
+</dd>
+</dl>
+</div>
+<div class="section" id="inlineav">
+<span id="id2"></span><h2>11.4. inlineav<a class="headerlink" href="#inlineav" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>NAME</dt>
+<dd>inlineav - used to embed an AV (in particular &#8220;slideshows&#8221;) into the document</dd>
+</dl>
+<p>SYNOPSIS:</p>
+<div class="highlight-python"><pre>.. inlineav:: {avId} {type}
+   [:output: show|hide]
+   :points: {number}
+   :required: true|false
+   :threshold: {number}
+   :align: left|right|center|justify|inherit</pre>
+</div>
+<dl class="docutils">
+<dt>DESCRIPTION</dt>
+<dd><p class="first"><tt class="docutils literal"><span class="pre">..</span> <span class="pre">inlineav::</span> <span class="pre">avId</span> <span class="pre">type</span></tt></p>
+<blockquote>
+<div><p>Create a container for an inline AV with the given ID and type.
+If the type is <tt class="docutils literal"><span class="pre">ss</span></tt> a slideshow will be created and if it is
+<tt class="docutils literal"><span class="pre">dgm</span></tt> a diagram will be created. inlineav diagrams behave like
+typicall reStructuredText figures. Cross reference target and
+caption are declared using the standard syntax.</p>
+<p><tt class="docutils literal"><span class="pre">&lt;type&gt;</span></tt> <strong>is automatically appended to the inlineav directive
+by the configuration process and should not be added manually.</strong></p>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">[:output:</span> <span class="pre">show|hide]</span></tt></p>
+<blockquote>
+<div>If the AV is a slideshow, controls whether or not the message box is displayed
+Note the &#8216;output&#8217; argument is only valid for slideshows.</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">:long_name:</span></tt></p>
+<blockquote>
+<div>Long-form name for a slideshow object.
+<strong>Added automatically by the configuration process, do NOT add manually.</strong></div></blockquote>
+<p><tt class="docutils literal"><span class="pre">:points:</span> <span class="pre">{number}</span></tt></p>
+<blockquote>
+<div>Number of points this activity is worth.
+<strong>Added automatically by the configuration process, do NOT add manually.</strong></div></blockquote>
+<p><tt class="docutils literal"><span class="pre">:required:</span> <span class="pre">true|false</span></tt></p>
+<blockquote>
+<div>Whether this activity is required for module credit.
+<strong>Added automatically by the configuration process, do NOT add manually.</strong></div></blockquote>
+<p><tt class="docutils literal"><span class="pre">:threshold:</span> <span class="pre">{number}</span></tt></p>
+<blockquote>
+<div>Threshold number of points required for credit.
+<strong>Added automatically by the configuration process, do NOT add manually.</strong></div></blockquote>
+<p><tt class="docutils literal"><span class="pre">:align:</span> <span class="pre">left|right|center|justify|inherit</span></tt></p>
+<blockquote class="last">
+<div>The alignment of the caption within the page.</div></blockquote>
+</dd>
+</dl>
+</div>
+<div class="section" id="numref">
+<span id="id3"></span><h2>11.5. numref<a class="headerlink" href="#numref" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>NAME</dt>
+<dd>numref - adds numbered cross references to modules.</dd>
+</dl>
+<p>SYNOPSIS:</p>
+<div class="highlight-python"><pre>:numref: {caption} &lt;{reference_label}&gt;
+:numref: {reference_label}</pre>
+</div>
+<dl class="docutils">
+<dt>DESCRIPTION</dt>
+<dd><p class="first"><tt class="docutils literal"><span class="pre">:numref:</span> <span class="pre">{caption}</span> <span class="pre">&lt;{reference_label}&gt;</span></tt></p>
+<p>A custom interpreted text role. <tt class="docutils literal"><span class="pre">numref</span></tt> adds numbered cross
+references within ODSA documents.</p>
+<p><tt class="docutils literal"><span class="pre">{caption}</span></tt></p>
+<p>Text to be displayed next to the numbered reference.</p>
+<p><tt class="docutils literal"><span class="pre">{reference_label}</span></tt></p>
+<p class="last">Reference name (unique) of the referenced object. Should be
+enclose in brackets (<tt class="docutils literal"><span class="pre">&lt;&gt;</span></tt>) when a caption is provided. It is
+specified via the standard ReST referencing mechanisms.</p>
+</dd>
+<dt>NOTES</dt>
+<dd><p class="first">The ODSA preprocessor creates a table of all referenced objects
+with numbers and writes it into a file that is read by the <tt class="docutils literal"><span class="pre">numref</span></tt>
+role.
+When referencing equation (declared with <tt class="docutils literal"><span class="pre">math</span></tt> directive), &#8216;equation-&#8216;
+need to be added in front of the label to work, eg to reference
+the equation with label &#8216;sum2&#8217; you write
+<tt class="docutils literal"><span class="pre">:numref:`&lt;equation-sum2&gt;`</span></tt></p>
+<p class="last"><strong>WARNING: We now consider it a violation of best practice to
+reference a module from another module.</strong>
+This is because OpenDSA is a collection of materials that can be
+combined in various ways.
+For this reason, use of <tt class="docutils literal"><span class="pre">numref</span></tt> has been phased out.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="chap-numchap">
+<span id="chap"></span><h2>11.6. chap/numchap<a class="headerlink" href="#chap-numchap" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>NAME</dt>
+<dd>chap/numchap - adds a reference to the first (introduction) module
+of a chapter.</dd>
+</dl>
+<p>SYNOPSIS:</p>
+<div class="highlight-python"><pre>:chap: {chapter_name}
+:numchap: {chapter_name}</pre>
+</div>
+<dl class="docutils">
+<dt>DESCRIPTION</dt>
+<dd><p class="first"><tt class="docutils literal"><span class="pre">:chap:</span> <span class="pre">{chapter_name}</span></tt></p>
+<p>A custom interpreted role that adds the chapter name as the label
+for a link to the first module of the indicated chapter.</p>
+<p><tt class="docutils literal"><span class="pre">:numchap:</span> <span class="pre">{chapter_name}</span></tt></p>
+<p>A custom interpreted role that adds a chapter number as the label
+for a link to the first module of the indicated chapter.</p>
+<p><tt class="docutils literal"><span class="pre">{chapter_name}</span></tt></p>
+<p class="last">The name of the chapter. It should be identical (case sensitive)
+to the one specified in the json configuration file.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="showhidecontent">
+<h2>11.7. showhidecontent<a class="headerlink" href="#showhidecontent" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>NAME</dt>
+<dd>showhidecontent - creates a section of text that can be hidden or displayed.</dd>
+</dl>
+<p>SYNOPSIS:</p>
+<div class="highlight-python"><pre>.. showhidecontent:: {section_id}
+   [:long_name: {string}]
+   [:showhide: show|hide|none]</pre>
+</div>
+<dl class="docutils">
+<dt>DESCRIPTION</dt>
+<dd><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">..</span> <span class="pre">showhidecontent::</span> <span class="pre">{section_id}</span></tt></dt>
+<dd><tt class="docutils literal"><span class="pre">{section_id}</span></tt> is a string used to identify the section in the configuration file. Ideally, it should be descriptive and in camel-case, because if <tt class="docutils literal"><span class="pre">long_name</span></tt> is omitted, <tt class="docutils literal"><span class="pre">section_id</span></tt> will be converted to a space-delimited string and used in its place</dd>
+</dl>
+<p><tt class="docutils literal"><span class="pre">:long_name:</span> <span class="pre">{string}</span></tt></p>
+<blockquote>
+<div>The display name for the section that will appear on the showhide button (if applicable). If omitted, the <tt class="docutils literal"><span class="pre">section_id</span></tt> will be converted from camel-case to a space-delimited string and used in its place
+<strong>Added automatically by the configuration process, do NOT add manually.</strong></div></blockquote>
+<dl class="last docutils">
+<dt><tt class="docutils literal"><span class="pre">:showhide:</span> <span class="pre">show|hide|none</span></tt></dt>
+<dd>If <tt class="docutils literal"><span class="pre">show</span></tt> then display a button to show or hide the section and make the section visible on page load.
+If <tt class="docutils literal"><span class="pre">hide</span></tt> then display the button, but hide the section on page load.
+If <tt class="docutils literal"><span class="pre">none</span></tt> or if the option is omitted then the section will be displayed with no button
+<strong>Added automatically by the configuration process, do NOT add manually.</strong></dd>
+</dl>
+</dd>
+</dl>
+</div>
+<div class="section" id="todo">
+<h2>11.8. TODO<a class="headerlink" href="#todo" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>NAME</dt>
+<dd>TODO - adds a todo box in the output HTML file, and is
+also used by the ODSA preprocessor script to create a separate
+HTML page containing the collated list of desired AVs and
+Exercises.
+(NOTE: Can also be called as <tt class="docutils literal"><span class="pre">todo</span></tt>.)</dd>
+</dl>
+<p>SYNOPSIS:</p>
+<div class="highlight-python"><pre>.. TODO::
+   [:type: {type label of the desired artifact}]</pre>
+</div>
+<p>DESCRIPTION</p>
+<blockquote>
+<div><p><tt class="docutils literal"><span class="pre">..</span> <span class="pre">TODO::</span></tt></p>
+<p>Within the module, this behaves like the standard Sphinx
+TODO (or todo) directive. As with the standard TODO directive, the
+author should then include (indented) text that describes the task
+to be done. The ODSA version will in addition create a
+separate page TODO.html that includes a listing of all TODO
+blocks from all of the modules.</p>
+<p><tt class="docutils literal"><span class="pre">:type:</span> <span class="pre">{type</span> <span class="pre">label</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">desired</span> <span class="pre">artifact}</span></tt></p>
+<p>The type of the desired artifact (AV, Proficiency Exercise,
+etc). This is just a label, so it can be anything. Each
+separate label will collate together all TODO entries with
+that label on the TODO.html page.</p>
+</div></blockquote>
+<dl class="docutils">
+<dt>NOTES</dt>
+<dd>The ODSA preprocessor collects the descriptions (i.e., the text
+that follows the TODO directive) from the complete collection of
+RST files to create a separate TODO.rst file that lists all the
+desired AVs and Exercises grouped by type.
+The TODO.rst file should be included in the index.rst file to be
+part of the table of contents for the eBook.</dd>
+</dl>
+</div>
+<div class="section" id="odsalink">
+<span id="id4"></span><h2>11.9. odsalink<a class="headerlink" href="#odsalink" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>NAME</dt>
+<dd>odsalink - adds the code to include a CSS file in the
+HTML output file.</dd>
+</dl>
+<p>SYNOPSIS:</p>
+<div class="highlight-python"><pre>.. odsalink:: {path to file}</pre>
+</div>
+<dl class="docutils">
+<dt>DESCRIPTION</dt>
+<dd><p class="first"><tt class="docutils literal"><span class="pre">..</span> <span class="pre">odsalink::</span></tt>
+The directive injects the code to include a linked file in the
+outputted HTML files.
+It gets the path to ODSA directory from the <tt class="docutils literal"><span class="pre">odsa_path</span></tt> variable
+in the <tt class="docutils literal"><span class="pre">conf.py</span></tt> file.</p>
+<p class="last"><tt class="docutils literal"><span class="pre">{path</span> <span class="pre">to</span> <span class="pre">file}</span></tt>
+The path (relative to ODSA directory root as defined by the
+<tt class="docutils literal"><span class="pre">odsa_path</span></tt> variable in the <tt class="docutils literal"><span class="pre">conf.py</span></tt> file) to the linked file
+to be include.</p>
+</dd>
+<dt>NOTES</dt>
+<dd><p class="first">The directory containing the file to be included should be hosted
+within the ODSA directory.
+Example, if <tt class="docutils literal"><span class="pre">odsa_path</span></tt> is defined to be <tt class="docutils literal"><span class="pre">..\..\..</span></tt>, then</p>
+<p><tt class="docutils literal"><span class="pre">..</span> <span class="pre">odsalink::</span> <span class="pre">JSAV/css/JSAV.css</span></tt></p>
+<p>will produce</p>
+<p><tt class="docutils literal"><span class="pre">&lt;link</span> <span class="pre">href=&quot;../../../JSAV/css/JSAV.css&quot;</span> <span class="pre">rel=&quot;stylesheet&quot;</span> <span class="pre">type=&quot;text/css&quot;</span> <span class="pre">/&gt;</span></tt></p>
+<p class="last">in the HTML output file.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="odsascript">
+<span id="id5"></span><h2>11.10. odsascript<a class="headerlink" href="#odsascript" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>NAME</dt>
+<dd>odsascript - adds the code to include a script file in the
+HTML output file.</dd>
+</dl>
+<p>SYNOPSIS:</p>
+<div class="highlight-python"><pre>.. odsascript:: {path to file}</pre>
+</div>
+<dl class="docutils">
+<dt>DESCRIPTION</dt>
+<dd><p class="first"><tt class="docutils literal"><span class="pre">..</span> <span class="pre">odsascript::</span></tt>
+The directive injects the code to include a script file in the
+outputted HTML files.
+It gets the path to ODSA directory from the <tt class="docutils literal"><span class="pre">odsa_path</span></tt> variable
+in the <tt class="docutils literal"><span class="pre">conf.py</span></tt> file.</p>
+<p class="last"><tt class="docutils literal"><span class="pre">{path</span> <span class="pre">to</span> <span class="pre">file}</span></tt>
+The path (relative to ODSA directory root as defined by the
+<tt class="docutils literal"><span class="pre">odsa_path</span></tt> variable in the <tt class="docutils literal"><span class="pre">conf.py</span></tt> file) to the script file
+to be include.</p>
+</dd>
+<dt>NOTES</dt>
+<dd><p class="first">The directory containing the file to be included should be hosted
+within the ODSA directory.
+Example, if <tt class="docutils literal"><span class="pre">odsa_path</span></tt> is defined to be <tt class="docutils literal"><span class="pre">..\..\..</span></tt>, then</p>
+<p><tt class="docutils literal"><span class="pre">..</span> <span class="pre">odsascript::</span> <span class="pre">JSAV/build/JSAV-min.js</span></tt></p>
+<p>will produce</p>
+<p><tt class="docutils literal"><span class="pre">&lt;script</span> <span class="pre">type=&quot;text/javascript&quot;</span> <span class="pre">src=&quot;../../../JSAV/build/JSAV-min.js&quot;&gt;&lt;/script&gt;</span></tt></p>
+<p class="last">in the HTML output file.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="odsafig">
+<h2>11.11. odsafig<a class="headerlink" href="#odsafig" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>NAME</dt>
+<dd>odsafig - provides the ability to specify caption alignment to figures.</dd>
+</dl>
+<p>SYNOPSIS:</p>
+<div class="highlight-python"><pre>.. odsafig:: {path to image}
+   :capalign: left|right|center|justify|inherit</pre>
+</div>
+<dl class="docutils">
+<dt>DESCRIPTION</dt>
+<dd><p class="first"><tt class="docutils literal"><span class="pre">..</span> <span class="pre">odsafig::</span></tt>
+The directive behaves exactly as the standard <tt class="docutils literal"><span class="pre">..</span> <span class="pre">figure::</span></tt> directive.
+It allows you to specify the positioning of figure caption on the page</p>
+<dl class="last docutils">
+<dt><tt class="docutils literal"><span class="pre">:capalign:</span> <span class="pre">left|right|center|justify|inherit</span></tt></dt>
+<dd>The alignment of the caption on the page.</dd>
+</dl>
+</dd>
+<dt>NOTES</dt>
+<dd>The directive closely matches the standard ReST <tt class="docutils literal"><span class="pre">figure</span></tt> directive. The only addition
+is the <tt class="docutils literal"><span class="pre">:capalign:</span></tt> argument.</dd>
+</dl>
+</div>
+<div class="section" id="odsatab">
+<h2>11.12. odsatab<a class="headerlink" href="#odsatab" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>NAME</dt>
+<dd>odsatab - provides the ability to create tables (with <tt class="docutils literal"><span class="pre">math</span></tt> directive) that behave like figures. Caption is display above the table, and the position of the caption can be specified by the user.</dd>
+</dl>
+<p>SYNOPSIS:</p>
+<div class="highlight-python"><pre>.. odsatab::
+   :capalign: left|right|center|justify|inherit
+   :align: left|right|center</pre>
+</div>
+<dl class="docutils">
+<dt>DESCRIPTION</dt>
+<dd><p class="first"><tt class="docutils literal"><span class="pre">..</span> <span class="pre">odsatab::</span></tt>
+The directive allows the user to create tables using <tt class="docutils literal"><span class="pre">math</span></tt> directives. The directive numbers tables and allows numbered cross refences.
+It allows users to specify the positioning of the table and the table caption on the page</p>
+<dl class="last docutils">
+<dt><tt class="docutils literal"><span class="pre">:capalign:</span> <span class="pre">left|right|center|justify|inherit</span></tt></dt>
+<dd>The alignment of the caption on the page.</dd>
+<dt><tt class="docutils literal"><span class="pre">:align:</span> <span class="pre">left|right|cente</span></tt></dt>
+<dd>The alignment of the table on the page.</dd>
+</dl>
+</dd>
+<dt>NOTES</dt>
+<dd>The first paragraph of the directive content is used as table caption.</dd>
+</dl>
+</div>
+<div class="section" id="odsatoctree">
+<h2>11.13. odsatoctree<a class="headerlink" href="#odsatoctree" title="Permalink to this headline">¶</a></h2>
+<p>Specialized version Sphinx <tt class="docutils literal"><span class="pre">toctree</span></tt> directive.
+It is used when a chapter has the optional <tt class="docutils literal"><span class="pre">hidden</span></tt> field to <tt class="docutils literal"><span class="pre">true</span></tt>.
+The Modules in the chapter will not be visible in the table of content.
+<strong>It is added automatically by the configuration process, do NOT add manually.</strong></p>
+</div>
+<div class="section" id="ref">
+<h2>11.14. ref<a class="headerlink" href="#ref" title="Permalink to this headline">¶</a></h2>
+<p>We have modified the  Sphinx <tt class="docutils literal"><span class="pre">ref</span></tt> directive to better support the
+fact that eBook instances can vary with respect to whether given
+modules are included or not.</p>
+<dl class="docutils">
+<dt>NAME</dt>
+<dd>ref - Creates a hyperlink to a module, label, or a glossary term.</dd>
+</dl>
+<p>SYNOPSIS:</p>
+<div class="highlight-python"><pre>:ref:`my anchor text &lt;label&gt;`
+:ref:`my anchor text &lt;glossary term&gt; &lt;label&gt;`</pre>
+</div>
+<dl class="docutils">
+<dt>DESCRIPTION</dt>
+<dd><p class="first"><tt class="docutils literal"><span class="pre">my</span> <span class="pre">anchor</span> <span class="pre">text</span></tt></p>
+<blockquote>
+<div>The anchor text for the hyperlink.</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">&lt;label&gt;</span></tt></p>
+<blockquote>
+<div>Module name or some label within a module.
+If it is a module name, then <tt class="docutils literal"><span class="pre">ref</span></tt> links to the module.
+If it is a label (such as for an Example), then the directive
+links to that point in the module.
+If  <tt class="docutils literal"><span class="pre">&lt;label&gt;</span></tt> does not exist, then the directive shows only the
+anchor text (in normal font, as though no reference were being made).</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">&lt;glossary</span> <span class="pre">term&gt;</span></tt></p>
+<blockquote class="last">
+<div>If <tt class="docutils literal"><span class="pre">&lt;label&gt;</span></tt> does not exist and the <tt class="docutils literal"><span class="pre">&lt;glossary</span> <span class="pre">term&gt;</span></tt> is given,
+then the hyperlink directs to the <tt class="docutils literal"><span class="pre">&lt;glossary</span> <span class="pre">term&gt;</span></tt> entry in the
+glossary.</div></blockquote>
+</dd>
+</dl>
+</div>
+<div class="section" id="topic-special-case">
+<h2>11.15. topic (special case)<a class="headerlink" href="#topic-special-case" title="Permalink to this headline">¶</a></h2>
+<p>The syntax of the <tt class="docutils literal"><span class="pre">topic</span></tt> directive is not changed in OpenDSA.
+We use this directive to display
+<tt class="docutils literal"><span class="pre">examples,</span> <span class="pre">tables,</span> <span class="pre">and</span> <span class="pre">theorems</span></tt>.
+To insert an example in your module, use the keyword <tt class="docutils literal"><span class="pre">Example</span></tt> as
+the topic title.
+To insert a theorem in your module, use the keyword <tt class="docutils literal"><span class="pre">Theorem</span></tt> as
+the topic title.
+The example/table/theorem can be referenced using the standard Sphinx
+mechanism.
+For a numbered reference, use the <tt class="docutils literal"><span class="pre">:num:</span></tt> directive.</p>
+<p>EXAMPLE:</p>
+<div class="highlight-python"><pre>(1) to add  an example with an anchor
+.. _example1:
+
+.. topic:: Example
+
+This is our first example
+
+
+(2) to reference the example
+See Example :num: `Example #example1`.</pre>
+</div>
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        «&#160;&#160;<a href="Client-sideDevelopment.html">10. Client-side Development</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="Preprocessor.html">12. The Document Processor</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer">
+        &copy; Copyright 2012-2015 by OpenDSA Project Contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,804 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>15. Data collection server database tables &mdash; OpenDSA System Documentation</title>
+    
+    <link rel="stylesheet" href="_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/print.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.4.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/theme_extras.js"></script>
+    <link rel="top" title="OpenDSA System Documentation" href="index.html" />
+    <link rel="next" title="16. Administrator’s Tools" href="AdminTools.html" />
+    <link rel="prev" title="14. Back-end web services and user interface" href="BackendSpecs.html" /> 
+  </head>
+  <body>
+      <div class="header"><img class="rightlogo" src="_static/AlgoVizLogo.gif" alt="Logo"/><h1 class="heading"><a href="index.html">
+          <span>OpenDSA System Documentation</span></a></h1>
+        <h2 class="heading"><span>15. Data collection server database tables</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        «&#160;&#160;<a href="BackendSpecs.html">14. Back-end web services and user interface</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="AdminTools.html">16. Administrator&#8217;s Tools</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="data-collection-server-database-tables">
+<span id="databaseschemas"></span><h1>15. Data collection server database tables<a class="headerlink" href="#data-collection-server-database-tables" title="Permalink to this headline">¶</a></h1>
+<p>Below is the description of all the tables created
+by the opendsa django app models.py file.</p>
+<div class="section" id="exercise">
+<h2>15.1. Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">¶</a></h2>
+<p>Stores exercises information.</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="39%" />
+<col width="16%" />
+<col width="45%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Column</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>name</td>
+<td>int</td>
+<td>Name of the exercise</td>
+</tr>
+<tr class="row-odd"><td>description</td>
+<td>longtext</td>
+<td>Description of the exercise</td>
+</tr>
+<tr class="row-even"><td>author</td>
+<td>varchar</td>
+<td>Exercise author</td>
+</tr>
+<tr class="row-odd"><td>covers</td>
+<td>longtext</td>
+<td><dl class="first last docutils">
+<dt>Topic covered by the</dt>
+<dd>exercise</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-even"><td>ex_type</td>
+<td>varchar</td>
+<td>Type of exercise: Khan
+academy, JSAV proficiency,
+or JSAV slide shows</td>
+</tr>
+<tr class="row-odd"><td>streak (KA exercises)</td>
+<td>decimal</td>
+<td>streak of correct exercise
+for proficiency</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="section" id="books">
+<h2>15.2. Books<a class="headerlink" href="#books" title="Permalink to this headline">¶</a></h2>
+<p>Stores books information.</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="39%" />
+<col width="16%" />
+<col width="45%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Column</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>book_name</td>
+<td>varchar</td>
+<td>Name of the book</td>
+</tr>
+<tr class="row-odd"><td>description</td>
+<td>longtext</td>
+<td>Book&#8217;s URL</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="section" id="assignments">
+<h2>15.3. Assignments<a class="headerlink" href="#assignments" title="Permalink to this headline">¶</a></h2>
+<p>Stores assignments information.</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="35%" />
+<col width="25%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Column</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>course_module(1)</td>
+<td>int</td>
+<td>reference to assignment name</td>
+</tr>
+<tr class="row-odd"><td>assignment_book(2)</td>
+<td>int</td>
+<td>reference to book</td>
+</tr>
+<tr class="row-even"><td>assignment_exercises</td>
+<td><dl class="first last docutils">
+<dt>comma separated</dt>
+<dd>integers</dd>
+</dl>
+</td>
+<td>Exercise author</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">Foreign</span> <span class="pre">keys:</span></tt> (1) Exercise_CourseModule table (A+ database), (2) Book table.</p>
+</div>
+<div class="section" id="module">
+<h2>15.4. Module<a class="headerlink" href="#module" title="Permalink to this headline">¶</a></h2>
+<p>Stores modules information.</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="39%" />
+<col width="16%" />
+<col width="45%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Column</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>short_display_name</td>
+<td>varchar</td>
+<td>Name of the module</td>
+</tr>
+<tr class="row-odd"><td>name</td>
+<td>longtext</td>
+<td>Description of the module</td>
+</tr>
+<tr class="row-even"><td>author</td>
+<td>varchar</td>
+<td>Exercise author</td>
+</tr>
+<tr class="row-odd"><td>covers</td>
+<td>longtext</td>
+<td><dl class="first last docutils">
+<dt>Topic covered by the</dt>
+<dd>exercise</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-even"><td>exercises_list</td>
+<td>comma
+separated
+integers</td>
+<td>List of exercises in
+the module</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="section" id="bookmoduleexercise">
+<h2>15.5. BookModuleExercise<a class="headerlink" href="#bookmoduleexercise" title="Permalink to this headline">¶</a></h2>
+<p>Stores information related to books, modules, and exercises relationships.</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="39%" />
+<col width="16%" />
+<col width="45%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Column</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>book(1)</td>
+<td>int</td>
+<td>Reference to book</td>
+</tr>
+<tr class="row-odd"><td>module(2)</td>
+<td>int</td>
+<td>Reference to module</td>
+</tr>
+<tr class="row-even"><td>exercise(3)</td>
+<td>int</td>
+<td>Reference to exercise</td>
+</tr>
+<tr class="row-odd"><td>points</td>
+<td>int</td>
+<td>Points of the exercise</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">Foreign</span> <span class="pre">keys:</span></tt> (1) Book table, (2) Module table, (3) Exercise table.</p>
+</div>
+<div class="section" id="bookchapter">
+<h2>15.6. BookChapter<a class="headerlink" href="#bookchapter" title="Permalink to this headline">¶</a></h2>
+<p>Stores information about chapters in a book.</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="35%" />
+<col width="25%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Column</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>book(1)</td>
+<td>int</td>
+<td>Reference to book</td>
+</tr>
+<tr class="row-odd"><td>name</td>
+<td>int</td>
+<td>Name of the chapter</td>
+</tr>
+<tr class="row-even"><td>module_list</td>
+<td>comma separated
+integers</td>
+<td>List of modules in the
+chapter</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">Foreign</span> <span class="pre">keys:</span></tt> (1) Book table.</p>
+</div>
+<div class="section" id="userbook">
+<h2>15.7. UserBook<a class="headerlink" href="#userbook" title="Permalink to this headline">¶</a></h2>
+<p>Stores book-user relationships and if user&#8217;s work should be graded.</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="35%" />
+<col width="25%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Column</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>book(1)</td>
+<td>int</td>
+<td>Reference to book</td>
+</tr>
+<tr class="row-odd"><td>user(2)</td>
+<td>int</td>
+<td>Reference to user</td>
+</tr>
+<tr class="row-even"><td>grade</td>
+<td>boolean</td>
+<td>Indicates if user&#8217;s grades
+should be displayed
+in teachers&#8217; view</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">Foreign</span> <span class="pre">keys:</span></tt> (1) Book table, (2) Auth_User table (Django table).</p>
+</div>
+<div class="section" id="userbutton">
+<h2>15.8. UserButton<a class="headerlink" href="#userbutton" title="Permalink to this headline">¶</a></h2>
+<p>Stores clickstream/interactions data</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="35%" />
+<col width="25%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Column</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>book(1)</td>
+<td>int</td>
+<td>Reference to book</td>
+</tr>
+<tr class="row-odd"><td>user(2)</td>
+<td>int</td>
+<td>Reference to user</td>
+</tr>
+<tr class="row-even"><td>exercise(3)</td>
+<td>int</td>
+<td>reference to exercise</td>
+</tr>
+<tr class="row-odd"><td>module(4)</td>
+<td>int</td>
+<td>reference to module</td>
+</tr>
+<tr class="row-even"><td>name</td>
+<td>varchar</td>
+<td>type of interaction</td>
+</tr>
+<tr class="row-odd"><td>description</td>
+<td>longtext</td>
+<td>description of the
+interaction</td>
+</tr>
+<tr class="row-even"><td>action_time</td>
+<td>datetime</td>
+<td>time of the interaction</td>
+</tr>
+<tr class="row-odd"><td>uiid</td>
+<td>int</td>
+<td>unique id of the intercation</td>
+</tr>
+<tr class="row-even"><td>browser_family</td>
+<td>varchar</td>
+<td>browser used by the user</td>
+</tr>
+<tr class="row-odd"><td>browser_version</td>
+<td>varchar</td>
+<td>browser&#8217;s version</td>
+</tr>
+<tr class="row-even"><td>os_family</td>
+<td>varchar</td>
+<td>operating system used</td>
+</tr>
+<tr class="row-odd"><td>os_version</td>
+<td>varchar</td>
+<td>operating system&#8217;s version</td>
+</tr>
+<tr class="row-even"><td>device</td>
+<td>varchar</td>
+<td>device used by the user</td>
+</tr>
+<tr class="row-odd"><td>ip_address</td>
+<td>varchar</td>
+<td>IP address of the user</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">Foreign</span> <span class="pre">keys:</span></tt> (1) Book table, (2) Auth_User table (Django table), (3) Exercise table, (4) Module table.</p>
+<p><tt class="docutils literal"><span class="pre">Jsav</span> <span class="pre">buttons</span></tt>
+jsav-forward: go to the next slide.
+jsav-backward: back to the previous slide.
+jsav-begin: go to the first page of the slideshow.
+jsav-end: go to the last page of the slideshow.
+=&gt; With AV information (see below), those actions would be very useful to calculate which slides are most viewed, and it would give a different aspect to calculate the slide reading time.</p>
+<p><tt class="docutils literal"><span class="pre">Mouse</span> <span class="pre">focus</span></tt>
+window-focus: student is looking at this page.
+window-blur: student left this page.
+=&gt; With this information, we might be able to calculate students&#8217; actual spent time on OpenDSA.</p>
+<p><tt class="docutils literal"><span class="pre">Module</span> <span class="pre">load</span></tt>
+window-unload: in the current system, this actions is recorded only when students leave the page, but within Canvas, it is recorded when users hit the next button to continue reading the prose.
+document-ready: a module is loaded.</p>
+<p><tt class="docutils literal"><span class="pre">KA</span> <span class="pre">exercise</span></tt>
+load-ka: this action is recorded when KA exercise framework is loaded. When KA exercise framework is loaded, all interaction logs go to userexerciselog, so userbutton table does not get any interaction log.
+However, when the KA exercise is refreshed (for gaming or any other reason), this actin is recorded on the userbutton table. Therefore, by counting the frequency of this action, we can tell how many times students refreshed the page to avoid hard questions. With a new infrastructure, we are getting an exact exercise name, so along with these two information, we can catch one type of gaming activity with confidence.</p>
+<p><tt class="docutils literal"><span class="pre">AV</span> <span class="pre">information</span></tt>
+ev_num: number of clicks on Jsav with any jsav button (forward, backward, begin, or end).
+currentStep: number of required clicks to reach the last slide. Thus, the total number of slide is the value of currentStep + 1. (e.g. if there is a set of slide with five slides, the currentStep value is four since you need to click four times to get to the end of the slide show).</p>
+</div>
+<div class="section" id="usermodule">
+<h2>15.9. UserModule<a class="headerlink" href="#usermodule" title="Permalink to this headline">¶</a></h2>
+<p>Records a summary of a student activity on a module</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="35%" />
+<col width="25%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Column</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>book(1)</td>
+<td>int</td>
+<td>Reference to book</td>
+</tr>
+<tr class="row-odd"><td>user(2)</td>
+<td>int</td>
+<td>Reference to user</td>
+</tr>
+<tr class="row-even"><td>module(3)</td>
+<td>int</td>
+<td>reference to module</td>
+</tr>
+<tr class="row-odd"><td>first_done</td>
+<td>datetime</td>
+<td>date of first module attempt</td>
+</tr>
+<tr class="row-even"><td>last_done</td>
+<td>datetime</td>
+<td>date of last module attempt</td>
+</tr>
+<tr class="row-odd"><td>proficient_date</td>
+<td>datetime</td>
+<td>date of prociciency</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">Foreign</span> <span class="pre">keys:</span></tt> (1) Book table, (2) Auth_User table (Django table), (3) Module table.</p>
+</div>
+<div class="section" id="userdata">
+<h2>15.10. UserData<a class="headerlink" href="#userdata" title="Permalink to this headline">¶</a></h2>
+<p>Records summary of user/exercises activity (started exercises and proficient exercises).</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="28%" />
+<col width="39%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Column</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>book(1)</td>
+<td>int</td>
+<td>Reference to book</td>
+</tr>
+<tr class="row-odd"><td>user(2)</td>
+<td>int</td>
+<td>Reference to user</td>
+</tr>
+<tr class="row-even"><td>started_exercises</td>
+<td>comma separated int</td>
+<td>reference to module</td>
+</tr>
+<tr class="row-odd"><td>proficient_exercises</td>
+<td>comma separated int</td>
+<td>date of first module attempt</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">Foreign</span> <span class="pre">keys:</span></tt> (1) Book table, (2) Auth_User table (Django table)</p>
+</div>
+<div class="section" id="userexerciselog">
+<h2>15.11. UserExerciseLog<a class="headerlink" href="#userexerciselog" title="Permalink to this headline">¶</a></h2>
+<p>Records information about each exercise attempt.</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="35%" />
+<col width="25%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Column</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>user(1)</td>
+<td>int</td>
+<td>Reference to user</td>
+</tr>
+<tr class="row-odd"><td>exercise(2)</td>
+<td>int</td>
+<td>reference to exercise</td>
+</tr>
+<tr class="row-even"><td>correct</td>
+<td>boolean</td>
+<td>correctness of the attempt</td>
+</tr>
+<tr class="row-odd"><td>time_done</td>
+<td>datetime</td>
+<td>time of the attempt</td>
+</tr>
+<tr class="row-even"><td>time_taken</td>
+<td>datetime</td>
+<td>time taken to complete
+the exercise</td>
+</tr>
+<tr class="row-odd"><td>counts_hints</td>
+<td>int</td>
+<td>number of hint used</td>
+</tr>
+<tr class="row-even"><td>hint_used</td>
+<td>boolean</td>
+<td>hint used or not</td>
+</tr>
+<tr class="row-odd"><td>earned_proficiency</td>
+<td>boolean</td>
+<td>proficiency earned or not</td>
+</tr>
+<tr class="row-even"><td>count_attempt</td>
+<td>int</td>
+<td>number of attempts</td>
+</tr>
+<tr class="row-odd"><td>ex_question</td>
+<td>varchar</td>
+<td>KA question name</td>
+</tr>
+<tr class="row-even"><td>request_type</td>
+<td>longtext</td>
+<td>KA user interaction type</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">Foreign</span> <span class="pre">keys:</span></tt> (1) Book table, (2) Exercise.</p>
+</div>
+<div class="section" id="userproglog">
+<h2>15.12. UserProgLog<a class="headerlink" href="#userproglog" title="Permalink to this headline">¶</a></h2>
+<p>Records additional information about each programing exercise attempt.</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="35%" />
+<col width="21%" />
+<col width="44%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Column</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>problem_log(1)</td>
+<td>int</td>
+<td>Reference to UserExerciseLog</td>
+</tr>
+<tr class="row-odd"><td>student_code</td>
+<td>longtext</td>
+<td>students attempt code</td>
+</tr>
+<tr class="row-even"><td>feedback</td>
+<td>longtext</td>
+<td>compilation feedback</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">Foreign</span> <span class="pre">keys:</span></tt> (1) UserExerciseLog table.</p>
+</div>
+<div class="section" id="userprofexerciselog">
+<h2>15.13. UserProfExerciseLog<a class="headerlink" href="#userprofexerciselog" title="Permalink to this headline">¶</a></h2>
+<p>Stores additional information about each JSAV proficiency exercise attempt.</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="35%" />
+<col width="21%" />
+<col width="44%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Column</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>problem_log(1)</td>
+<td>int</td>
+<td>Reference to UserExerciseLog</td>
+</tr>
+<tr class="row-odd"><td>student</td>
+<td>int</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>correct</td>
+<td>int</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>fix</td>
+<td>int</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>undo</td>
+<td>int</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>total</td>
+<td>int</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">Foreign</span> <span class="pre">keys:</span></tt> (1) UserExerciseLog table.</p>
+</div>
+<div class="section" id="userexercise">
+<h2>15.14. UserExercise<a class="headerlink" href="#userexercise" title="Permalink to this headline">¶</a></h2>
+<p>Stores statistics about student attempts each record contains the data
+related to one student and one exercise.</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="35%" />
+<col width="25%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Column</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>user(1)</td>
+<td>int</td>
+<td>Reference to user</td>
+</tr>
+<tr class="row-odd"><td>exercise(2)</td>
+<td>int</td>
+<td>reference to exercise</td>
+</tr>
+<tr class="row-even"><td>streak</td>
+<td>int</td>
+<td>streak of the attempt (KA)</td>
+</tr>
+<tr class="row-odd"><td>longuest_streak</td>
+<td>int</td>
+<td>user&#8217;s longuest streak</td>
+</tr>
+<tr class="row-even"><td>first_done</td>
+<td>datetime</td>
+<td>time of first  attempt</td>
+</tr>
+<tr class="row-odd"><td>last_done</td>
+<td>datetime</td>
+<td>time of last attempt</td>
+</tr>
+<tr class="row-even"><td>total_done</td>
+<td>int</td>
+<td>total number of attempts</td>
+</tr>
+<tr class="row-odd"><td>total_correct</td>
+<td>int</td>
+<td>number of correct attempts</td>
+</tr>
+<tr class="row-even"><td>proficient_date</td>
+<td>datetime</td>
+<td>date of proficiency</td>
+</tr>
+<tr class="row-odd"><td>progress</td>
+<td>decimal</td>
+<td>correctness percentage</td>
+</tr>
+<tr class="row-even"><td>correct_exercises</td>
+<td>longtext</td>
+<td>a list of correct exercises</td>
+</tr>
+<tr class="row-odd"><td>current_exercises</td>
+<td>longtext</td>
+<td>current exercise title</td>
+</tr>
+<tr class="row-even"><td>hinted_exercises</td>
+<td>longtext</td>
+<td>recently hint used exercise</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">Foreign</span> <span class="pre">keys:</span></tt> (1) Auth_User table (Django table), (2) Exercise table.</p>
+</div>
+<div class="section" id="bugs">
+<h2>15.15. Bugs<a class="headerlink" href="#bugs" title="Permalink to this headline">¶</a></h2>
+<p>Stores bugs reported by users.</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="35%" />
+<col width="25%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Column</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>user(1)</td>
+<td>int</td>
+<td>Reference to user</td>
+</tr>
+<tr class="row-odd"><td>os_family</td>
+<td>varchar</td>
+<td>OS where the bug occured</td>
+</tr>
+<tr class="row-even"><td>browser_family</td>
+<td>varchar</td>
+<td>browser used</td>
+</tr>
+<tr class="row-odd"><td>title</td>
+<td>varchar</td>
+<td>short summary of the bug</td>
+</tr>
+<tr class="row-even"><td>description</td>
+<td>longtext</td>
+<td>detailed bug&#8217;s description</td>
+</tr>
+<tr class="row-odd"><td>screenshot</td>
+<td>longtext</td>
+<td>path to the screenshot</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">Foreign</span> <span class="pre">keys:</span></tt> (1) Auth_User table (Django table).</p>
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        «&#160;&#160;<a href="BackendSpecs.html">14. Back-end web services and user interface</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="AdminTools.html">16. Administrator&#8217;s Tools</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer">
+        &copy; Copyright 2012-2015 by OpenDSA Project Contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.
+    </div>
+  </body>
+</html>

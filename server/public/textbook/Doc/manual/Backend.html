@@ -1,0 +1,281 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>13. OpenDSA Backend Installation and Setup &mdash; OpenDSA System Documentation</title>
+    
+    <link rel="stylesheet" href="_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/print.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.4.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/theme_extras.js"></script>
+    <link rel="top" title="OpenDSA System Documentation" href="index.html" />
+    <link rel="next" title="14. Back-end web services and user interface" href="BackendSpecs.html" />
+    <link rel="prev" title="12. The Document Processor" href="Preprocessor.html" /> 
+  </head>
+  <body>
+      <div class="header"><img class="rightlogo" src="_static/AlgoVizLogo.gif" alt="Logo"/><h1 class="heading"><a href="index.html">
+          <span>OpenDSA System Documentation</span></a></h1>
+        <h2 class="heading"><span>13. OpenDSA Backend Installation and Setup</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        «&#160;&#160;<a href="Preprocessor.html">12. The Document Processor</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="BackendSpecs.html">14. Back-end web services and user interface</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="opendsa-backend-installation-and-setup">
+<span id="backend"></span><h1>13. OpenDSA Backend Installation and Setup<a class="headerlink" href="#opendsa-backend-installation-and-setup" title="Permalink to this headline">¶</a></h1>
+<p>The OpenDSA &#8220;backend&#8221; provides support for collecting student scoring
+data (in a MySQL database), logs user interaction details with OpenDSA
+content for analysis purposes, and provides tools for instructors to
+manage the student score data.
+Most OpenDSA developers do <strong>not</strong> need to worry about intalling a
+copy of the OpenDSA back end.
+Instructors who would like to use OpenDSA will probably want to
+contact the OpenDSA team about getting hosting support, rather than
+set up their own server.</p>
+<div class="section" id="windows">
+<h2>13.1. Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Install Python</p>
+</li>
+<li><p class="first">Install python setuptools</p>
+<ul class="simple">
+<li>Download the executeable from
+<a class="reference external" href="http://pypi.python.org/pypi/setuptools">http://pypi.python.org/pypi/setuptools</a></li>
+</ul>
+</li>
+<li><p class="first">Install Django:</p>
+<div class="highlight-python"><pre>tar xzvf Django-1.4.1.tar.gz
+cd Django-1.4.1
+python setup.py install</pre>
+</div>
+</li>
+<li><p class="first">Install MySQL Server</p>
+</li>
+</ol>
+<blockquote>
+<div><ul>
+<li><p class="first">Start a MySQL command prompt and then do:</p>
+<div class="highlight-python"><pre>CREATE DATABASE &lt;database_name&gt;;
+GRANT ALL ON &lt;database_name&gt;.* TO '&lt;database_user&gt;'@'localhost' IDENTIFIED BY '&lt;database_user_password&gt;';
+exit</pre>
+</div>
+</li>
+</ul>
+</div></blockquote>
+<p>See &#8220;Both&#8221; section for remaining instructions</p>
+</div>
+<div class="section" id="linux">
+<h2>13.2. Linux<a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Install Python:</p>
+<div class="highlight-python"><pre>sudo apt-get install python</pre>
+</div>
+</li>
+<li><p class="first">Download and install Django:</p>
+<div class="highlight-python"><pre>tar xzvf Django-1.4.1.tar.gz
+cd Django-1.4.1
+python setup.py install</pre>
+</div>
+</li>
+<li><p class="first">Install python setuptools:</p>
+<div class="highlight-python"><pre>sudo apt-get install python-setuptools (easy_install)</pre>
+</div>
+</li>
+<li><p class="first">Install MySQL Server:</p>
+<div class="highlight-python"><pre>sudo apt-get install mysql-server</pre>
+</div>
+<ul>
+<li><p class="first">Start mysql prompt and do:</p>
+<div class="highlight-python"><pre>mysql -u root -p
+&lt; Enter your password when prompted &gt;
+CREATE DATABASE &lt;database_name&gt;;
+GRANT ALL ON &lt;database_name&gt;.* TO '&lt;database_user&gt;'@'localhost' IDENTIFIED BY '&lt;database_user_password&gt;';
+exit</pre>
+</div>
+</li>
+</ul>
+</li>
+</ol>
+<p>See &#8220;Both&#8221; section for remaining instructions</p>
+</div>
+<div class="section" id="both">
+<h2>13.3. Both<a class="headerlink" href="#both" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>easy_install MySQL-python</li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li>If this doesn&#8217;t work in Windows, you can install from an EXE - <a class="reference external" href="https://code.google.com/p/soemin/downloads/detail?name=MySQL-python-1.2.3.win32-py2.7.exe">https://code.google.com/p/soemin/downloads/detail?name=MySQL-python-1.2.3.win32-py2.7.exe</a></li>
+</ul>
+</div></blockquote>
+<ol class="arabic" start="2">
+<li><p class="first">Install required modules, (remove <tt class="docutils literal"><span class="pre">sudo</span></tt> for Windows):</p>
+<div class="highlight-python"><pre>sudo easy_install oauth2
+sudo easy_install simplejson
+sudo easy_install feedparser
+sudo easy_install icalendar
+sudo easy_install mimeparse
+sudo easy_install python-dateutil
+sudo easy_install django-tastypie
+sudo easy_install html5lib</pre>
+</div>
+</li>
+<li><p class="first">Install memcache:</p>
+<div class="highlight-python"><pre>pip install python-memcached</pre>
+</div>
+</li>
+<li><p class="first">Install user agent (<a class="reference external" href="http://pypi.python.org/pypi/django-user_agents">http://pypi.python.org/pypi/django-user_agents</a>):</p>
+<div class="highlight-python"><pre>pip install pyyaml ua-parser user-agents
+pip install django-user-agents</pre>
+</div>
+</li>
+<li><p class="first">Install OpenDSA-server:</p>
+<div class="highlight-python"><pre>git clone https://YOURGITHUBID@github.com/OpenDSA/OpenDSA-server.git
+cd OpenDSA-server/ODSA-django</pre>
+</div>
+<ul>
+<li><p class="first">Change values in settings.py file</p>
+<blockquote>
+<div><ul class="simple">
+<li>&#8216;ENGINE&#8217;: &#8216;django.db.backends.mysql&#8217;, # Add &#8216;postgresql_psycopg2&#8217;, &#8216;postgresql&#8217;, &#8216;mysql&#8217;, &#8216;sqlite3&#8217; or &#8216;oracle&#8217;.</li>
+<li>&#8216;NAME&#8217;: &#8216;&lt;database_name&gt;&#8217;,         #g3et_path(&#8216;test.db&#8217;),            # Or path to database file if using sqlite3.</li>
+<li>&#8216;USER&#8217;: &#8216;&lt;database_user&gt;&#8217;,                  # Not used with sqlite3.</li>
+<li>&#8216;PASSWORD&#8217;: &#8216;&lt;database_user_password&gt;&#8217;,                  # Not used with sqlite3.</li>
+<li>&#8216;HOST&#8217;: &#8216;&#8217;,                      # Set to empty string for localhost. Not used with sqlite3.</li>
+<li>&#8216;PORT&#8217;: &#8216;&#8217;,                      # Set to empty string for default. Not used with sqlite3.</li>
+<li>For both values under &#8216;TEMPLATE_LOADERS = (&#8216; change &#8216;load_template_source&#8217; to &#8216;Loader&#8217;</li>
+<li>Update BASE_URL to have IP and port of Django server (optional?)<ul>
+<li>BASE_URL = &#8220;&lt;IP&gt;:&lt;PORT&gt;&#8221;</li>
+<li>Ex: BASE_URL = &#8220;127.0.0.1:8000&#8221;</li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</li>
+<li><p class="first">Create an empty file named daily_stats.json, inside  the &#8220;media root&#8221;
+directory specified in settings.py file</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">syncdb</span></tt></p>
+</li>
+<li><p class="first">Create an administrator (superuser) account when prompted</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">runserver</span> <span class="pre">0.0.0.0:8000</span></tt></p>
+</li>
+<li><p class="first">In your web browser, go to: <a class="reference external" href="http://127.0.0.1:8000/admin/">http://127.0.0.1:8000/admin/</a></p>
+</li>
+</ol>
+</div>
+<div class="section" id="ssl-certificates">
+<h2>13.4. SSL Certificates<a class="headerlink" href="#ssl-certificates" title="Permalink to this headline">¶</a></h2>
+<p>An OpenDSA installation might encounter the symptom that some students
+cannot log on.
+If this is happening, it might be caused by a problem with your SSL
+certificate chain.
+If this is the cause, then hopefully you will be able to tell because
+either the browser console window or the Network tab under Firebug
+might indicate a message such as
+&#8220;Failed to load response data network error, ERR_INSECURE_RESPONSE&#8221;.</p>
+<p>The cause for this condition is that either the root certificate is
+missing in your Apache configuration, or else the certifciate
+signature chain is broken.
+In our experience, this can easily happen in a University setting.</p>
+<p>You can use online tools to help diagnose SSL installation issues.
+See <a class="reference external" href="https://www.digicert.com/help/">https://www.digicert.com/help/</a> or
+<a class="reference external" href="https://www.sslshopper.com/ssl-checker.html">https://www.sslshopper.com/ssl-checker.html</a>.
+Then, if necessary you will have to update your Apache configuration
+file (such as /etc/apache2/sites-enabled/default-ssl).
+Depending on your problem, you might need to:</p>
+<ul class="simple">
+<li>Add the root certificate by setting the <tt class="docutils literal"><span class="pre">SSLCACertificateFile</span></tt>
+variable (see
+<a class="reference external" href="http://httpd.apache.org/docs/2.2/mod/mod_ssl.html#sslcacertificatefile">http://httpd.apache.org/docs/2.2/mod/mod_ssl.html#sslcacertificatefile</a>).</li>
+<li>Specify the certificate signature chain file with
+<tt class="docutils literal"><span class="pre">SSLCertificateChainFile</span></tt>
+(see <a class="reference external" href="http://httpd.apache.org/docs/2.2/mod/mod_ssl.html#sslcertificatechainfile">http://httpd.apache.org/docs/2.2/mod/mod_ssl.html#sslcertificatechainfile</a>).
+If your certificate vendor did not provide you with a single chain
+file, you might have to concatenate all the intermediate
+certificates into one file.</li>
+</ul>
+</div>
+<div class="section" id="caching">
+<h2>13.5. Caching<a class="headerlink" href="#caching" title="Permalink to this headline">¶</a></h2>
+<p>If you frequently update your OpenDSA&#8217;s files, you might want
+to configure Apache to cache your files for a shorter period
+of time. In our case we configured Apache  to cache js and css
+files for an hour.</p>
+<p>The Apache documentation recommends to make configuration changes inside
+httpd main server config file rather that using <tt class="docutils literal"><span class="pre">.htaccess</span></tt> files
+(see <a class="reference external" href="http://httpd.apache.org/docs/2.4/howto/htaccess.html">http://httpd.apache.org/docs/2.4/howto/htaccess.html</a>).
+Below is our caching settings:</p>
+<div class="highlight-python"><pre>ExpiresActive On
+ExpiresByType image/png "now plus 1 month"
+ExpiresByType image/jpeg "now plus 1 month"
+ExpiresByType image/gif "now plus 1 month"
+ExpiresByType application/javascript "now plus 1 hour"
+ExpiresByType application/x-javascript "now plus 1 hour"
+ExpiresByType text/javascript "now plus 1 hour"
+ExpiresByType text/css "now plus 1 hour"</pre>
+</div>
+</div>
+<div class="section" id="notes">
+<h2>13.6. Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h2>
+<p>Due to cross-domain communication issues, the files communicating with
+the Django server must be hosted on a server and that server must be
+listed in the <tt class="docutils literal"><span class="pre">XS_SHARING_ALLOWED_ORIGINS</span></tt> variable in the
+<tt class="docutils literal"><span class="pre">settings.py</span></tt> file.
+For OpenDSA development, we host our files on
+<tt class="docutils literal"><span class="pre">http://algoviz-beta.cc.vt.edu</span></tt>.</p>
+<p>To enable OpenDSA to communicate with the Django server, you must include the IP of your server in your book instance configuration file.</p>
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        «&#160;&#160;<a href="Preprocessor.html">12. The Document Processor</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="BackendSpecs.html">14. Back-end web services and user interface</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer">
+        &copy; Copyright 2012-2015 by OpenDSA Project Contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.
+    </div>
+  </body>
+</html>

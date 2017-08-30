@@ -1,0 +1,373 @@
+
+<!DOCTYPE html>
+
+
+
+
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Illustrate slide shows and KA exercises in a Simple Demonstration of an OpenDSA learning module &mdash; Example of Simple Book</title>
+    
+    <link rel="stylesheet" href="_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../lib/normalize.css" type="text/css" />
+    <link rel="stylesheet" href="../../../JSAV/css/JSAV.css" type="text/css" />
+    <link rel="stylesheet" href="../../../lib/odsaMOD-min.css" type="text/css" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" type="text/css" />
+    <link rel="stylesheet" href="../../../lib/odsaStyle-min.css" type="text/css" />
+    
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    './',
+      VERSION:     '0.4.1',
+      COLLAPSE_INDEX: false,
+      FILE_SUFFIX: '.html',
+      HAS_SOURCE:  true
+    };
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+        processEscapes: true
+      },
+      "HTML-CSS": {
+        scale: "80"
+      }
+    });
+  </script>
+    <link rel="index" title="Example of Simple Book" href="index.html" />
+
+  </head>
+
+  <body>
+
+
+      <div class="header">
+        
+  
+      <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="../../../JSAV/lib/jquery.transit.js"></script>
+    <script type="text/javascript" src="../../../JSAV/lib/raphael.js"></script>
+    <script type="text/javascript" src="../../../JSAV/build/JSAV-min.js"></script>
+    <script type="text/javascript" src="_static/config.js"></script>
+    <script type="text/javascript" src="../../../lib/odsaUtils-min.js"></script>
+    <script type="text/javascript" src="../../../lib/odsaMOD-min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+    <script type="text/javascript" src="../../../lib/dataStructures.js"></script>
+    <script type="text/javascript" src="../../../lib/conceptMap.js"></script>
+
+        
+<a id="username-link" style="float:right;color:red;margin:10px 20px auto; display: none" class="username-link" href="Gradebook.html"></a>
+<a id="login-link" style="float:right;color:red;margin:10px 20px auto" class="login-link" href="#"><Macro 'login'></a>
+<div id="login-box" class="login-popup">
+  <a href="#" class="close"><img src="_static/Images/close_pop.png" class="btn_close" title="Close Window" alt="Close" /></a>
+  <form method="post" class="signin" action="https://#">
+    <fieldset class="textbox">
+      <label class="username">
+        <span>Username</span>
+        <input id="username" value="" type="text" autocomplete="on" placeholder="Username" tabindex="1">
+      </label>
+      <label class="password">
+        <span>Password</span>
+        <input id="password" value="" type="password" placeholder="Password" tabindex="2">
+        <span><a id="forgot" href="#">Forgot your password?</a></span>
+      </label>
+
+      <p>
+        <input type="submit" id="login-submit-button" value="Sign in" tabindex="3" />
+      </p>
+      <p>
+        <input type="button" id="register-button" value="Register" tabindex="4" />
+      </p>
+    </fieldset>
+  </form>
+</div>
+
+        
+<a id="registration-link" style="float:right;color:red;margin:10px 20px auto" class="registration-link" href="#">Register</a>
+<div id="registration-box" class="registration-popup ">
+  <a href="#" class="close"><img src="_static/Images/close_pop.png" class="btn_close" title="Close Window" alt="Close Window" /></a>
+  <form method="post" class="signin" action="https://#">
+    <fieldset class="textbox">
+      <div id="register_error" class="error"></div>
+      <label class="username">
+        <span>Username:</span>
+        <input type="text" id="user" placeholder="Username" />
+      </label>
+
+      <label class="password">
+        <span>Password</span>
+        <input id="pass" type="password" placeholder="Password" />
+      </label>
+
+      <label class="password">
+        <span>Confirm Password</span>
+        <input id="rpass" type="password" placeholder="Confirm Password" />
+      </label>
+
+      <label class="email">
+        <span>Email:</span>
+        <input type="text" id="email" placeholder="Email">
+      </label>
+
+      <p>
+        <input type="submit" id="register-submit-button" value="Register &rarr;"/>
+      </p>
+    </fieldset>
+  </form>
+</div>
+<img class="leftlogo" src="_static/OpenDSALogoT64.png" alt="Logo"/><div class="title-wrapper">
+          <div class="title-inbetween" style="display: table-cell; vertical-align: middle;">
+            <div class="title-content">
+              <h1 class="heading" ><a href="index.html">
+                <span>Example of Simple Book</span></a></h1>
+              <h2 class="heading" ><span></span></h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="topnav">
+        <p>
+            <a style="float:left;color:blue;" href="../source/simple_demo.rst"
+              target="_blank" rel="nofollow">Show Source | </a>&#160;&#160;
+            <a class="abt" style="float:left;color:blue;" href="#" rel="nofollow">| About</a>&#160;&#160;
+
+          
+        <a  class="uplink" href="index.html">Contents</a>
+
+
+        </p>
+      </div>
+       
+      <div class="content">
+        
+  <script>ODSA.SETTINGS.DISP_MOD_COMP = true;ODSA.SETTINGS.MODULE_NAME = "simple_demo";ODSA.SETTINGS.MODULE_LONG_NAME = "Simple Example of Using a Slide Show in a Book Module";ODSA.SETTINGS.MODULE_CHAPTER = "A Simple Example"; ODSA.SETTINGS.BUILD_DATE = "2017-05-30 16:22:56"; ODSA.SETTINGS.BUILD_CMAP = false;JSAV_OPTIONS['lang']='en';JSAV_EXERCISE_OPTIONS['code']='java_generic';</script><div class="section" id="illustrate-slide-shows-and-ka-exercises-in-a-simple-demonstration-of-an-opendsa-learning-module">
+<h1>Illustrate slide shows and KA exercises in a Simple Demonstration of an OpenDSA learning module<a class="headerlink" href="#illustrate-slide-shows-and-ka-exercises-in-a-simple-demonstration-of-an-opendsa-learning-module" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>To get you started, the following &quot;learning module&quot; illustrates how to
+create some slideshows and exercises.  The slideshows you see here are
+in the AV/SimpleDemo directory, and the the exercises are in the
+Exercises/SimpleDemo directory.  No real &quot;algorithm&quot; is illustrated
+here, but rather the slideshows and exercises are meant as starting
+points for you to create your own content.</p>
+</div>
+<div class="section" id="a-slideshow-to-swap-array-elements-displayed-as-an-inline-av">
+<h2>A slideshow to swap array elements displayed as an inline AV<a class="headerlink" href="#a-slideshow-to-swap-array-elements-displayed-as-an-inline-av" title="Permalink to this headline">¶</a></h2>
+<p>The following demonstrates how, once you have created a slideshow to
+swap two array elements (see <em>simple_demo1</em> in the AV/SimpleDemo
+directory), you can then incorporate it into a learning module as an
+inline AV.</p>
+<div id="simple_demo1" class="ssAV" data-points="0.0" data-threshold="1.0
+:output: show" data-type="ss" data-required="False" data-long-name="Simple demo slideshow">
+ <span class="jsavcounter"></span>
+ <a class="jsavsettings" href="#">Settings</a>
+ <div class="jsavcontrols"></div>
+ 
+ <div class="jsavcanvas"></div>
+ <div class="prof_indicators">
+  <img id="simple_demo1_check_mark" class="prof_check_mark" src="_static/Images/green_check.png" alt="Proficient" />
+  <span id="simple_demo1_cm_saving_msg" class="cm_saving_msg">Saving...</span>
+  <span id="simple_demo1_cm_error_msg" class="cm_error_msg">
+   <img id="simple_demo1_cm_warning_icon" class="cm_warning_icon" src="_static/Images/warning.png" alt="Error Saving" /><br />
+   Server Error<br />
+   <a href="#" class="resubmit_link">Resubmit</a>
+  </span>
+ </div>
+</div>
+<p></p>
+</div>
+<div class="section" id="swapping-array-elements-with-user-input-of-the-array-and-a-reset-button">
+<h2>Swapping array elements with user input of the array and a reset button<a class="headerlink" href="#swapping-array-elements-with-user-input-of-the-array-and-a-reset-button" title="Permalink to this headline">¶</a></h2>
+<p>Here we have the same visualization as in the previous inlineav, but
+now as an embedded AV.  Although it is slightly more complicated this
+way, it allows us to process input from the user on the embedded page.
+Here the user can enter a space-separated list of numbers, or if they
+choose to not do so, an OpenDSA utility randomly generates them for
+the user.  (See <em>simple_demo2</em> in the AV/SimpleDemo
+directory.)</p>
+<div
+    id="simple_demo2"
+    class="embedContainer"
+    data-exer-name="simple_demo2"
+    data-long-name="Simple Demo Standalone AV"
+    data-frame-src="../../../AV/SimpleDemo/simple_demo2.html?selfLoggingEnabled=false&amp;localMode=true&amp;module=simple_demo&amp;JXOP-debug=true&amp;JOP-lang=en&amp;JXOP-code=java_generic"
+    data-frame-width="950"
+    data-frame-height="650"
+    data-external="false"
+    data-points="0"
+    data-required="False"
+    data-showhide="none"
+    data-threshold="1.0"
+    data-type="ss">
+  
+  <div class="center">
+    <div id="simple_demo2_iframe"></div>
+  </div>
+</div>
+</div>
+<div class="section" id="a-khan-academy-exercise-with-jsav-object">
+<h2>A Khan Academy Exercise with JSAV object<a class="headerlink" href="#a-khan-academy-exercise-with-jsav-object" title="Permalink to this headline">¶</a></h2>
+<p>This example shows how to embed a Khan Academy exercise that has the user identify the
+maximum by clicking on a JSAV array cell.  (See <em>Simple_demo_ex1</em> in the Exercises/SimpleDemo
+directory.)</p>
+<div
+    id="Simple_demo_ex1"
+    class="embedContainer"
+    data-exer-name="Simple_demo_ex1"
+    data-long-name="KA Exercise Example with JSAV object"
+    data-frame-src="../../../Exercises/SimpleDemo/Simple_demo_ex1.html?selfLoggingEnabled=false&amp;localMode=true&amp;module=simple_demo&amp;JXOP-debug=true&amp;JOP-lang=en&amp;JXOP-code=java_generic"
+    data-frame-width="950"
+    data-frame-height="650"
+    data-external="false"
+    data-points="1.0"
+    data-required="True"
+    data-showhide="show"
+    data-threshold="3.0"
+    data-type="ka">
+  
+  <div class="center">
+    <div id="Simple_demo_ex1_iframe"></div>
+  </div>
+</div>
+</div>
+<div class="section" id="a-khan-academy-exercise-with-fill-in-the-blank-question">
+<h2>A Khan Academy Exercise with Fill-in-the-blank Question<a class="headerlink" href="#a-khan-academy-exercise-with-fill-in-the-blank-question" title="Permalink to this headline">¶</a></h2>
+<p>This example shows how to embed a Khan Academy exercise that has the user identify the
+maximum by typing the number into a text box.  (See <em>Simple_demo_ex2</em> in the Exercises/SimpleDemo
+directory.)</p>
+<div
+    id="Simple_demo_ex2"
+    class="embedContainer"
+    data-exer-name="Simple_demo_ex2"
+    data-long-name="KA Exercise Example with fill in the blank question"
+    data-frame-src="../../../Exercises/SimpleDemo/Simple_demo_ex2.html?selfLoggingEnabled=false&amp;localMode=true&amp;module=simple_demo&amp;JXOP-debug=true&amp;JOP-lang=en&amp;JXOP-code=java_generic"
+    data-frame-width="950"
+    data-frame-height="650"
+    data-external="false"
+    data-points="1.0"
+    data-required="True"
+    data-showhide="show"
+    data-threshold="3.0"
+    data-type="ka">
+  
+  <div class="center">
+    <div id="Simple_demo_ex2_iframe"></div>
+  </div>
+</div>
+</div>
+<div class="section" id="a-khan-academy-exercise-with-multiple-choice-question">
+<h2>A Khan Academy Exercise with Multiple Choice Question<a class="headerlink" href="#a-khan-academy-exercise-with-multiple-choice-question" title="Permalink to this headline">¶</a></h2>
+<p>This example shows how to embed a Khan Academy exercise that has the
+user identify the maximum by picking it from a multiple-choice list.
+(See <em>Simple_demo_ex3</em> in the Exercises/SimpleDemo directory.)</p>
+</div>
+<div class="section" id="same-example-as-the-first-one-just-different-numbers">
+<h2>Same Example as the First One, Just Different Numbers<a class="headerlink" href="#same-example-as-the-first-one-just-different-numbers" title="Permalink to this headline">¶</a></h2>
+<div
+    id="Simple_demo_ex3"
+    class="embedContainer"
+    data-exer-name="Simple_demo_ex3"
+    data-long-name="Array Question"
+    data-frame-src="../../../Exercises/SimpleDemo/Simple_demo_ex3.html?selfLoggingEnabled=false&amp;localMode=true&amp;module=simple_demo&amp;JXOP-debug=true&amp;JOP-lang=en&amp;JXOP-code=java_generic"
+    data-frame-width="950"
+    data-frame-height="650"
+    data-external="false"
+    data-points="0.0"
+    data-required="False"
+    data-showhide="show"
+    data-threshold="1.0"
+    data-type="ka">
+  
+  <div class="center">
+    <div id="Simple_demo_ex3_iframe"></div>
+  </div>
+</div>
+<script type="text/javascript" src="../../../AV/SimpleDemo/simple_demo1.js"></script>
+<script type="text/javascript" src="../../../AV/SimpleDemo/simple_demo3.js"></script>
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav">
+      <p><span class="email_div" style="display:inline;"><a id="contact_us" class="contact" style="float:left;color:blue;" rel="nofollow" href="mailto:">Contact Us |</a><a style="float:left;color:blue;" rel="nofollow" href="../../../lib/Privacy.html" target="_blank">| Privacy |</a> <a style="float:left;color:blue;" rel="nofollow" href="../../../lib/license.html" target="_blank">| License</a></span>&#160;&#160;
+      
+        <a  class="uplink" href="index.html">Contents</a>
+
+</p>
+      </div>
+      <img style="float:right;" src="_static/nsf1.gif" height="62" width="62" alt="nsf"/>
+
+
+    <div class="footer">
+      <p>
+        <span class="email_div" style="display:inline;">
+          <a id="contact_us" class="contact" style="float:left;color:blue;" rel="nofollow" href="mailto:">Contact Us |</a>
+          <a id="bugreport-link" style="float:left;color:blue;" class="bugreport-link" href="#">| Report a bug</a>
+        </span>
+      </p>
+        &copy; Copyright 2016 by OpenDSA Project Contributors and distributed under an MIT license.
+      Last updated on Aug 30, 2017.
+      Created using <a target="_blank" href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.
+    </div>
+    
+<div id="bugreport-box" class="bugreport-popup ">
+  <a href="#" class="close"><img src="_static/Images/close_pop.png" class="btn_close" title="Close Window" alt="Close Window" /></a>
+  <form method="post" class="report" action="https://#">
+    <fieldset class="textbox">
+      <div id="bug_error" class="error"></div>
+      <label>
+        <span>Summary*:</span>
+        <input type="text" id="b_title" placeholder="Summary" />
+      </label>
+
+      <label class="os">
+        <span>Operating system*:</span>
+        <select id="b_os">
+          <option value="windows">Windows</option>
+          <option value="macos">Mac OS</option>
+          <option value="linux">Linux</option>
+          <option value="ios">iOS</option>
+          <option value="android">Android</option>
+          <option value="other">Other</option>
+        </select>
+      </label>
+
+      <label class="browser">
+        <span>Browser*:</span>
+        <select id="b_browser">
+          <option value="chrome">Chrome</option>
+          <option value="safari">Safari</option>
+          <option value="internetexplorer">Internet Explorer</option>
+          <option value="opera">Opera</option>
+          <option value="other">Other</option>
+        </select>
+      </label>
+
+      <label class="description">
+        <span>Description*:</span><br>
+        <textarea id="b_description" rows="5" cols="25" placeholder="***BUG** Please enter: (1) a consice description of the problem. (2) steps to reproduce bug. (3) the version of your browser and operating system."></textarea>
+      </label>
+
+      <label class="screenshot">
+        <span>Attach a screenshot (optional):</span>
+        <input type="file" id="b_screenshot" accept="image/*" placeholder="Attach a screenshot (optional)">
+      </label>
+
+      <p>
+        <input type="submit" id="bug-submit-button" value="Submit &rarr;"/>
+      </p>
+    </fieldset>
+  </form>
+</div>
+
+  </body>
+</html>

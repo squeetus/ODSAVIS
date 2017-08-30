@@ -1,0 +1,472 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>14. Back-end web services and user interface &mdash; OpenDSA System Documentation</title>
+    
+    <link rel="stylesheet" href="_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/print.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.4.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/theme_extras.js"></script>
+    <link rel="top" title="OpenDSA System Documentation" href="index.html" />
+    <link rel="next" title="15. Data collection server database tables" href="DatabaseSchemas.html" />
+    <link rel="prev" title="13. OpenDSA Backend Installation and Setup" href="Backend.html" /> 
+  </head>
+  <body>
+      <div class="header"><img class="rightlogo" src="_static/AlgoVizLogo.gif" alt="Logo"/><h1 class="heading"><a href="index.html">
+          <span>OpenDSA System Documentation</span></a></h1>
+        <h2 class="heading"><span>14. Back-end web services and user interface</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        «&#160;&#160;<a href="Backend.html">13. OpenDSA Backend Installation and Setup</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="DatabaseSchemas.html">15. Data collection server database tables</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="back-end-web-services-and-user-interface">
+<span id="backendspecs"></span><h1>14. Back-end web services and user interface<a class="headerlink" href="#back-end-web-services-and-user-interface" title="Permalink to this headline">¶</a></h1>
+<p>The OpenDSA &#8220;backend&#8221; API provides access to resources stored
+in the database. OpenDSA implements RESTful (REpresentional State Transfer)
+service server-side. Information is transferred to/from the back end using JSON.</p>
+<div class="section" id="users-resources">
+<h2>14.1. Users Resources<a class="headerlink" href="#users-resources" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="create-new-user">
+<h3>14.1.1. Create new user<a class="headerlink" href="#create-new-user" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">HTTP</span> <span class="pre">method:</span></tt>  POST</p>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">parameters:</span></tt></p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="47%" />
+<col width="53%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameters</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>username</td>
+<td>username of user</td>
+</tr>
+<tr class="row-odd"><td>password</td>
+<td>new user password</td>
+</tr>
+<tr class="row-even"><td>email</td>
+<td>new user email address</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">Server</span> <span class="pre">Response:</span></tt> HTTP status[bad request], [error message].</p>
+</div>
+<div class="section" id="login-user">
+<h3>14.1.2. Login user<a class="headerlink" href="#login-user" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">HTTP</span> <span class="pre">method:</span></tt>  POST</p>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">parameters:</span></tt></p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="47%" />
+<col width="53%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameters</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>username</td>
+<td>username of user</td>
+</tr>
+<tr class="row-odd"><td>password</td>
+<td>new user password</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">Server</span> <span class="pre">Response:</span></tt> HTTP status[bad request|unauthorized|forbidden], [session key]</p>
+</div>
+<div class="section" id="logout-user">
+<h3>14.1.3. Logout user<a class="headerlink" href="#logout-user" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">HTTP</span> <span class="pre">method:</span></tt>  POST</p>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">parameters:</span></tt></p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="47%" />
+<col width="53%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameters</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>key</td>
+<td><dl class="first last docutils">
+<dt>session key (generated by</dt>
+<dd>the server)</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">Server</span> <span class="pre">Response:</span></tt> HTTP status[bad request|unauthorized]</p>
+</div>
+</div>
+<div class="section" id="books-resources">
+<h2>14.2. Books Resources<a class="headerlink" href="#books-resources" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="add-new-book">
+<h3>14.2.1. Add new book<a class="headerlink" href="#add-new-book" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">HTTP</span> <span class="pre">method:</span></tt>  POST</p>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">parameters:</span></tt></p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="47%" />
+<col width="53%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameters</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>book_name</td>
+<td>Name of the book</td>
+</tr>
+<tr class="row-odd"><td>book_url</td>
+<td>BOOK&#8217;S URL</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">Server</span> <span class="pre">Response:</span></tt> HTTP status[bad request|unauthorized]</p>
+</div>
+</div>
+<div class="section" id="modules-resources">
+<h2>14.3. Modules Resources<a class="headerlink" href="#modules-resources" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="add-new-module">
+<h3>14.3.1. Add new Module<a class="headerlink" href="#add-new-module" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">HTTP</span> <span class="pre">method:</span></tt>  POST</p>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">parameters:</span></tt></p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="47%" />
+<col width="53%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameters</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>name</td>
+<td>Name of the module</td>
+</tr>
+<tr class="row-odd"><td>exercises</td>
+<td>names of the exercises
+in the module</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">Server</span> <span class="pre">Response:</span></tt> HTTP status[bad request|unauthorized]</p>
+</div>
+</div>
+<div class="section" id="exercises-resources">
+<h2>14.4. Exercises Resources<a class="headerlink" href="#exercises-resources" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">HTTP</span> <span class="pre">method:</span></tt>  POST</p>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">parameters:</span></tt></p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="47%" />
+<col width="53%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameters</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>name</td>
+<td>Name of the exercise</td>
+</tr>
+<tr class="row-odd"><td>description</td>
+<td>Description of the exercise</td>
+</tr>
+<tr class="row-even"><td>author</td>
+<td>Exercise author</td>
+</tr>
+<tr class="row-odd"><td>covers</td>
+<td><dl class="first last docutils">
+<dt>Topic covered by the</dt>
+<dd>exercise</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-even"><td>ex_type</td>
+<td>Type of exercise: Khan
+academy, JSAV proficiency,
+or JSAV slide shows</td>
+</tr>
+<tr class="row-odd"><td>streak (KA exercises)</td>
+<td>streak of correct exercise
+for proficiency</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">Server</span> <span class="pre">Response:</span></tt> HTTP status[bad request|unauthorized]</p>
+<div class="section" id="usermodule-resources">
+<h3>14.4.1. UserModule Resources<a class="headerlink" href="#usermodule-resources" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">Endpoint:</span></tt> ismoduleproficient</p>
+<p><tt class="docutils literal"><span class="pre">HTTP</span> <span class="pre">method:</span></tt>  POST</p>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">parameters:</span></tt></p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="47%" />
+<col width="53%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameters</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>key</td>
+<td>session key</td>
+</tr>
+<tr class="row-odd"><td>module</td>
+<td>module name</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">HTTP</span> <span class="pre">Response:</span></tt> HTTP status[bad request|unauthorized], user module proficiency status</p>
+</div>
+</div>
+<div class="section" id="userexercises-resources">
+<h2>14.5. UserExercises Resources<a class="headerlink" href="#userexercises-resources" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="userexercise-logs-ka-exercises">
+<h3>14.5.1. userexercise logs (KA exercises)<a class="headerlink" href="#userexercise-logs-ka-exercises" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">HTTP</span> <span class="pre">method:</span></tt> POST</p>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">Parameters:</span></tt></p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="47%" />
+<col width="53%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameters</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>key</td>
+<td>session key</td>
+</tr>
+<tr class="row-odd"><td>exercise</td>
+<td>exercise name</td>
+</tr>
+<tr class="row-even"><td>module</td>
+<td>module name</td>
+</tr>
+<tr class="row-odd"><td>attempt_number</td>
+<td>Counter for how many time
+the exercise has been
+attempted</td>
+</tr>
+<tr class="row-even"><td>attempt_content</td>
+<td>Student answer</td>
+</tr>
+<tr class="row-odd"><td>complete</td>
+<td>1 if the answer is correct
+0 otherwise</td>
+</tr>
+<tr class="row-even"><td>count_hints</td>
+<td>Counter for how many time
+hints were use</td>
+</tr>
+<tr class="row-odd"><td>time_taken</td>
+<td><dl class="first last docutils">
+<dt>Time taken to complete</dt>
+<dd>the exercise</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-even"><td>remote_adrr</td>
+<td>IP address</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">Action</span> <span class="pre">triggered:</span></tt> Update proficiency field accordingly.</p>
+<p><tt class="docutils literal"><span class="pre">HTTP</span> <span class="pre">Response:</span></tt> HTTP status[bad request|unauthorized], proficiency status.</p>
+</div>
+<div class="section" id="userexercise-logs-jsav-exercises">
+<h3>14.5.2. userexercise logs (JSAV exercises)<a class="headerlink" href="#userexercise-logs-jsav-exercises" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">HTTP</span> <span class="pre">method:</span></tt> POST</p>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">Parameters:</span></tt></p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="47%" />
+<col width="53%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameters</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>key</td>
+<td>session key</td>
+</tr>
+<tr class="row-odd"><td>exercise</td>
+<td>exercise name</td>
+</tr>
+<tr class="row-even"><td>uiid</td>
+<td>exercise unique id</td>
+</tr>
+<tr class="row-odd"><td>module</td>
+<td>module name</td>
+</tr>
+<tr class="row-even"><td>tstamp</td>
+<td>time the exercise was done</td>
+</tr>
+<tr class="row-odd"><td>score</td>
+<td>number of correct steps</td>
+</tr>
+<tr class="row-even"><td>total_time</td>
+<td><dl class="first last docutils">
+<dt>Time taken to complete</dt>
+<dd>the exercise</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-odd"><td>remote_adrr</td>
+<td>IP address</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">Action</span> <span class="pre">triggered:</span></tt> Update proficiency field accordingly.</p>
+<p><tt class="docutils literal"><span class="pre">HTTP</span> <span class="pre">Response:</span></tt> HTTP status[bad request|unauthorized], proficiency status.</p>
+</div>
+</div>
+<div class="section" id="userinterface-resources">
+<h2>14.6. Userinterface Resources<a class="headerlink" href="#userinterface-resources" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="userinterface-logs">
+<h3>14.6.1. userinterface logs<a class="headerlink" href="#userinterface-logs" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">HTTP</span> <span class="pre">method:</span></tt> POST</p>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">Parameters:</span></tt></p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="47%" />
+<col width="53%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameters</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>key</td>
+<td>session key</td>
+</tr>
+<tr class="row-odd"><td>exercise</td>
+<td>exercise name</td>
+</tr>
+<tr class="row-even"><td>module</td>
+<td>module name</td>
+</tr>
+<tr class="row-odd"><td>book</td>
+<td>book name</td>
+</tr>
+<tr class="row-even"><td>type</td>
+<td>type of interaction</td>
+</tr>
+<tr class="row-odd"><td>uiid</td>
+<td>exercise unique id</td>
+</tr>
+<tr class="row-even"><td>desc</td>
+<td>description of the
+interaction</td>
+</tr>
+<tr class="row-odd"><td>tstamp</td>
+<td>time the exercise was done</td>
+</tr>
+<tr class="row-even"><td>remote_adrr</td>
+<td>IP address</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">HTTP</span> <span class="pre">Response:</span></tt> HTTP status[bad request|unauthorized], starage status.</p>
+</div>
+</div>
+<div class="section" id="scheduled-tasks">
+<h2>14.7. Scheduled Tasks<a class="headerlink" href="#scheduled-tasks" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="daily-summary-logs">
+<h3>14.7.1. Daily summary logs<a class="headerlink" href="#daily-summary-logs" title="Permalink to this headline">¶</a></h3>
+<p>We use <tt class="docutils literal"><span class="pre">celery</span></tt> (<a class="reference external" href="http://celeryproject.org/">http://celeryproject.org/</a>) to run scripts that create daily activity log files.
+The scripts run at the same time everyday. The scripts query the database and update the logs files
+that are used by the visualization webpage.</p>
+</div>
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        «&#160;&#160;<a href="Backend.html">13. OpenDSA Backend Installation and Setup</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="DatabaseSchemas.html">15. Data collection server database tables</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer">
+        &copy; Copyright 2012-2015 by OpenDSA Project Contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.
+    </div>
+  </body>
+</html>

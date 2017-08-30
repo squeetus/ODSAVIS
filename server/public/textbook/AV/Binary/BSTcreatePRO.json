@@ -1,0 +1,33 @@
+{
+  "translations": {
+    "en": {
+      ".avTitle": "BST Tree Building",
+      "av_Authors": "Matthew McQuaigue",
+      ".instructLabel": "Instructions:",
+      ".instructions": "Click on the respective nodes to highlight the path of insertion for the given number.",
+      "#about": "About",
+      "#addnode": "Add Root Node",
+      "#addleft": "Add Left Child",
+      "#addright": "Add Right Child"
+    }
+  },
+  "params": {
+    "JXOP-feedback": "atend"
+  },
+  "code": {
+    "BSTAlgorithm": [{
+      "url": "../../../SourceCode/Pseudo/Binary/BSTcreatePRO.txt",
+      "lineNumbers": false,
+      "startAfter": "/* *** ODSATag: bstcreate *** */",
+      "endBefore": "/* *** ODSAendTag: bstcreate *** */",
+      "tags": {
+        "sig": 1,
+        "checknull": 2,
+        "visitleft": 3,
+        "visitright": 4,
+        "visit": 5,
+        "end": 6
+      }
+    }]
+  }
+}

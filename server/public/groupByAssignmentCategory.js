@@ -35,8 +35,8 @@
 
 
       // determine sort order for assignments
-      var categories = ['attendance', 'lab', 'homework', 'projects', 'exams'],
-          indices = [[0], [1,2], [3,7],[8,13], [14,17]];
+      var categories = ['attendance', 'lab', 'homework', 'projects', 'quizzes', 'exams'],
+          indices = [[0], [1,2], [3,7],[8,13], [14,16], [17, 20]];
 
 
 function transformGrades() {

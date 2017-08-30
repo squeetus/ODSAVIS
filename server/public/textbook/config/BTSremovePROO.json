@@ -1,0 +1,67 @@
+{
+  "title": "Simple Work",
+  "desc": "COSC 2436 Data Structures",
+  "build_dir": "Books",
+  "code_dir": "SourceCode/",
+  "code_lang": {
+    "Java_Generic": {
+      "ext": [
+        "java"
+      ],
+      "label": "Java (Generic)",
+      "lang": "java"
+    },
+    "Java": {
+      "ext": [
+        "java"
+      ],
+      "label": "Java",
+      "lang": "java"
+    },
+    "Processing": {
+      "ext": [
+        "pde"
+      ],
+      "label": "Processing",
+      "lang": "java"
+    }
+  },
+  "tabbed_codeinc": false,
+  "lang": "en",
+  "build_JSAV": false,
+  "suppress_todo": false,
+  "dispModComp": true,
+  "glob_exer_options": {
+    "JXOP-debug": "true"
+  },
+  "chapters": {
+    "Preface": {
+      "Intro": {
+        "long_name": "How to Use this System",
+        "sections": {}
+      },
+      "Status": {
+        "long_name": "OpenDSA Content Status",
+        "sections": {}
+      }
+    },
+    "Binary/BST": {
+      "long_name": "Binary Search Trees",
+      "sections": {
+        "BST Remove": {
+          "my_simple": {
+            "long_name": "BST Remove Proficiency Exercise",
+            "exer_options": {
+              "JXOP-code": "none",
+              "JXOP-feedback": "continuous",
+              "JXOP-fixmode": "undo"
+            },
+            "required": true,
+            "points": 2.0,
+            "threshold": 0.90
+          }
+        }
+      }
+    }
+  }
+}

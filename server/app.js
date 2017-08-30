@@ -28,6 +28,9 @@ require('./config/express')(app);
 require('./routes')(app);
 
 app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/public/textbook'));
+app.use(express.static(__dirname + '/public/textbook/RST'));
+app.use(express.static(__dirname + '/public/textbook/Books/simple_demo/html/'));
 
 // Start server
 server.listen(config.port, config.ip, function () {

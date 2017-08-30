@@ -1,0 +1,397 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>10. Client-side Development &mdash; OpenDSA System Documentation</title>
+    
+    <link rel="stylesheet" href="_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/print.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.4.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/theme_extras.js"></script>
+    <link rel="top" title="OpenDSA System Documentation" href="index.html" />
+    <link rel="next" title="11. ReST Extensions" href="Extensions.html" />
+    <link rel="prev" title="9. Using OpenDSA with the Khan Academy infrastructure" href="KAExercise.html" /> 
+  </head>
+  <body>
+      <div class="header"><img class="rightlogo" src="_static/AlgoVizLogo.gif" alt="Logo"/><h1 class="heading"><a href="index.html">
+          <span>OpenDSA System Documentation</span></a></h1>
+        <h2 class="heading"><span>10. Client-side Development</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        «&#160;&#160;<a href="KAExercise.html">9. Using OpenDSA with the Khan Academy infrastructure</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="Extensions.html">11. ReST Extensions</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="client-side-development">
+<span id="client-sidedevelopment"></span><h1>10. Client-side Development<a class="headerlink" href="#client-side-development" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="av-developer-responsibilities">
+<h2>10.1. AV Developer Responsibilities<a class="headerlink" href="#av-developer-responsibilities" title="Permalink to this headline">¶</a></h2>
+<p>The OpenDSA client-side framework automatically handles as much logging as possible.  However, developers must write their AVs to be compliant with the framework to ensure proper logging (<strong>Note</strong>: Non-compliant AVs will fail silently, so follow the instructions closely and test your AV to ensure the data you expect to be logged is logged).</p>
+<ul class="simple">
+<li>Follow standard HTML layout as close as possible (use templates)<ul>
+<li>Ensures proper CSS and scripts are loaded including: <tt class="docutils literal"><span class="pre">JSAV.css</span></tt>, <tt class="docutils literal"><span class="pre">odsaAV-min.css</span></tt>, <tt class="docutils literal"><span class="pre">jquery.min.js</span></tt>, <tt class="docutils literal"><span class="pre">jquery-ui.min.js</span></tt>, <tt class="docutils literal"><span class="pre">jsav-min.js</span></tt>, <tt class="docutils literal"><span class="pre">odsaUtils-min.js</span></tt>, <tt class="docutils literal"><span class="pre">odsaAV-min.js</span></tt></li>
+<li>Provides a standard appearance for all AVs</li>
+<li>Makes maintenance and systematic changes easier</li>
+</ul>
+</li>
+<li>Use descriptive IDs to reference page elements<ul>
+<li>All IDs on a single page must be unique, allowing reliable access to a specific element</li>
+<li>The framework will automatically attach loggers to buttons and links (unless they appear inside a contain with a class that matches &#8216;.*jsavw*control.*&#8217;) and the data these loggers collect identifies interactive elements based on their ID.  Using descriptive IDs will make data analysis much easier.</li>
+<li>Do not place elements inside a contain with a class that matches <tt class="docutils literal"><span class="pre">'.*jsav\w*control.*'</span></tt>.  JSAV controls appear within these containers but are logged by a different mechanism so the automatic button and link loggers ignore the contents of these containers.</li>
+</ul>
+</li>
+<li>Make JSAV exercise options configurable (if necessary and desired)<ul>
+<li>If you do not change the default values of <tt class="docutils literal"><span class="pre">JSAV_EXERCISE_OPTIONS</span></tt>, you do not have to do anything.</li>
+<li>However, if you do change the default values of <tt class="docutils literal"><span class="pre">JSAV_EXERCISE_OPTIONS</span></tt>, you must call <tt class="docutils literal"><span class="pre">ODSA.UTILS.parseURLParams()</span></tt> in order to make the exercise options configurable from the config file.  Conversely, if you want to prevent the configuration process from overriding the grading options for your exercise, you can change or reset the defaults and not call this function.</li>
+<li>Developers should initialize configurable variables like this: <tt class="docutils literal"><span class="pre">var</span> <span class="pre">variable</span> <span class="pre">=</span> <span class="pre">(params.&lt;variable&gt;)</span> <span class="pre">?</span> <span class="pre">params.&lt;variable&gt;</span> <span class="pre">:</span> <span class="pre">default_value;</span></tt>, so that if the appropriate parameter is passed to the exercise it will be used, otherwise the exercise will default to a reasonable value</li>
+</ul>
+</li>
+<li>Attach JSAV array click handlers through JSAV rather than jQuery<ul>
+<li>Example: <tt class="docutils literal"><span class="pre">theArray.click(function(index){...});</span></tt> rather than <tt class="docutils literal"><span class="pre">$('#arrayId').on('click',</span> <span class="pre">&quot;.jsavindex&quot;,</span> <span class="pre">function(){...});</span></tt></li>
+</ul>
+</li>
+<li>Log initial exercise state<ul>
+<li>If the only input to your AV is an array of input values (such as most of the Sorting AVs), you can use <tt class="docutils literal"><span class="pre">ODSA.AV.processArrayValues()</span></tt> which will automatically log the array values used to initialize your AV</li>
+<li>If <tt class="docutils literal"><span class="pre">ODSA.AV.processArrayValues()</span></tt> does not fit your needs, you can all <tt class="docutils literal"><span class="pre">ODSA.AV.logExerciseInit()</span></tt> explicitly.  Refer to the function documentation in <tt class="docutils literal"><span class="pre">odsaAV.js</span></tt> for more information on logging conventions.</li>
+</ul>
+</li>
+<li>Take advantage of macro-logging<ul>
+<li>As a developer, if you feel something is important to log (whether its the state of the exercise, some sort of interaction or simply a comment) you can use either <tt class="docutils literal"><span class="pre">ODSA.UTILS.logUserAction()</span></tt> or <tt class="docutils literal"><span class="pre">ODSA.UTILS.logEvent()</span></tt>.  Refer to the function documentation in <tt class="docutils literal"><span class="pre">odsaUtils.js</span></tt> for more information on how to use these functions.</li>
+<li>Allows developers to describe what is happening at a given step to make it easier when analyzing problem steps to identify what step the students are missing</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="internationalization-support">
+<h2>10.2. Internationalization Support<a class="headerlink" href="#internationalization-support" title="Permalink to this headline">¶</a></h2>
+<p>OpenDSA supports a sophisticated internationalization framework that
+attempts to make it as easy as possible to support compiling textbook
+instances in various (natural) languages.
+The configuration system allows a book compiler to specify the
+language of choice, and the system will take module versions in the
+target language whenever available (the fallback language is
+English).</p>
+<p>Like every other aspect of internationalization, we define the
+language using the two-letter
+<a class="reference external" href="http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">ISO 639-1</a>
+language codes.</p>
+<p>Someone creating a new book instance would use the &#8216;lang&#8217; variable
+in the configuration file to define their book language.
+But if you want to add support to the OpenDSA system to support a new
+language, then you will need to provide the necessary strings in the
+target language.
+Here is a guide to how you would provide that information.</p>
+<p>It helps to understand that the Sphinx compiler itself has its own
+translation support, which affects some of the strings that appear on
+an OpenDSA page.
+Just telling Sphinx what language that you want to use will cause
+those strings that Sphinx controls to be translated.
+This is done by the configuration system when the configuration file
+tells it to use a particular language.
+A list of languages supported by sphinx can be found at
+<a class="reference external" href="http://sphinx-doc.org/config.html#confval-language">http://sphinx-doc.org/config.html#confval-language</a>.</p>
+<p>Translation is controlled by the file <tt class="docutils literal"><span class="pre">tools/language_msg.json</span></tt>.
+Each language is represented by its code in language_msg.json.
+Make sure that a translation is available in language_msg.json file
+before asking the configuration system to create a book in that
+language.</p>
+<p>The terms for each language are grouped in two categories within
+<tt class="docutils literal"><span class="pre">language_msg.json</span></tt>:</p>
+<ul>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">jinja</span></tt> for the terms that will be added inside the configuration</dt>
+<dd><p class="first last">file. They will be passed by Sphinx to the templating system
+(jinja + haiku).</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">js</span></tt> for the terms processed by the <tt class="docutils literal"><span class="pre">odsaMOD.js</span></tt> library, and</dt>
+<dd><p class="first last">injected while the page is loading.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Here is the structure for language_msg.json:</p>
+<div class="highlight-python"><pre>{
+  "en"{
+    "jinja": {
+      "term1": "en_term1",
+      ...
+    },
+    "js": {
+      "term2": "en_term2",
+      ...
+    }
+  },
+  "fi"{
+    "jinja": {
+      "term1": "fi_term1",
+      ...
+    },
+    "js": {
+      "term2": "fi_term2",
+      ...
+    }
+  }
+}</pre>
+</div>
+<p>The gradebook text strings are taken from <tt class="docutils literal"><span class="pre">RST/&lt;lang&gt;/Gradebook.rst</span></tt>.</p>
+<p>The book configuration  program will read the language variable.
+If a translation for the entered language is not available, the
+default language English is used.</p>
+<p>Individual AVs and exercises support internationalization through the
+use of an associated <tt class="docutils literal"><span class="pre">.json</span></tt> file that provides the various
+translation text for all strings that appear in the AV.
+JSAV provides translations to many languages for its infrastructure
+strings.</p>
+</div>
+<div class="section" id="glossary-concept-map-definition">
+<h2>10.3. Glossary Concept Map Definition<a class="headerlink" href="#glossary-concept-map-definition" title="Permalink to this headline">¶</a></h2>
+<p>OpenDSA supports displaying glossary terms as a <strong>concept map</strong>.
+The relationship between terms are specified in the <tt class="docutils literal"><span class="pre">Glossary.rst</span></tt>
+file, and consist of the following elements added below the term we are defining:</p>
+<ul>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">:to-term:</span></tt> followed by the related term. Ideally, the related term should be also</dt>
+<dd><p class="first last">defined in the glossary file, but is is not mandatory.</p>
+</dd>
+</dl>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">:label:</span></tt> followed by the linking phrase decribing the relationship between the two terms.</p>
+</li>
+</ul>
+<p>Here is an example of a relationship definition between the terms <tt class="docutils literal"><span class="pre">graph</span></tt> and <tt class="docutils literal"><span class="pre">vertices</span></tt>:</p>
+<div class="highlight-python"><pre>graph
+    :to-term: vertices :label: contains
+
+    A :term:`graph` :math:`\mathbf{G} = (\mathbf{V}, \mathbf{E})` consists
+    of a set of :term:`vertices` :math:`\mathbf{V}` and a set of
+    :term:`edges` :math:`\mathbf{E}`,
+    such that each edge in :math:`\mathbf{E}` is a connection between a
+    pair of vertices in :math:`\mathbf{V}`.</pre>
+</div>
+</div>
+<div class="section" id="client-side-api">
+<h2>10.4. Client-side API<a class="headerlink" href="#client-side-api" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="odsa-av">
+<h3>10.4.1. ODSA.AV<a class="headerlink" href="#odsa-av" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><strong>logExerciseInit</strong> - generates an event which is used to log the initial state of an AV or exercise<ul>
+<li>Captures the state of the exercise at the beginning (such as the numbers in an array) which allows us to put the later operations we log in context.  For example, its all well and great to know the user clicked on index 4 of an array but if we don&#8217;t know the randomly generated numbers in the array the operations we log won&#8217;t make much sense.</li>
+<li>The generated event uses the same channel as JSAV events and is therefore received by the existing listener.  This function is NOT dependent on the JSAV framework.</li>
+</ul>
+</li>
+<li><strong>awardCompletionCredit</strong> - generates an event which triggers the framework to give a user credit for an exercise<ul>
+<li>This function is designed to be used when an exercise doesn&#8217;t really have a score but must be completed (like the calculator or performance exercises).  Developers should call this function in their code when a student has reached a state where the developer believes they should receive credit.</li>
+<li>The generated event uses the same channel as JSAV events and is therefore received by the existing listener.  This function is NOT dependent on the JSAV framework.</li>
+</ul>
+</li>
+<li><strong>initArraySize(min, max, selected)</strong> - initializes the arraysize drop down list with the range of numbers from <tt class="docutils literal"><span class="pre">min</span></tt> to <tt class="docutils literal"><span class="pre">max</span></tt> with <tt class="docutils literal"><span class="pre">selected</span></tt> selected</li>
+<li><strong>reset(flag)</strong> - resets the AV to its original state<ul>
+<li>The <tt class="docutils literal"><span class="pre">reset()</span></tt> function works by saving the HTML from the <tt class="docutils literal"><span class="pre">avcontainer</span></tt> element on page load and using it to replace the HTML in the <tt class="docutils literal"><span class="pre">avcontainer</span></tt> when reset it called.  When JSAV is initialized it alters the contents of the container, after the HTML has been saved.  When JSAV is initialized on page load but never reinitialized, the first reset clears the elements JSAV  generated, breaking the AV.  Using this <tt class="docutils literal"><span class="pre">reset()</span></tt> method, JSAV must be reinitialized after each reset in order for the AV to function properly.  We recommend reinitializing JSAV after calling <tt class="docutils literal"><span class="pre">ODSA.AV.reset(true)</span></tt> in the <tt class="docutils literal"><span class="pre">runit()</span></tt> method.</li>
+<li>The <tt class="docutils literal"><span class="pre">runit()</span></tt> method should call <tt class="docutils literal"><span class="pre">ODSA.AV.reset(true)</span></tt> to ensure the avcontainer is cleared and ready for the next instance.</li>
+</ul>
+</li>
+<li><strong>processArrayValues(upperLimit)</strong> - validates the array values a user enters or generates an array of random numbers if none are provided</li>
+<li><strong>sendResizeMsg()</strong> - forces the AV to send a message to the parent page containing the height and width of the rendered AV. This function is called automatically when the AV is loaded or reset, but can be explicitly called by developers if their AV changes size during its operation.</li>
+</ul>
+</div>
+<div class="section" id="odsa-mod">
+<h3>10.4.2. ODSA.MOD<a class="headerlink" href="#odsa-mod" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><strong>serverEnabled()</strong> - returns whether or not the backend server is enabled</li>
+<li><strong>inDebugMode()</strong> - returns true if localStorage.DEBUG_MODE is set to true</li>
+<li><strong>getBookID()</strong> - returns a SHA1 hash of the book URL as a unique identifier</li>
+<li><strong>getUsername()</strong> - returns the username stored in local storage</li>
+<li><strong>getSessionKey()</strong> - returns the session key stored in local storage</li>
+<li><strong>userLoggedIn()</strong> - returns whether or not a user is logged in</li>
+<li><strong>getJSON(data)</strong> - converts the input string to a JSON object, if given a JSON object, returns it</li>
+<li><strong>logUserAction(type, desc, exerName, eventUiid)</strong> - logging function that takes the event type, a description of the event and the name and uiid of the exercise with which the event is associated</li>
+<li><strong>logEvent(data)</strong> - flexible logging function that appends whatever data is specified to the event log, provided it meets the criteria for a valid event</li>
+<li><strong>sendEventData()</strong> - flushes the buffered event data to the server</li>
+<li><strong>getType()</strong> - returns correct object type information (replaces broken functionality of &#8216;typeof&#8217;)</li>
+<li><strong>roundPercent(number)</strong> - rounds the given number to a max of 2 decimal places</li>
+</ul>
+</div>
+<div class="section" id="odsa-utils">
+<h3>10.4.3. ODSA.UTILS<a class="headerlink" href="#odsa-utils" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><strong>STATUS</strong> - pseudo-enumerated variable used to define the different
+states of proficiency</li>
+<li><strong>getProficiencyStatus(name, username, book)</strong> - returns whether or
+not local storage has a record of the given user being proficient
+with the given exercise or module in the given book</li>
+<li><strong>syncProficiency()</strong> - queries <tt class="docutils literal"><span class="pre">getgrade</span></tt> endpoint to obtain
+proficiency status for all exercises and modules</li>
+<li><strong>parseURLParams()</strong> - parses parameters from the URL, sets <tt class="docutils literal"><span class="pre">JSAV_OPTIONS</span></tt> and <tt class="docutils literal"><span class="pre">JSAV_EXERCISE_OPTIONS</span></tt> if applicable and stores the remaining options in a global <tt class="docutils literal"><span class="pre">PARAMS</span></tt> object for use by the module or exercise</li>
+</ul>
+</div>
+</div>
+<div class="section" id="tips-and-tricks">
+<h2>10.5. Tips and Tricks<a class="headerlink" href="#tips-and-tricks" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="truthy-and-falsy">
+<h3>10.5.1. Truthy and Falsy<a class="headerlink" href="#truthy-and-falsy" title="Permalink to this headline">¶</a></h3>
+<p>Be aware that values in JavaScript will not always evaluate the way
+you expect when used in conditionals.  When comparing objects use
+<strong>strict equal</strong> (<tt class="docutils literal"><span class="pre">===</span></tt>) and <strong>strict not equal</strong> (<tt class="docutils literal"><span class="pre">!==</span></tt>) to
+ensure values are compared by type and value.  When testing whether a
+variable contains useful information you can generally use the value
+inself in the conditional, i.e. <tt class="docutils literal"><span class="pre">if</span> <span class="pre">(testCondition)</span> <span class="pre">{...}</span></tt>.  While
+this is &#8216;sloppy&#8217;, it works unless you expect a <tt class="docutils literal"><span class="pre">0</span></tt>, <tt class="docutils literal"><span class="pre">false</span></tt> of
+<tt class="docutils literal"><span class="pre">&quot;&quot;</span></tt> to be valid.  If you want a more formal test, you can use
+<tt class="docutils literal"><span class="pre">typeof</span> <span class="pre">testCondition</span> <span class="pre">===</span> <span class="pre">&quot;undefined&quot;</span></tt>.  This expression will be
+true only if <tt class="docutils literal"><span class="pre">testCondition</span></tt> has never been assigned a value.</p>
+<p>For more information see
+<a class="reference external" href="http://www.sitepoint.com/javascript-truthy-falsy/">Truthy and Falsy: When All is Not Equal in JavaScript</a>.</p>
+</div>
+<div class="section" id="html5-postmessage">
+<h3>10.5.2. HTML5 postMessage<a class="headerlink" href="#html5-postmessage" title="Permalink to this headline">¶</a></h3>
+<p>We have no guarantee that content embedded in iFrames (such as AVs and
+Exercises) will be hosted on the same domain as the modules.  In order
+to create a robust application communication between the parent and
+child pages should take place using <tt class="docutils literal"><span class="pre">postMessage</span></tt> rather than
+referencing elements or functions through the <tt class="docutils literal"><span class="pre">contentDocument</span></tt> or
+<tt class="docutils literal"><span class="pre">contentWindow.document</span></tt> of the iFrame element or <tt class="docutils literal"><span class="pre">window.parent</span></tt>
+or <tt class="docutils literal"><span class="pre">window.top</span></tt>.</p>
+</div>
+<div class="section" id="encapsulation">
+<span id="id1"></span><h3>10.5.3. Encapsulation<a class="headerlink" href="#encapsulation" title="Permalink to this headline">¶</a></h3>
+<p>You should always wrap your JavaScript code in an anonymous function
+to prevent the DOM from getting cluttered and to prevent outside
+access to specific data or functions.
+All functions and global variables defined within an anonymous
+function are visible to each other and can be used normally.
+However, sometimes you will need to define a publically accessible
+function that interacts with functions you wish to keep private.
+The simplest way to do this is to write your JavaScript as normal
+within an anonymous function and then assign specific &#8220;public&#8221;
+functions to be properties of the <tt class="docutils literal"><span class="pre">window</span></tt> object.
+For example:</p>
+<div class="highlight-python"><pre>$(document).ready(function () {
+  var privateData = 0;
+
+  function privFunct() {
+    alert('ODSA private function');
+  }
+
+  function publicFunct() {
+    privFunct();
+  }
+
+  var AV = {};
+  AV.publicFunct = publicFunct;
+  window.AV = AV;
+});</pre>
+</div>
+<p>Another alternative is:</p>
+<div class="highlight-python"><pre>$(document).ready(function () {
+  var AV = {};
+
+  function privFunct() {
+    alert('ODSA private function');
+    AV.publicFunct();
+  }
+
+  AV.publicFunct = function() {
+    alert('ODSA publicFunct');
+  }
+
+  AV.callPrivFunct = function() {
+    privFunct();
+  }
+
+  window.AV = AV;
+});</pre>
+</div>
+<p>In both of these examples, <tt class="docutils literal"><span class="pre">publicFunct()</span></tt> can be referenced outside
+the anonymous function using <tt class="docutils literal"><span class="pre">AV.publicFunct()</span></tt>
+(or <tt class="docutils literal"><span class="pre">window.AV.publicFunct()</span></tt>).
+We prefer the first method because it looks more like a standard
+JavaScript file, internal function references are simpler, and its
+easy to add all the public functions in one place, giving the
+developer greater control over what they make public.</p>
+<p>Be sure not to overwrite any existing namespaces (such as window.ODSA
+which is used by the OpenDSA framework)!</p>
+</div>
+</div>
+<div class="section" id="troubleshooting">
+<h2>10.6. Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="jquery-selectors">
+<h3>10.6.1. jQuery Selectors<a class="headerlink" href="#jquery-selectors" title="Permalink to this headline">¶</a></h3>
+<p>jQuery selectors can be useful, but do have some limitations.  For
+instance, when using jQuery to reference an element by ID, the ID
+cannot contain specific characters such as a period, a plus sign or
+spaces.  While its better to avoid them if possible, if you find that
+you must use these or other invalid characters, use <tt class="docutils literal"><span class="pre">$('[id=&quot;'</span> <span class="pre">+</span>
+<span class="pre">objID</span> <span class="pre">+</span> <span class="pre">'&quot;]')</span></tt>.</p>
+</div>
+<div class="section" id="proficiency-exercises">
+<h3>10.6.2. Proficiency Exercises<a class="headerlink" href="#proficiency-exercises" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>If your AV doesn&#8217;t show up immediately but shows up as soon as you
+advance the slideshow, make sure you ran: <tt class="docutils literal"><span class="pre">jsav.displayInit();</span></tt></li>
+<li>If you are having difficulties with variables managed by JSAV<ul>
+<li>Make sure you use <tt class="docutils literal"><span class="pre">.value()</span></tt> to access the variables value,
+otherwise you get an object rather than the string or number you
+most likely want</li>
+<li>Make sure you use <tt class="docutils literal"><span class="pre">.value(newValue)</span></tt> to change the value of the
+variable, assignment using &#8216;=&#8217; doesn&#8217;t work</li>
+</ul>
+</li>
+<li>If your fixState function successfully changes the state of
+everything, but says you are getting all subsequent correct answers
+wrong and undoing everything to the state where you first made a
+mistake, make sure you are calling <tt class="docutils literal"><span class="pre">exercise.gradeableStep();</span></tt></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        «&#160;&#160;<a href="KAExercise.html">9. Using OpenDSA with the Khan Academy infrastructure</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="Extensions.html">11. ReST Extensions</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer">
+        &copy; Copyright 2012-2015 by OpenDSA Project Contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.
+    </div>
+  </body>
+</html>

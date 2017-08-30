@@ -1,0 +1,44 @@
+/* *** ODSATag: randinsertGood *** */
+bstInsert (value){
+  node = root.value();	
+  while(node != null){
+    if (value <= node){
+      node = node.left();
+    }else{
+      node = node.right();
+    }
+  }
+  node.value() = value;
+  return bst;
+}
+/* *** ODSAendTag: randinsertGood *** */
+
+/* *** ODSATag: randinsertLeft *** */
+bstInsert (value){
+  node = root.value();	
+  while(node != null){
+    if (value <= node){
+      node = node.left();
+    }else{
+      node = node.left();
+    }
+  }
+  node.value() = value;
+  return bst;
+}
+/* *** ODSAendTag: randinsertLeft *** */
+
+/* *** ODSATag: randinsertRight *** */
+bstInsert (value){
+  currentNode = root.value();	
+  while(currentNode != null){
+    if (value <= currentNode){
+      currentNode = currentNode.right();
+    }else{
+      currentNode = currentNode.right();
+    }
+  }
+  currentNode.value() = value;
+  return bst;
+}
+/* *** ODSAendTag: randinsertRight *** */

@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>6. House Style Rules &mdash; OpenDSA System Documentation</title>
+    
+    <link rel="stylesheet" href="_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/print.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.4.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/theme_extras.js"></script>
+    <link rel="top" title="OpenDSA System Documentation" href="index.html" />
+    <link rel="next" title="7. Notes for AV and Exercise Developers" href="AV.html" />
+    <link rel="prev" title="5. Module Authoring" href="ModAuthor.html" /> 
+  </head>
+  <body>
+      <div class="header"><img class="rightlogo" src="_static/AlgoVizLogo.gif" alt="Logo"/><h1 class="heading"><a href="index.html">
+          <span>OpenDSA System Documentation</span></a></h1>
+        <h2 class="heading"><span>6. House Style Rules</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        «&#160;&#160;<a href="ModAuthor.html">5. Module Authoring</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="AV.html">7. Notes for AV and Exercise Developers</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="house-style-rules">
+<span id="style"></span><h1>6. House Style Rules<a class="headerlink" href="#house-style-rules" title="Permalink to this headline">¶</a></h1>
+<p>The following guidelines should be observed when writing content for
+the OpenDSA project.</p>
+<div class="section" id="content-types">
+<h2>6.1. Content Types<a class="headerlink" href="#content-types" title="Permalink to this headline">¶</a></h2>
+<p>OpenDSA content can generally be divided into the following types:</p>
+<ul class="simple">
+<li>modules: written in ReST and whose source resides in the
+OpenDSA/RST/source directory,</li>
+<li>exercises: implemented using the Khan Academy Infrastructure and
+residing in the OpenDSA/Exercises directory,</li>
+<li>mini-slideshows and diagrams: directly embedded into modules using the
+<tt class="docutils literal"><span class="pre">inlineav</span></tt> directive and whose source resides in the OpenDSA/AV
+directory, and</li>
+<li>visualizations and activities: embedded as iframes using the
+<tt class="docutils literal"><span class="pre">avembed</span></tt> directive, and residing in the OpenDSA/AV directory.</li>
+</ul>
+</div>
+<div class="section" id="algorithm-visualizations-and-slideshows">
+<h2>6.2. Algorithm Visualizations and slideshows<a class="headerlink" href="#algorithm-visualizations-and-slideshows" title="Permalink to this headline">¶</a></h2>
+<p>New content always should begin development within the
+OpenDSA/AV/Development directory. Once the implementation is completed
+and validated, then it will be moved by the project managers to a
+topic sub-directory.</p>
+<p>Directly embedded content (slideshows and diagrams) should have no
+width set so that it will naturally expand to the page width as
+appropriate.</p>
+<p>Nothing should require a width greater than 850px.
+This keeps all visual elements within the minimum page size enforced
+by the Haiku template.</p>
+<p>The typical classroom projector provides a vertical screen resolution
+of 800 pixels, and that fits the limits of many laptops and tablets.
+Given the requirements for browser toolbars, etc., the most that you
+can count on for the vertical space shown for an actual browser page
+is about 650 pixels, so that it the absolute maximum height for any
+given visual element such as an AV or an exercise.
+It is better to stay under 600 pixels if possible, so that the
+show/hide button is also visible (this provides important feedback
+when working an exercise).</p>
+<p>HTML, CSS, and JavaScript should all be kept in separate files.
+Each should pass its respective validation tools without
+complaint.
+See the developer&#8217;s &#8220;Getting Started&#8221; guide for details on using the
+validation tools.</p>
+</div>
+<div class="section" id="use-of-gendered-pronouns-in-prose">
+<h2>6.3. Use of Gendered Pronouns in Prose<a class="headerlink" href="#use-of-gendered-pronouns-in-prose" title="Permalink to this headline">¶</a></h2>
+<p>It frequently happens that some pronoun is needed, and authors are
+then faced with a somewhat arbitrary decision about the nominal
+gender.
+There are a number of choices that have been used, all of which appear
+awkward to some portion of the reading population.
+When possible, the best choice is to write to avoid the need for a
+gendered pronoun in the first place.
+When this is not practical, our preferred style is to use the
+&#8220;singular they&#8221; construction.
+That is, we recommend use of &#8220;they&#8221; in place of &#8220;he&#8221; or &#8220;she&#8221;,
+and &#8220;their&#8221; in place of &#8220;his vs. her&#8221;.</p>
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        «&#160;&#160;<a href="ModAuthor.html">5. Module Authoring</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="AV.html">7. Notes for AV and Exercise Developers</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer">
+        &copy; Copyright 2012-2015 by OpenDSA Project Contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.
+    </div>
+  </body>
+</html>

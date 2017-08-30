@@ -1,0 +1,108 @@
+{
+  "title": "OpenDSA PintersBook",
+  "desc": "OpenDSA Java Pointers Book",
+  "build_dir": "Books",
+  "code_dir": "SourceCode/",
+  "code_lang": {
+    "Java": {
+      "ext": [
+        "java"
+      ],
+      "label": "Java",
+      "lang": "java"
+    },
+    "Java_CompleteCode": {
+      "ext": [
+        "java"
+      ],
+      "label": "Java (Complete Code)",
+      "lang": "java"
+    }
+  },
+  "lang": "en",
+  "build_JSAV": false,
+  "suppress_todo": false,
+  "dispModComp": true,
+  "glob_exer_options": {
+    "JXOP-debug": "true"
+  },
+  "chapters": {
+    "Pointers": {
+      "Pointers/PointerIntro": {
+        "long_name": "Pointers Chapter Introduction",
+        "sections": {}
+      },
+      "Pointers/BasicPointers": {
+        "long_name": "Basic References",
+        "sections": {
+          "What is a reference?": {},
+          "Reference Dereferencing": {},
+          "Reference Assignment": {},
+          "Bad references": {},
+          "Syntax": {},
+          "Example Reference Code": {},
+          "Reference Rules Summary": {},
+          "Java references Features": {},
+          "How Are References Implemented In The Machine?": {},
+          "The Term 'Pointer'": {},
+          "Why Are Bad Reference Bugs So Common?": {}
+        }
+      },
+      "Pointers/LocalMem": {
+        "long_name": "Local Memory",
+        "sections": {
+          "Thanks For The Memory: Allocation and Deallocation": {},
+          "Local Memory": {},
+          "Examples": {},
+          "Local Parameters": {},
+          "How Does The Function Call Stack Work?": {}
+        }
+      },
+      "Pointers/RefParam": {
+        "long_name": "Reference Parameters",
+        "sections": {
+          "Reference Parameters": {},
+          "Passing By Reference": {},
+          "Simple Reference Parameter Example: Swap()": {},
+          "Java is always pass-by-value": {},
+          "Reference Parameter Summary": {}
+        }
+      },
+      "Pointers/HeapMem": {
+        "long_name": "Heap Memory",
+        "sections": {
+          "Heap Memory": {},
+	  "Java Garbage Collection":{},
+          "What Does The Heap Look Like?": {},
+          "Programming The Heap": {},
+          "Simple Heap Example": {},
+          "Simple Heap Observations": {},
+          "Heap Array": {},
+          "Memory Leaks": {},
+          "Heap Memory Summary": {}
+        }
+      },
+      "Pointers/Exercises": {
+        "long_name": "Exercises",
+        "sections": {
+          "FindNode Pointer Programming Exercise": {
+            "learning_tool": "code-workout",
+            "resource_type": "external_assignment",
+            "resource_name": "",
+            "points": 1.0
+          }
+        }
+      }
+    },
+    "Appendix": {
+      "Glossary": {
+        "long_name": "Glossary",
+        "sections": {}
+      },
+      "Bibliography": {
+        "long_name": "Bibliography",
+        "sections": {}
+      }
+    }
+  }
+}

@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>12. The Document Processor &mdash; OpenDSA System Documentation</title>
+    
+    <link rel="stylesheet" href="_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/print.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.4.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/theme_extras.js"></script>
+    <link rel="top" title="OpenDSA System Documentation" href="index.html" />
+    <link rel="next" title="13. OpenDSA Backend Installation and Setup" href="Backend.html" />
+    <link rel="prev" title="11. ReST Extensions" href="Extensions.html" /> 
+  </head>
+  <body>
+      <div class="header"><img class="rightlogo" src="_static/AlgoVizLogo.gif" alt="Logo"/><h1 class="heading"><a href="index.html">
+          <span>OpenDSA System Documentation</span></a></h1>
+        <h2 class="heading"><span>12. The Document Processor</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        «&#160;&#160;<a href="Extensions.html">11. ReST Extensions</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="Backend.html">13. OpenDSA Backend Installation and Setup</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="the-document-processor">
+<span id="preprocessor"></span><h1>12. The Document Processor<a class="headerlink" href="#the-document-processor" title="Permalink to this headline">¶</a></h1>
+<p>The OpenDSA textbook compilation pipeline includes custom
+preprocessing of module files into compileable ReStructuredText source.
+The main motivation for using our own document pre-processor was to
+support integration beyond the file level in ways that Sphinx does (or
+at least, did) not do.
+This includes the ability to number document objects (figures, and
+tables, and equations), and display numbered references.
+When we started the OpenDSA project, DocUtils did not providie such
+features.
+Some of the pre-processor features might be added over time to Sphinx,
+in which case we might eventually remove them from the pre-processor.
+You can view the DocUtils To Do list at
+<a class="reference external" href="http://docutils.sourceforge.net/docs/dev/todo.html">http://docutils.sourceforge.net/docs/dev/todo.html</a>.</p>
+<div class="section" id="overview">
+<h2>12.1. Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The document processor works as a three-pass compiler.
+The first two passes are executed on <tt class="docutils literal"><span class="pre">rst</span></tt> files before running
+Sphinx, and the last pass is run against <tt class="docutils literal"><span class="pre">html</span></tt> files produced
+by Sphinx.
+The process results in three files,
+two containing ducuments and objects numbers and one to check if
+the document has been modified.
+All global variables are declared in a separate file (config.py).</p>
+</div>
+<div class="section" id="first-pass">
+<h2>12.2. First Pass<a class="headerlink" href="#first-pass" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>INPUT</dt>
+<dd>Modules as <tt class="docutils literal"><span class="pre">rst</span></tt> source files.</dd>
+<dt>OUTPUT</dt>
+<dd>A file JSON (page_chapter.json) containing a dictionary of modules
+and their associate chapter.</dd>
+<dt>DESCRIPTION</dt>
+<dd>During the first pass, the document processor creates a dictionary
+of the highlest level elements in the document (modules).
+The dictionary contains tuples defined as
+<tt class="docutils literal"><span class="pre">(module_name,</span> <span class="pre">[chapter_name,</span> <span class="pre">chapter_number])</span></tt>.</dd>
+</dl>
+</div>
+<div class="section" id="second-pass">
+<h2>12.3. Second Pass<a class="headerlink" href="#second-pass" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>INPUT</dt>
+<dd>Modules as <tt class="docutils literal"><span class="pre">rst</span></tt> source files.</dd>
+<dt>OUTPUT</dt>
+<dd>A JSON file (table.json) containing a dictionary of all documents
+objects and their appearance number.</dd>
+<dt>DESCRIPTION</dt>
+<dd>During the second pass, the document processor creates a
+dictionary of all the objects inside modules.
+The appearance number is the concatenation of <tt class="docutils literal"><span class="pre">chapter_number</span></tt>,
+<tt class="docutils literal"><span class="pre">module_number</span></tt>, and <tt class="docutils literal"><span class="pre">object_number</span></tt>.
+The dictionary contains tuples defined as
+<tt class="docutils literal"><span class="pre">(object_name,</span> <span class="pre">appearance_number.)</span></tt>.</dd>
+</dl>
+</div>
+<div class="section" id="integration-with-sphinx">
+<h2>12.4. Integration with Sphinx<a class="headerlink" href="#integration-with-sphinx" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">numref</span></tt> (<a class="reference internal" href="Extensions.html#numref"><em>numref</em></a>) directive adds numbers to document
+objects (figures, tables, and equations) to the output of the
+document preprocessor and uses it as hyperlink text for cross
+referencing.</p>
+</div>
+<div class="section" id="third-pass">
+<h2>12.5. Third Pass<a class="headerlink" href="#third-pass" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>INPUT</dt>
+<dd>Modules as <tt class="docutils literal"><span class="pre">html</span></tt> files generated by Sphinx.</dd>
+<dt>OUTPUT</dt>
+<dd>Modified <tt class="docutils literal"><span class="pre">html</span></tt> files with an updated table of contents and
+navigation bar, and section numbers augmented with a chapter
+number prefix.</dd>
+<dt>DESCRIPTION</dt>
+<dd>During the third pass, the document processor parses the html files
+and replaces headers and section numbers as appropriate from the
+dictionaries created during the first two passes.
+Since our processor does not modify the Sphinx document tree, we
+have to modify <tt class="docutils literal"><span class="pre">html</span></tt> files to replace the raw Sphinx section
+number with our own numbering scheme.
+This phase applies only to the Table Of Content, the navigation
+bar, page headers, and sections.
+The document processor perform a third pass only if the
+html file has been modified by Sphinx.
+The file <tt class="docutils literal"><span class="pre">count.txt</span></tt> stores the latest modification times for the
+html files.</dd>
+</dl>
+</div>
+<div class="section" id="where-things-are">
+<h2>12.6. Where things are<a class="headerlink" href="#where-things-are" title="Permalink to this headline">¶</a></h2>
+<p>There are many files that affect the eventual HTML output.
+Here is a list of places to look if you are trying to make changes.</p>
+<blockquote>
+<div><p>OpenDSA/RST/source/_themes/haiku/basic/layout.html</p>
+<p>OpenDSA/RST/source/_themes/haiku/static/haiku.css_t</p>
+<p>OpenDSA/RST/preprocessor.py</p>
+<p>OpenDSA/RST/ODSAextensions</p>
+<p>OpenDSA/tools/configure.py</p>
+</div></blockquote>
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        «&#160;&#160;<a href="Extensions.html">11. ReST Extensions</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="Backend.html">13. OpenDSA Backend Installation and Setup</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer">
+        &copy; Copyright 2012-2015 by OpenDSA Project Contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.
+    </div>
+  </body>
+</html>

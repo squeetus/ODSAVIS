@@ -1,0 +1,303 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>9. Using OpenDSA with the Khan Academy infrastructure &mdash; OpenDSA System Documentation</title>
+    
+    <link rel="stylesheet" href="_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/print.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.4.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/theme_extras.js"></script>
+    <link rel="top" title="OpenDSA System Documentation" href="index.html" />
+    <link rel="next" title="10. Client-side Development" href="Client-sideDevelopment.html" />
+    <link rel="prev" title="8. Using OpenDSA to Create JSAV-based Proficiency Exercises" href="JSAVExercise.html" /> 
+  </head>
+  <body>
+      <div class="header"><img class="rightlogo" src="_static/AlgoVizLogo.gif" alt="Logo"/><h1 class="heading"><a href="index.html">
+          <span>OpenDSA System Documentation</span></a></h1>
+        <h2 class="heading"><span>9. Using OpenDSA with the Khan Academy infrastructure</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        «&#160;&#160;<a href="JSAVExercise.html">8. Using OpenDSA to Create JSAV-based Proficiency Exercises</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="Client-sideDevelopment.html">10. Client-side Development</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="using-opendsa-with-the-khan-academy-infrastructure">
+<span id="kaexercise"></span><h1>9. Using OpenDSA with the Khan Academy infrastructure<a class="headerlink" href="#using-opendsa-with-the-khan-academy-infrastructure" title="Permalink to this headline">¶</a></h1>
+<p>We use the Khan Academy (KA) infrastructure for writing questions.
+KA supplies some documentation at their
+<a class="reference external" href="https://github.com/Khan/khan-exercises/wiki/">wiki</a>.</p>
+<p>In the rest of this section, we will go through examples of the most
+common question types used in OpenDSA.</p>
+<p>In general, each given question gets defined in its own HTML file
+(with an associated JavaScript file if necessary).
+This promotes maximum flexibility and reuse.
+New exercises are normally stored in
+<tt class="docutils literal"><span class="pre">~OpenDSA/Exercises/Development</span></tt> until they have been reviewed.</p>
+<div class="section" id="summary-exercises">
+<h2>9.1. Summary Exercises<a class="headerlink" href="#summary-exercises" title="Permalink to this headline">¶</a></h2>
+<p>Individual questions, as appropriate, can be grouped together into
+&#8220;summary&#8221; exercise.
+These can in turn be grouped together into a broader summary, such as
+an end-of-chapter review.
+<tt class="docutils literal"><span class="pre">~OpenDSA/Exercises/Background/IntroSumm.html</span></tt> provides a typical
+example.
+If you are creating a new summary exercie, you can copy this file and
+start by changing the title on line 4.
+Note that the two library includes on lines 5 and 6 are needed for all
+Khan Academy exercises within OpenDSA.
+Replace lines 9-16 with your exercises, one per line, using the same
+format as these lines use.
+Note that <tt class="docutils literal"><span class="pre">data-name</span></tt> takes a file name using a path relative to the
+summary exercise.</p>
+</div>
+<div class="section" id="math-and-variables">
+<h2>9.2. Math and Variables<a class="headerlink" href="#math-and-variables" title="Permalink to this headline">¶</a></h2>
+<p>You can include math (in LaTeX notation) by bracketing it in
+<tt class="docutils literal"><span class="pre">&lt;code&gt;&lt;/code&gt;</span></tt>.
+See <tt class="docutils literal"><span class="pre">~OpenDSA/Exercises/Background/MthBgMCQperm.html</span></tt> for simple
+examples.</p>
+<p>You can define variables to generate random values or compute
+results.
+<tt class="docutils literal"><span class="pre">~OpenDSA/Exercises/List/ListOverhead.html</span></tt> shows an example.
+It also shows simple use of JavaScript for computation, but
+anything more complicated than this should separate the JavaScript
+into a separate file (see examples below).</p>
+</div>
+<div class="section" id="true-false-questions">
+<h2>9.3. True/False Questions<a class="headerlink" href="#true-false-questions" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">~OpenDSA/Exercises/Design/CompareTF2.html</span></tt> is an example of a
+typical simple T/F question.
+Simply change the question in the &#8220;question&#8221; paragraph, set &#8220;solution&#8221;
+to be <tt class="docutils literal"><span class="pre">True</span></tt> or <tt class="docutils literal"><span class="pre">False</span></tt>, and set the hints.</p>
+<p><strong>ALL</strong> questions (aside from summary exercises) should have at least
+one hint!</p>
+<p><tt class="docutils literal"><span class="pre">~OpenDSA/Exercises/Design/CompareTF1.html</span></tt> shows use of simple
+alternate wording, called a &#8220;spin&#8221;.
+Note the required change in line 2 to load &#8220;spin&#8221; support.</p>
+<p><tt class="docutils literal"><span class="pre">~OpenDSA/Exercises/Background/SetTFequivrel.html</span></tt> shows
+sophisticated use of variables to generate a variety of questions.
+It also shows use of <tt class="docutils literal"><span class="pre">katex</span></tt> functionality to support interpretation
+of math inside a string (not a typical problem that you will
+encounter).</p>
+</div>
+<div class="section" id="multiple-choice-questions">
+<h2>9.4. Multiple Choice Questions<a class="headerlink" href="#multiple-choice-questions" title="Permalink to this headline">¶</a></h2>
+<p>The simplest form of MCQ is shown in
+<tt class="docutils literal"><span class="pre">~OpenDSA/Exercises/Background/IntroMCQeff.html</span></tt>.
+Just change your title, your question, the text for the choices (add
+as many as you like), and the hints.
+This style of MCQ will show the answer string and the choices strings,
+all arranged in random order each time the question is presented.
+Note that the correct answer is <strong>not</strong> included as a choice.
+In contrast, T/F questions are a special type of MCQ where the
+question choices are given in the specified order (and the correct
+answer is therefore also one of the listed choices).
+<tt class="docutils literal"><span class="pre">~OpenDSA/Exercises/Design/CompareMCQ4.html</span></tt> is an MCQ with fixed
+choices.</p>
+<p><tt class="docutils literal"><span class="pre">~OpenDSA/Exercises/Binary/HparentMCQ.html</span></tt> shows a somewhat
+different approach.
+Line 18 has two key flags.
+<tt class="docutils literal"><span class="pre">data-show</span></tt> is set to 4, meaning that 4 choices will be shown.
+<tt class="docutils literal"><span class="pre">data-none</span></tt> is set to true, which means that the choice <tt class="docutils literal"><span class="pre">None</span> <span class="pre">of</span>
+<span class="pre">the</span> <span class="pre">above</span></tt> will always appear.
+Counting the correct answer, the four distractors, and <tt class="docutils literal"><span class="pre">None</span> <span class="pre">of</span> <span class="pre">the</span>
+<span class="pre">above</span></tt>, this means that there are six possible choices to display
+(<tt class="docutils literal"><span class="pre">None</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">above</span></tt> will appear last, and three of the other five
+will appear at random).
+When the correct answer is not shown, <tt class="docutils literal"><span class="pre">None</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">above</span></tt> becomes
+the correct answer.
+If a student chooses that, then the correct answer is shown after
+clicking the <tt class="docutils literal"><span class="pre">Check</span> <span class="pre">answer</span></tt> button.</p>
+</div>
+<div class="section" id="fill-in-the-blank-questions">
+<h2>9.5. Fill-in-the-Blank Questions<a class="headerlink" href="#fill-in-the-blank-questions" title="Permalink to this headline">¶</a></h2>
+<p>See <tt class="docutils literal"><span class="pre">~OpenDSA/Exercises/Background/MthBgFIBlgbs1.html</span></tt> for simple
+FIB formatting.
+It is important to understand that the KA framework provides support
+for processing certain types of student inputs.
+The simplest approach is to do an exact string match, as in this
+simple example.
+This is indicated by the fact that line 15 includes the tag
+<tt class="docutils literal"><span class="pre">data-type=&quot;text&quot;</span></tt> (even though the student answer is actually a
+number, they have type it exactly this way).
+<tt class="docutils literal"><span class="pre">~OpenDSA/Exercises/Background/AlgAnlsFIBsqrt.html</span></tt> shows off two
+different features.
+It will allow the student to type either of two diffrent answers:
+the string &#8220;1/2&#8221; or anything that is the decimal equivalent to 0.5.</p>
+<p><tt class="docutils literal"><span class="pre">~OpenDSA/Exercises/Background/MthBgFIBstckfn.html</span></tt> uses custom
+JavaScript to interpret student answer.
+Note the specific syntax of lines 33-40 that you can use as a
+template.
+Again, anything more than a few lines of code should be separated into
+its own JavaScript file, as described next.
+For more details about what is going on here, see the
+KA <a class="reference external" href="https://github.com/Khan/khan-exercises/wiki/">wiki</a>.</p>
+</div>
+<div class="section" id="using-javascript-and-jsav-within-the-khan-academy-framework">
+<h2>9.6. Using JavaScript and JSAV within the Khan Academy Framework<a class="headerlink" href="#using-javascript-and-jsav-within-the-khan-academy-framework" title="Permalink to this headline">¶</a></h2>
+<p>Using JavaScript in a KA exercise requires some non-standard
+processing (since these are not vanilla HTML files).
+We also include in our client-side framework special features
+to support including JSAV visualization elements.</p>
+<p><tt class="docutils literal"><span class="pre">~OpenDSA/Exercises/AlgAnal/GrowthRatesPRO.html</span></tt> and
+<tt class="docutils literal"><span class="pre">~OpenDSA/Exercises/AlgAnal/GrowthRatesPRO.js</span></tt> show a simple
+example.
+Note line 6 of the HTML file, where <tt class="docutils literal"><span class="pre">CompareGrowth</span></tt> is referenced.
+This is defining the name of the JavaScript file to include (normally
+the name has to match that of the HTML file, otherwise the search
+process will be looking in other places for the file).
+Note the syntax used on line 30 of <tt class="docutils literal"><span class="pre">compareGrowth.checkAnswer</span></tt>.
+This tells the exercise to look for the definition of function
+<tt class="docutils literal"><span class="pre">checkAnswer</span></tt> externally (in the JavaScript file).
+The first 4 and last 2 lines of this JavaScript file should be copied
+verbatim to your file, changing the name <tt class="docutils literal"><span class="pre">compareGrowth</span></tt>
+to the corresponding name that you use.
+It is relevant that the name matches the file name, with the first
+letter in lower case.
+Any functions or variables that are to be &#8220;exported&#8221; to the HTML file
+need to be in the equivalent to the <tt class="docutils literal"><span class="pre">compareGrowth</span></tt> object.
+Other functions can be defined outside of that object in normal
+fashion.</p>
+<p><tt class="docutils literal"><span class="pre">~OpenDSA/Exercises/AlgAnal/GrowthRatesPRO.html</span></tt> and
+<tt class="docutils literal"><span class="pre">~OpenDSA/Exercises/AlgAnal/GrowthRatesPRO.js</span></tt> show a relatively
+simple example of using JSAV with the Khan Academy framework.
+Note that all of the following naming conventions should be observed
+unless you know what you are doing when you change it.</p>
+<p>Line 7 of the HTML file requires that <tt class="docutils literal"><span class="pre">jsav</span></tt> be included, along with
+the name of the exercise file (which must be the same as the matching
+.js file to be included.
+Exercise file names (and their JavaScript file) must begin with a
+capital letter.</p>
+<p>Any required CSS styling is included in the .html file for the
+exercise.
+Be aware that many elements have defined styles already that should
+not be overwritten without cause.
+<tt class="docutils literal"><span class="pre">GrowthRatesPRO</span></tt> is a rare exception in that it explicitly needs to
+define the JSAV array cells to be large.
+Most JSAV-based exercises have only a height value, and all CSS
+elements should include the file name to keep from colliding namespace
+with other parts of the page.
+Never adjust the width of the .jsavcanvas.
+You have no reason to make it narrower than the default, and you will
+probably break things if you make it wider.</p>
+<p>The body tag (Line 12) must include the <tt class="docutils literal"><span class="pre">data-height</span></tt> and
+<tt class="docutils literal"><span class="pre">data-width</span> <span class="pre">fields.</span>
+<span class="pre">Always</span> <span class="pre">set</span> <span class="pre">``data-width=&quot;950&quot;</span></tt>.
+Make sure that the height can accommodate the hints when they are
+displayed.</p>
+<p>The <tt class="docutils literal"><span class="pre">div</span></tt> tag on line 44 has an ID field whose name is the exercise name with &#8220;p&#8221; added at
+the end.
+The <tt class="docutils literal"><span class="pre">div</span></tt> tag on line 52 has an ID field whose name is the exercise name.
+Any variables or functions imported from the JavaScript is preceeded
+with the exercise name, but with the first letter in lower case.
+Lines 54-63 should use this syntax, with the exercise name changed as appropriate.</p>
+<p>Moving to the JavaScript file, we first see that <tt class="docutils literal"><span class="pre">window</span></tt> is always
+tagged as a global.
+Any other global packages (in this case, <tt class="docutils literal"><span class="pre">katex</span></tt> would appear there
+as well.
+We always use the functional version for the <tt class="docutils literal"><span class="pre">&quot;use</span> <span class="pre">strict&quot;</span></tt>
+directive, so as not to break other JavaScript loaded on the page (in
+particular, the KA framework code won&#8217;t work under strict rules).</p>
+<p>Any functions or variables to be exported to the HTML file <strong>must</strong> be
+declared inside an object that uses the exercise name, with the
+initial letter changed to lower case.
+We must use the declaration syntax shown for the declarations in the
+object.
+Any other functions and variables that we want to create, outside the
+scope of the object, can use your preferred JavaScript declaration
+syntax.
+Note the last two lines of the file, where the object name is
+exported.</p>
+<p>The JSAV object <strong>must</strong> be declared with the exercise name
+for its parameter.
+It is petty much universal that the JSAV objects appear as a static
+display (that is, not a JSAV slideshow).
+Lines 86-90 show the standard format for this section, beginning with
+creating the JSAV object, followed by setting out any JSAV objects
+(this one is pretty simple in that there is only a single JSAV array),
+followed by the <tt class="docutils literal"><span class="pre">displayInit</span></tt> and <tt class="docutils literal"><span class="pre">recorded</span></tt> to get the elements
+displayed on the HTML page.</p>
+</div>
+<div class="section" id="naming-conventions">
+<h2>9.7. Naming Conventions<a class="headerlink" href="#naming-conventions" title="Permalink to this headline">¶</a></h2>
+<p>Summary exercises should <strong>always</strong> be given names of the form
+<tt class="docutils literal"><span class="pre">&lt;topicname&gt;Summ.html</span></tt>.</p>
+<p>T/F questions should have file names as <tt class="docutils literal"><span class="pre">&lt;topicname&gt;TF&lt;question&gt;.html</span></tt>.
+Multiple choice questions should be named as
+<tt class="docutils literal"><span class="pre">&lt;topicname&gt;MCQ&lt;question&gt;.html</span></tt>.
+Fill-in-the-blank questions should be named as
+<tt class="docutils literal"><span class="pre">&lt;topicname&gt;FIB&lt;question&gt;.html</span></tt>.
+It is bad style to use counts (like 1, 2, 3) for the <tt class="docutils literal"><span class="pre">&lt;question&gt;</span></tt>
+part in the name for a series of questions.</p>
+<p>Proficiency exercises should be named as <tt class="docutils literal"><span class="pre">&lt;topicname&gt;PRO.html</span></tt>.
+A proficiency exercise is something where the student must manipulate
+a data structure (including any exercise where the user interface for
+answering the question is to click or drag JSAV objects), or sometimes
+work a problem to reach an answer.
+In the case where students do a computation to complete a
+fill-in-the-blank problem, this might be a matter of judgement on how
+to name it.
+Generally, a fill-in-the-blanks question that generates random problem
+instances and is presented as a stand-alone exercise to students
+should probably be named as a proficiency exercise.</p>
+</div>
+<div class="section" id="common-errors">
+<h2>9.8. Common Errors<a class="headerlink" href="#common-errors" title="Permalink to this headline">¶</a></h2>
+<p>Your exercise might generate a console error that looks like:</p>
+<div class="highlight-python"><pre>Error while evaluating var#JSAV
+khan-exercise.js:359 TypeError: Cannot read property 'id' of undefined(…)</pre>
+</div>
+<p>This is a common problem. Nearly always, it means that either you
+forgot to include <tt class="docutils literal"><span class="pre">jsav</span></tt> in the <tt class="docutils literal"><span class="pre">data-require</span></tt> field of the <tt class="docutils literal"><span class="pre">&lt;html&gt;</span></tt>
+tag, or else you got the names wrong somewhere for the divs.</p>
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        «&#160;&#160;<a href="JSAVExercise.html">8. Using OpenDSA to Create JSAV-based Proficiency Exercises</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="Client-sideDevelopment.html">10. Client-side Development</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer">
+        &copy; Copyright 2012-2015 by OpenDSA Project Contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.
+    </div>
+  </body>
+</html>

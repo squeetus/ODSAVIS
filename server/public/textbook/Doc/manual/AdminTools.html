@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>16. Administrator’s Tools &mdash; OpenDSA System Documentation</title>
+    
+    <link rel="stylesheet" href="_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/print.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.4.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/theme_extras.js"></script>
+    <link rel="top" title="OpenDSA System Documentation" href="index.html" />
+    <link rel="next" title="17. Client-Side Framework" href="Client-sideFramework.html" />
+    <link rel="prev" title="15. Data collection server database tables" href="DatabaseSchemas.html" /> 
+  </head>
+  <body>
+      <div class="header"><img class="rightlogo" src="_static/AlgoVizLogo.gif" alt="Logo"/><h1 class="heading"><a href="index.html">
+          <span>OpenDSA System Documentation</span></a></h1>
+        <h2 class="heading"><span>16. Administrator’s Tools</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        «&#160;&#160;<a href="DatabaseSchemas.html">15. Data collection server database tables</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="Client-sideFramework.html">17. Client-Side Framework</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="administrator-s-tools">
+<span id="admintools"></span><h1>16. Administrator&#8217;s Tools<a class="headerlink" href="#administrator-s-tools" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="teacher-view-configuration">
+<h2>16.1. Teacher View Configuration<a class="headerlink" href="#teacher-view-configuration" title="Permalink to this headline">¶</a></h2>
+<p>To configure a view for a specific course/book instance, it is
+required to create a course and an assignement for that course through
+the backend administration
+<a class="reference external" href="http://opendsa.cs.vt.edu/admin/">console</a>.
+Only the Django administration account can perform these tasks.</p>
+</div>
+<div class="section" id="course-creation">
+<h2>16.2. Course Creation<a class="headerlink" href="#course-creation" title="Permalink to this headline">¶</a></h2>
+<p>If this is a course that does not exist, then on the A+ homepage under
+<tt class="docutils literal"><span class="pre">Courses</span></tt>, click on <tt class="docutils literal"><span class="pre">+Add</span></tt>, fill in the form, and assign
+teacher(s) to the course.</p>
+<p>On the A+ homepage under <tt class="docutils literal"><span class="pre">Course</span> <span class="pre">instances</span></tt> click on <tt class="docutils literal"><span class="pre">+Add</span></tt> to
+create an instance of the course.
+Fill in the form and assign teaching assistants.</p>
+<p>On the A+ homepage under <tt class="docutils literal"><span class="pre">Bookss</span></tt>, you should now see your book&#8217;s
+URL listed if the book has been compiled.
+Click on the url of the OpenDSA book instance
+you want to associate to the course.
+In the book&#8217;s form, select the appropriate course to associate it to.</p>
+</div>
+<div class="section" id="granting-instructor-access">
+<h2>16.3. Granting Instructor Access<a class="headerlink" href="#granting-instructor-access" title="Permalink to this headline">¶</a></h2>
+<p>To give instructor access to an existing account, from the django
+administration page
+go to &#8220;Courses&#8221; to display the list of available courses,
+then click on the course ID to edit course settings.</p>
+</div>
+<div class="section" id="register-a-book-instance">
+<h2>16.4. Register a Book Instance<a class="headerlink" href="#register-a-book-instance" title="Permalink to this headline">¶</a></h2>
+<p>To send over to the data server all information (chapters, modules,
+exercises, points, etc.) related to a newly created book instance, it
+is necessary to register the book instance.
+The registration can be done on the <tt class="docutils literal"><span class="pre">RegisterBook</span></tt> page at
+<tt class="docutils literal"><span class="pre">Book_Base_URL/html/RegisterBook.html</span></tt>.
+For example,
+<tt class="docutils literal"><span class="pre">http://algoviz.org/OpenDSA/Books/OpenDSA/html/RegisterBook.html</span></tt>.
+This presumes that the book instance has already been configured by a
+Django administrator.</p>
+</div>
+<div class="section" id="managing-the-front-page">
+<h2>16.5. Managing the Front Page<a class="headerlink" href="#managing-the-front-page" title="Permalink to this headline">¶</a></h2>
+<p>The &#8220;front page&#8221; for the instructor&#8217;s view will list a separate button
+for each &#8220;active&#8221; course.
+An &#8220;active&#8221; course is any course who&#8217;s end date is past the current
+moment in time.
+All courses will be listed on the &#8220;course archive&#8221; page.</p>
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        «&#160;&#160;<a href="DatabaseSchemas.html">15. Data collection server database tables</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="Client-sideFramework.html">17. Client-Side Framework</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer">
+        &copy; Copyright 2012-2015 by OpenDSA Project Contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.
+    </div>
+  </body>
+</html>
